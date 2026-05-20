@@ -12,7 +12,11 @@
       "Bash(curl -s -o train-ref.png \"https://www.figma.com/api/mcp/asset/796a2eca-3822-4984-b479-7fb55f48b600\")",
       "Bash(curl -s -o frame-ref.png \"https://www.figma.com/api/mcp/asset/d3db6707-9404-4627-9a52-62e5f2c47708\")",
       "mcp__Claude_in_Chrome__tabs_context_mcp",
-      "mcp__Claude_in_Chrome__navigate"
+      "mcp__Claude_in_Chrome__navigate",
+      "Bash(mkdir \"C:\\\\Users\\\\Mike\\\\OneDrive\\\\Desktop\\\\Pocket Pixel - Projects\\\\Klokin\\\\.claude\" 2>nul & echo done)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where npx *)",
+      "Bash(where node *)"
     ]
   }
 }

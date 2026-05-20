@@ -4,7 +4,15 @@
       "WebFetch(domain:api.anthropic.com)",
       "PowerShell(git init)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "mcp__74bdcf34-cae7-4482-9f75-050f64d7fc22__get_metadata",
+      "mcp__74bdcf34-cae7-4482-9f75-050f64d7fc22__get_screenshot",
+      "mcp__74bdcf34-cae7-4482-9f75-050f64d7fc22__get_design_context",
+      "Bash(curl -s -o rail-ref.png \"https://www.figma.com/api/mcp/asset/c4be6a77-aacd-40d9-84bc-29c5ae7fdc57\")",
+      "Bash(curl -s -o train-ref.png \"https://www.figma.com/api/mcp/asset/796a2eca-3822-4984-b479-7fb55f48b600\")",
+      "Bash(curl -s -o frame-ref.png \"https://www.figma.com/api/mcp/asset/d3db6707-9404-4627-9a52-62e5f2c47708\")",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__navigate"
     ]
   }
 }

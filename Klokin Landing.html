@@ -411,8 +411,8 @@
   .tl-grad-start{stop-color:var(--indigo)}
   .tl-grad-end{stop-color:var(--orange)}
   .tl-rail-bg{display:none}
-  .tl-rail-fill{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:8;opacity:.18}
-  .tl-rail-progress{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:8}
+  .tl-rail-fill{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:.18}
+  .tl-rail-progress{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
   .tl-rail-train{fill:var(--orange);stroke:var(--paper);stroke-width:3;filter:drop-shadow(0 2px 6px color-mix(in oklab, var(--orange) 35%, transparent))}
   .tl-rail-train-halo{fill:none;stroke:color-mix(in oklab, var(--orange) 28%, transparent);stroke-width:1.5}
   .tl-fill{display:none}
@@ -1757,20 +1757,25 @@ document.addEventListener('DOMContentLoaded', function(){
         return (r.top - trackRect.top) + r.height / 2;
       });
 
-      // Metro-map path: vertices at each card icon row, alternating between the
-      // right rail column (near cards) and a leftward bulge. Long diagonals
-      // connect them with sharp miter corners.
       var rightX = mainX;
       var leftX = mainX - (isMobile ? 30 : 50);
+      var zone = 16;
       var vertices = ys.map(function(y, i){
         return { x: (i % 2 === 0 ? leftX : rightX), y: y };
       });
 
       var topPad = 12;
       var d = 'M ' + vertices[0].x.toFixed(2) + ' ' + topPad.toFixed(2);
-      vertices.forEach(function(v){
-        d += ' L ' + v.x.toFixed(2) + ' ' + v.y.toFixed(2);
-      });
+      d += ' L ' + vertices[0].x.toFixed(2) + ' ' + (vertices[0].y - zone).toFixed(2);
+      for(var vi = 0; vi < vertices.length; vi++){
+        var cur = vertices[vi];
+        var next = vertices[vi + 1];
+        if(next){
+          d += ' C ' + cur.x.toFixed(2) + ' ' + (cur.y + zone).toFixed(2)
+             + ', ' + next.x.toFixed(2) + ' ' + (next.y - zone).toFixed(2)
+             + ', ' + next.x.toFixed(2) + ' ' + next.y.toFixed(2);
+        }
+      }
       var last = vertices[vertices.length - 1];
       d += ' L ' + last.x.toFixed(2) + ' ' + (trackH - topPad).toFixed(2);
 

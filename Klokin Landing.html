@@ -264,6 +264,41 @@
   .featgrid .item.is-feat-past .ico-neutral{background:color-mix(in oklab, var(--orange) 8%, var(--paper));color:var(--orange)}
 
   .ico-indigo{background:color-mix(in oklab, var(--indigo) 8%, var(--paper));color:var(--indigo)}
+
+  /* ───────── Feature tabs ───────── */
+  .feat-tabs-row{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+  .feat-tab-pill{
+    appearance:none;border:1px solid var(--line);background:var(--card);
+    padding:10px 18px;border-radius:999px;
+    font-family:var(--font-display);font-size:14px;font-weight:500;
+    color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+    transition:all .25s ease;
+  }
+  .feat-tab-pill:hover{border-color:var(--indigo);color:var(--indigo)}
+  .feat-tab-pill.active{background:var(--indigo);color:#fff;border-color:transparent;box-shadow:var(--shadow-sm)}
+  .feat-tab-count{
+    font-size:11px;font-weight:400;opacity:.55;
+    background:color-mix(in oklab, currentColor 8%, transparent);
+    padding:1px 7px;border-radius:99px;
+  }
+  .feat-tab-grid{
+    display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:16px;
+  }
+  .feat-tab-grid.ft-fading .feat-tab-card{opacity:0 !important;transform:translateY(10px) !important}
+  .feat-tab-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;display:flex;flex-direction:column;gap:12px;
+    opacity:0;transform:translateY(10px);
+    animation:ftCardReveal .35s ease forwards;
+    cursor:default;
+  }
+  .feat-tab-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+  @keyframes ftCardReveal{to{opacity:1;transform:translateY(0)}}
+  .feat-tab-card .ico{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;flex-shrink:0}
+  .feat-tab-card h4{margin:0;font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-0.01em}
+  .feat-tab-card h4 sup{font-size:10px;color:var(--ink-3);margin-left:2px}
+  .feat-tab-card p{margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.55}
   .ico-orange{background:color-mix(in oklab, var(--orange) 12%, var(--paper));color:var(--orange)}
   .ico-mint{background:color-mix(in oklab, var(--mint) 18%, var(--paper));color:#2f8f7a}
   .ico-coral{background:color-mix(in oklab, var(--coral) 14%, var(--paper));color:#c93545}
@@ -590,6 +625,7 @@
     .hero-grid, .showcase-grid, .suite-grid, .quote, .sec-head{grid-template-columns:1fr;gap:36px}
     .hero-vis{justify-self:center;max-width:520px}
     .featgrid .item{grid-column:span 6}
+    .feat-tab-grid{grid-template-columns:repeat(2,1fr)}
     .pillar{grid-column:span 12;min-height:auto}
     .pillar.pillar-feature{grid-column:span 6}
     .sector-strip{grid-template-columns:repeat(3,1fr)}
@@ -600,6 +636,7 @@
   @media (max-width: 640px){
     .kpis{grid-template-columns:repeat(2,1fr)}
     .featgrid .item{grid-column:span 12}
+    .feat-tab-grid{grid-template-columns:1fr}
     .sector-strip{grid-template-columns:repeat(2,1fr)}
     .panel-row{grid-template-columns:1fr}
     .steps{grid-template-columns:1fr}
@@ -1277,7 +1314,8 @@
       <div class="right lead">A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting across sectors.</div>
     </div>
 
-    <div class="featgrid">
+    <div id="feat-tabs-root"></div>
+    <div class="featgrid" style="display:none">
       <div class="item">
         <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <h4>Single user access</h4>
@@ -1638,32 +1676,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }));
   });
 
-  // Feature grid items — scroll-activated train-line style
-  (function(){
-    var items = document.querySelectorAll('.featgrid .item');
-    if(!items.length) return;
-    items.forEach(function(item, i){
-      ScrollTrigger.create({
-        trigger: item,
-        start: 'top 80%',
-        end: 'top 40%',
-        onEnter: function(){
-          // Mark all previous items as past, current as active
-          items.forEach(function(el, j){
-            if(j < i){ el.classList.add('is-feat-past'); el.classList.remove('is-feat-active'); }
-            else if(j === i){ el.classList.add('is-feat-active'); el.classList.remove('is-feat-past'); }
-          });
-        },
-        onEnterBack: function(){
-          items.forEach(function(el, j){
-            if(j < i){ el.classList.add('is-feat-past'); el.classList.remove('is-feat-active'); }
-            else if(j === i){ el.classList.add('is-feat-active'); el.classList.remove('is-feat-past'); }
-            else { el.classList.remove('is-feat-active', 'is-feat-past'); }
-          });
-        }
-      });
-    });
-  })();
+  // Feature grid scroll animation — replaced by feat-tabs React component
 
   // Dashboard mockups — slight scale + fade
   gsap.utils.toArray('.device-mac').forEach(function(el){
@@ -1851,6 +1864,110 @@ document.addEventListener('DOMContentLoaded', function(){
   gsap.from('.hero-meta', { y: 16, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.05 });
   gsap.from('.hero-vis', { y: 40, opacity: 0, scale: 0.97, duration: 1.1, ease: 'power2.out', delay: 0.3 });
 });
+</script>
+
+<!-- React + Babel for Feature Tabs component -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+<script type="text/babel">
+/* ═══ FEATURE TABS COMPONENT ═══ */
+(function(){
+  const { useState, useCallback } = React;
+
+  const FT_FEATURES = [
+    { id: 1, title: "Role-based dashboards", desc: "One login, personalised views for every role — from personal records to full team oversight.", cat: "core",
+      icon: <><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></> },
+    { id: 2, title: "Approval workflows", desc: "Submit and route absence reasons and incidents through configurable approval chains with audit trails.", cat: "workflow",
+      icon: <><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></> },
+    { id: 3, title: "Shift management", desc: "Up to 3 shifts per day with customisable rule sets and flexible scheduling.", cat: "scheduling",
+      icon: <><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></> },
+    { id: 4, title: "Multi-branch setup", desc: "Manage unlimited branches under one organisation — no limits, full control.", cat: "core",
+      icon: <><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></> },
+    { id: 5, title: "Mobile app", desc: "Check in remotely with accurate, real-time syncing to the web console.", cat: "connect", note: true,
+      icon: <><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></> },
+    { id: 6, title: "Offense tracking", desc: "Colour-coded indicators help supervisors spot attendance patterns at a glance.", cat: "workflow",
+      icon: <><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></> },
+    { id: 7, title: "Public holidays", desc: "Bake regional holidays into shift rules — no manual exceptions.", cat: "scheduling",
+      icon: <><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></> },
+    { id: 8, title: "Notifications", desc: "Timely alerts for clock-ins, approvals, and exceptions — pushed to web and mobile.", cat: "connect",
+      icon: <><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></> },
+    { id: 9, title: "Bilingual (BM / EN)", desc: "Switch the entire interface between Bahasa Malaysia and English in one click.", cat: "core",
+      icon: <><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12 15.3 15.3 0 0 1 12 2z"/></> },
+    { id: 10, title: "Comprehensive reporting", desc: "Data-driven reports for workflow efficiency, staff synchronisation, and compliance.", cat: "connect",
+      icon: <><path d="M18 20V10M12 20V4M6 20v-6"/></> },
+  ];
+
+  const FT_CATS = [
+    { id: "all",        label: "All features" },
+    { id: "core",       label: "Core Platform" },
+    { id: "workflow",   label: "Workflow" },
+    { id: "scheduling", label: "Scheduling" },
+    { id: "connect",    label: "Connect" },
+  ];
+
+  function FeatureTabs() {
+    const [activeTab, setActiveTab] = useState("all");
+    const [fading, setFading]       = useState(false);
+    const [renderTab, setRenderTab] = useState("all");
+
+    const switchTab = useCallback(function(id) {
+      if (id === activeTab || fading) return;
+      setFading(true);
+      setActiveTab(id);
+      setTimeout(function() { setRenderTab(id); setFading(false); }, 180);
+    }, [activeTab, fading]);
+
+    const filtered = renderTab === "all"
+      ? FT_FEATURES
+      : FT_FEATURES.filter(function(f) { return f.cat === renderTab; });
+
+    return (
+      <div>
+        <div className="feat-tabs-row">
+          {FT_CATS.map(function(cat) {
+            var isActive = activeTab === cat.id;
+            var count = cat.id === "all"
+              ? FT_FEATURES.length
+              : FT_FEATURES.filter(function(f) { return f.cat === cat.id; }).length;
+            return (
+              <button key={cat.id}
+                className={"feat-tab-pill" + (isActive ? " active" : "")}
+                onClick={function() { switchTab(cat.id); }}>
+                {cat.label}
+                <span className="feat-tab-count">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div className={"feat-tab-grid" + (fading ? " ft-fading" : "")} key={renderTab}>
+          {filtered.map(function(f, i) {
+            return (
+              <div key={f.id} className="feat-tab-card" style={{ animationDelay: (i * 55) + "ms" }}>
+                <div className="ico ico-indigo">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {f.icon}
+                  </svg>
+                </div>
+                <h4>{f.title}{f.note && <sup>*</sup>}</h4>
+                <p>{f.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  function ftMount() {
+    var el = document.getElementById('feat-tabs-root');
+    if (!el || typeof ReactDOM === 'undefined') { setTimeout(ftMount, 30); return; }
+    ReactDOM.createRoot(el).render(<FeatureTabs />);
+  }
+  ftMount();
+})();
 </script>
 
 </body>

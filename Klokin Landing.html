@@ -1,0 +1,1861 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Klokin — Precision Attendance. Smart Tracking. Human Touch.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  // Init Lenis smooth scroll immediately
+  const lenis = new Lenis({
+    duration: 1.4,
+    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    touchMultiplier: 2,
+  });
+  // Lenis raf driven by GSAP ticker (see bottom script); standalone raf as fallback
+  function _raf(time){ lenis.raf(time); requestAnimationFrame(_raf); }
+  requestAnimationFrame(_raf);
+</script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="image-slot.js"></script>
+<style>
+  :root{
+    /* Klokin brand — extracted from the v1.2 brochure */
+    --ink:       #1a1530;        /* primary text */
+    --ink-2:     #4a4565;        /* secondary text */
+    --ink-3:     #8a85a0;        /* muted */
+    --line:      #e6e2d8;        /* hairline */
+    --line-2:    #efece4;
+    --paper:     #f7f4ec;        /* warm off-white ground */
+    --paper-2:   #efeadd;        /* slightly deeper paper */
+    --card:      #ffffff;
+    --indigo:    #44396b;        /* primary brand */
+    --indigo-2:  #5a4b8e;        /* lighter primary */
+    --indigo-3:  #2d2548;        /* deeper primary */
+    --indigo-ink:#1a1330;
+    --orange:    #f27200;        /* primary accent */
+    --orange-2:  #ff8a2b;
+    --mint:      #51bfa3;
+    --coral:     #f04a5a;
+    --yellow:    #f6e042;
+    --sky:       #00a2ff;
+
+    --radius:    14px;
+    --radius-lg: 22px;
+    --shadow-sm: 0 1px 2px rgba(26,21,48,.06), 0 1px 1px rgba(26,21,48,.04);
+    --shadow-md: 0 10px 30px -12px rgba(26,21,48,.18), 0 4px 10px -4px rgba(26,21,48,.08);
+    --shadow-lg: 0 30px 60px -24px rgba(45,37,72,.35), 0 12px 24px -10px rgba(45,37,72,.18);
+
+    --maxw: 1240px;
+    --gutter: clamp(20px, 4vw, 56px);
+
+    --font-display: "Ubuntu", system-ui, sans-serif;
+    --font-ui:      "Inter", system-ui, sans-serif;
+    --font-mono:    "Inter", system-ui, sans-serif;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:auto}
+  body{
+    font-family:var(--font-ui);
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    font-size:16px;
+    line-height:1.5;
+  }
+  img,svg{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:default}
+
+  /* ───────── Typography ───────── */
+  .display{font-family:var(--font-display);font-weight:500;letter-spacing:-0.02em;line-height:1.02}
+  h1.display{font-size:clamp(44px,6vw,84px)}
+  h2.display{font-size:clamp(34px,4.4vw,60px);letter-spacing:-0.018em}
+  h3.display{font-family:var(--font-display);font-weight:500;font-size:clamp(22px,2.2vw,30px);letter-spacing:-0.012em;line-height:1.15;margin:0}
+  .eyebrow{
+    font-family:var(--font-ui);
+    font-weight:600;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--indigo);
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{
+    content:"";width:18px;height:1px;background:currentColor;display:inline-block;opacity:.7;
+  }
+  .mono{font-family:var(--font-mono);font-size:12px;letter-spacing:.02em;color:var(--ink-3)}
+  .lead{font-size:clamp(17px,1.4vw,20px);line-height:1.55;color:var(--ink-2);max-width:60ch}
+
+  /* ───────── Layout ───────── */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+  section{padding:clamp(72px, 9vw, 128px) 0;position:relative}
+  .row{display:flex;gap:24px}
+  .stack{display:flex;flex-direction:column}
+
+  /* ───────── Nav ───────── */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in oklab, var(--paper) 84%, transparent);
+    backdrop-filter:saturate(160%) blur(14px);
+    -webkit-backdrop-filter:saturate(160%) blur(14px);
+    border-bottom:1px solid color-mix(in oklab, var(--line) 60%, transparent);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:14px var(--gutter);
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:500;font-size:22px;letter-spacing:-0.01em;color:var(--indigo)}
+  .brand-mark{
+    width:30px;height:30px;border-radius:9px;background:var(--indigo);
+    display:grid;place-items:center;position:relative;
+    box-shadow:inset 0 0 0 1px color-mix(in oklab, white 14%, transparent);
+  }
+  .brand-mark::after{
+    content:"";position:absolute;inset:8px 8px auto auto;width:6px;height:6px;background:var(--orange);border-radius:50%;
+  }
+  .brand-mark svg{width:18px;height:18px}
+  .brand small{font-family:var(--font-ui);font-weight:500;font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;margin-left:8px;border-left:1px solid var(--line);padding-left:8px}
+  .nav-links{display:flex;gap:28px;align-items:center;font-size:14px;color:var(--ink-2);font-weight:500}
+  .nav-links a{transition:color .15s, border-color .15s;padding-bottom:4px;border-bottom:2px solid transparent;color:var(--ink-3)}
+  .nav-links a:hover{color:var(--indigo)}
+  .nav-links a.active{color:var(--indigo);border-bottom-color:var(--indigo);font-weight:600}
+  .nav-cta{display:flex;gap:10px;align-items:center}
+
+  .btn{
+    appearance:none;border:0;background:transparent;color:var(--ink);
+    padding:11px 18px;border-radius:999px;font-weight:600;font-size:14px;letter-spacing:-0.005em;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .15s ease, background .2s, color .2s, box-shadow .2s;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ghost{color:var(--ink-2)}
+  .btn-ghost:hover{color:var(--indigo);background:color-mix(in oklab, var(--indigo) 7%, transparent)}
+  .btn-outline{border:1px solid var(--line);color:var(--ink)}
+  .btn-outline:hover{border-color:var(--indigo);color:var(--indigo)}
+  .btn-primary{background:var(--indigo);color:#fff;box-shadow:0 1px 0 color-mix(in oklab, white 14%, transparent) inset, 0 8px 18px -10px var(--indigo)}
+  .btn-primary:hover{background:var(--indigo-3)}
+  .btn-accent{background:var(--orange);color:#fff;box-shadow:0 1px 0 color-mix(in oklab, white 18%, transparent) inset, 0 8px 18px -8px color-mix(in oklab, var(--orange) 60%, transparent)}
+  .btn-accent:hover{background:#dc6700}
+  .btn-lg{padding:14px 22px;font-size:15px}
+  .btn .arrow{transition:transform .2s}
+  .btn:hover .arrow{transform:translateX(3px)}
+
+  /* ───────── Hero ───────── */
+  .hero{padding-top:clamp(56px, 6vw, 96px);padding-bottom:0;overflow:hidden}
+  .hero-grid{
+    display:grid;grid-template-columns: 1.05fr 1fr;gap:64px;align-items:center;
+  }
+  .hero h1 .accent{color:var(--orange);font-weight:500}
+  .hero h1 .underlay{position:relative;display:inline-block}
+  .hero h1 .underlay::after{
+    content:"";position:absolute;left:-4px;right:-4px;bottom:6px;height:14px;
+    background:color-mix(in oklab, var(--orange) 28%, transparent);
+    border-radius:4px;z-index:-1;
+  }
+  .hero-meta{display:flex;gap:12px;margin:36px 0 24px;align-items:center;flex-wrap:wrap}
+  .hero-cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .hero-note{display:flex;gap:18px;align-items:center;margin-top:28px;color:var(--ink-3);font-size:13px}
+  .hero-note .dot{width:6px;height:6px;border-radius:50%;background:var(--mint)}
+  .hero-vis{position:relative;justify-self:end;width:100%;max-width:680px;aspect-ratio: 7/8;}
+  .hero-vis-frame{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+
+  .hero-blob{
+    position:absolute;left:-10%;top:8%;width:120%;height:84%;z-index:-1;
+    background: radial-gradient(60% 60% at 60% 40%, color-mix(in oklab, var(--indigo) 16%, transparent) 0%, transparent 70%),
+                radial-gradient(50% 50% at 20% 80%, color-mix(in oklab, var(--orange) 18%, transparent) 0%, transparent 70%);
+    filter: blur(20px);
+  }
+
+  /* ───────── Logos / proof strip ───────── */
+  .proof{padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:color-mix(in oklab, var(--paper-2) 60%, transparent)}
+  .proof-inner{display:flex;align-items:center;gap:48px;flex-wrap:wrap;justify-content:space-between}
+  .proof-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+  .proof-logos{display:flex;gap:48px;align-items:center;flex:1;justify-content:space-around;flex-wrap:wrap}
+  .proof-logos .logo{font-family:var(--font-display);font-weight:500;color:var(--ink-3);font-size:18px;letter-spacing:-0.01em;opacity:.85;display:inline-flex;align-items:center;gap:8px}
+  .proof-logos .logo span.dot{width:8px;height:8px;border-radius:2px;background:var(--ink-3);display:inline-block;opacity:.5}
+  .proof-logos .logo.italic{}
+  .proof-logos .logo.serif{font-family:Georgia,serif}
+
+  /* ───────── Section heads ───────── */
+  .sec-head{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:56px}
+  .sec-head .right{color:var(--ink-2);max-width:48ch;padding-bottom:6px}
+
+  /* ───────── Pillars grid ───────── */
+  .pillars{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+  .pillar{
+    grid-column:span 6;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
+    padding:32px;
+    position:relative;overflow:hidden;
+    box-shadow:var(--shadow-sm);
+    min-height:280px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;
+  }
+  .pillar h3{margin:0 0 10px}
+  .pillar p{margin:0;color:var(--ink-2);font-size:15px;max-width:46ch}
+  .pillar .ico{width:38px;height:38px;border-radius:10px;background:color-mix(in oklab, var(--indigo) 8%, var(--paper));display:grid;place-items:center;color:var(--indigo);margin-bottom:18px}
+  .pillar .vis{height:120px;border-radius:12px;background:var(--paper);border:1px dashed color-mix(in oklab, var(--ink-3) 30%, transparent);display:grid;place-items:center;color:var(--ink-3);font-size:12px;font-family:var(--font-mono)}
+
+  .pillar.pillar-feature{grid-column:span 4;min-height:220px}
+  .pillar.pillar-feature p{font-size:14px}
+
+  .pillar.dark{background:var(--indigo);color:#fff;border-color:transparent}
+  .pillar.dark p{color:color-mix(in oklab, white 80%, transparent)}
+  .pillar.dark .ico{background:color-mix(in oklab, white 12%, transparent);color:#fff}
+
+  /* ───────── Dashboard block ───────── */
+  .showcase{background:linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .showcase-grid{display:grid;grid-template-columns: 1fr 1.4fr;gap:64px;align-items:center}
+  .showcase ul.checks{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:10px}
+  .showcase ul.checks li{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--ink-2)}
+  .showcase ul.checks li svg{flex-shrink:0;margin-top:3px;color:var(--orange)}
+
+  /* ───────── Mobile suite ───────── */
+  .suite{position:relative;background:var(--indigo);color:#fff;overflow:hidden}
+  .suite::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(60% 80% at 90% 10%, color-mix(in oklab, var(--orange) 30%, transparent) 0%, transparent 60%),
+      radial-gradient(40% 60% at 10% 100%, color-mix(in oklab, var(--indigo-2) 60%, transparent) 0%, transparent 60%);
+    opacity:.7;pointer-events:none;
+  }
+  .suite > *{position:relative}
+  .suite-eyebrow{color:color-mix(in oklab, white 80%, transparent)}
+  .suite-eyebrow::before{background:color-mix(in oklab, white 50%, transparent)}
+  .suite .display{color:#fff}
+  .suite .lead{color:color-mix(in oklab, white 78%, transparent);max-width:54ch}
+  .suite-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center}
+  .suite-features{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 32px;margin-top:36px}
+  .suite-feat .lbl{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-0.01em;margin-bottom:6px}
+  .suite-feat .lbl .num{font-family:var(--font-mono);font-size:11px;color:var(--orange);font-weight:400;letter-spacing:.06em}
+  .suite-feat p{margin:0;color:color-mix(in oklab, white 70%, transparent);font-size:14px;max-width:34ch}
+  .suite-store{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+  .store-btn{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.25);border:1px solid color-mix(in oklab, white 14%, transparent);padding:10px 16px;border-radius:12px}
+  .store-btn .small{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in oklab, white 60%, transparent)}
+  .store-btn .big{font-family:var(--font-display);font-weight:500;font-size:15px;color:#fff;letter-spacing:-0.01em}
+  .store-btn svg{color:#fff;flex-shrink:0}
+
+  /* ───────── Feature grid ───────── */
+  .featgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+  .featgrid .item{
+    grid-column:span 4;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;display:flex;flex-direction:column;gap:14px;
+  }
+  .featgrid .item .ico{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;flex-shrink:0}
+  .featgrid .item h4{margin:0;font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-0.01em}
+  .featgrid .item p{margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.55}
+  .featgrid .item .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:auto}
+
+  /* Feature grid: inactive/active states */
+  .ico-neutral{background:color-mix(in oklab, var(--ink-3) 8%, var(--paper));color:var(--ink-3);transition:background .5s ease, color .5s ease, box-shadow .5s ease}
+  .featgrid .item{opacity:.45;transform:translateY(6px);transition:opacity .5s ease, transform .5s ease}
+  .featgrid .item.is-feat-active{opacity:1;transform:translateY(0)}
+  .featgrid .item.is-feat-active .ico-neutral{background:color-mix(in oklab, var(--orange) 14%, var(--paper));color:var(--orange);box-shadow:0 0 0 3px color-mix(in oklab, var(--orange) 12%, transparent)}
+  .featgrid .item.is-feat-past{opacity:1;transform:translateY(0)}
+  .featgrid .item.is-feat-past .ico-neutral{background:color-mix(in oklab, var(--orange) 8%, var(--paper));color:var(--orange)}
+
+  .ico-indigo{background:color-mix(in oklab, var(--indigo) 8%, var(--paper));color:var(--indigo)}
+  .ico-orange{background:color-mix(in oklab, var(--orange) 12%, var(--paper));color:var(--orange)}
+  .ico-mint{background:color-mix(in oklab, var(--mint) 18%, var(--paper));color:#2f8f7a}
+  .ico-coral{background:color-mix(in oklab, var(--coral) 14%, var(--paper));color:#c93545}
+  .ico-yellow{background:color-mix(in oklab, var(--yellow) 30%, var(--paper));color:#9a8a18}
+  .ico-sky{background:color-mix(in oklab, var(--sky) 14%, var(--paper));color:#0f7fc0}
+
+  /* ───────── Sectors ───────── */
+  .sectors{padding-top:0}
+  .sector-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .sector{padding:32px 18px;text-align:center;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;align-items:center}
+  .sector:last-child{border-right:0}
+  .sector .ico-wrap{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line);color:var(--indigo)}
+  .sector .name{font-family:var(--font-display);font-weight:500;font-size:15px;letter-spacing:-0.005em}
+  .sector .desc{font-size:12px;color:var(--ink-3)}
+
+  /* ───────── Workflow / steps ───────── */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+  .step{position:relative;padding:24px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+  .step .num{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;color:var(--orange);font-weight:500}
+  .step h4{margin:8px 0 8px;font-family:var(--font-display);font-weight:500;font-size:20px;letter-spacing:-0.01em}
+  .step p{margin:0;font-size:14px;color:var(--ink-2)}
+
+  /* ───────── Quote ───────── */
+  .quote{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
+    padding:clamp(36px, 6vw, 72px);
+    display:grid;grid-template-columns: 1fr 1fr;gap:64px;align-items:center;
+  }
+  .quote blockquote{margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(22px,2.4vw,30px);line-height:1.3;letter-spacing:-0.012em;color:var(--ink)}
+  .quote cite{font-style:normal;display:flex;flex-direction:column;gap:2px;margin-top:24px;color:var(--ink-2);font-size:14px}
+  .quote cite strong{color:var(--ink);font-family:var(--font-display);font-weight:500;font-size:16px}
+  .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px 28px}
+  .stat .n{font-family:var(--font-display);font-weight:500;font-size:clamp(36px,3.2vw,48px);letter-spacing:-0.02em;color:var(--indigo);line-height:1}
+  .stat .lbl{margin-top:6px;color:var(--ink-2);font-size:13px;max-width:24ch}
+
+  /* ───────── CTA ───────── */
+  .cta{padding:96px 0 64px;text-align:center}
+  .cta .display{margin:0 auto;max-width:18ch}
+  .cta .lead{margin:18px auto 0;text-align:center}
+  .cta .hero-cta{justify-content:center;margin-top:32px}
+
+  /* ───────── Footer ───────── */
+  footer{padding:56px 0 36px;border-top:1px solid var(--line);background:var(--paper-2);color:var(--ink-2);font-size:13.5px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+  .foot-grid h5{margin:0 0 14px;font-family:var(--font-display);font-weight:500;color:var(--ink);font-size:14px;letter-spacing:.02em;text-transform:uppercase}
+  .foot-grid ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+  .foot-grid a:hover{color:var(--indigo)}
+  .foot-bottom{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--ink-3);font-size:12px;font-family:var(--font-mono);letter-spacing:.04em}
+
+
+  /* ───────── Dark Dashboard Mockup (real Klokin UI) ───────── */
+  .dk{font-family:'Inter',system-ui,sans-serif;font-size:10.5px;background:#0f172a;color:#e2e8f0;display:flex;flex-direction:column;min-height:460px}
+  .dk .tnav{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(15,23,42,.95);border-bottom:1px solid rgba(51,65,85,.5);backdrop-filter:blur(8px);gap:8px}
+  .dk .tnav .tlogo{display:flex;align-items:center;gap:6px}
+  .dk .tnav .tlogo img,.dk .tnav .tlogo .tl-ico{width:22px;height:22px;border-radius:6px;background:var(--indigo);display:grid;place-items:center}
+  .dk .tnav .tlogo .tl-ico svg{width:12px;height:12px}
+  .dk .tnav .tlogo .tl-ico::after{content:"";position:absolute;inset:5px 5px auto auto;width:3px;height:3px;border-radius:50%;background:var(--orange)}
+  .dk .tnav .tlinks{display:flex;gap:2px;align-items:center;flex:1;margin-left:12px}
+  .dk .tnav .tlinks a{padding:5px 8px;border-radius:6px;font-size:9.5px;font-weight:500;color:#94a3b8;white-space:nowrap}
+  .dk .tnav .tlinks a.on{color:#60a5fa;background:rgba(59,130,246,.12);font-weight:600}
+  .dk .tnav .tlinks a .chev{font-size:7px;margin-left:2px;opacity:.5}
+  .dk .tnav .tright{display:flex;align-items:center;gap:8px}
+  .dk .tnav .tbadge{font-size:8.5px;font-weight:700;padding:3px 8px;border-radius:999px;background:#dc2626;color:#000;white-space:nowrap;letter-spacing:.02em}
+  .dk .tnav .tav{width:22px;height:22px;border-radius:50%;background:#334155;border:1px solid #475569;display:grid;place-items:center;font-size:8px;font-weight:600;color:#94a3b8}
+  .dk .tnav .tglobe{color:#94a3b8;font-size:10px}
+
+  .dk .fbar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(51,65,85,.4);background:rgba(15,23,42,.6)}
+  .dk .fbar .fc{padding:10px 12px;border-right:1px solid rgba(51,65,85,.3)}
+  .dk .fbar .fc:last-child{border-right:0}
+  .dk .fbar .fc .fl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#64748b;margin-bottom:5px;display:flex;align-items:center;gap:4px}
+  .dk .fbar .fc .fv{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:5px 8px;font-size:9px;color:#cbd5e1;display:flex;align-items:center;justify-content:space-between}
+  .dk .fbar .fc .fv .caret{font-size:7px;color:#64748b}
+
+  .dk .dgradbar{height:3px;background:linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6);opacity:.8}
+  .dk .dcontent{padding:12px;display:flex;flex-direction:column;gap:10px;flex:1}
+
+  .dk .dcard{background:rgba(30,41,59,.7);border:1px solid rgba(51,65,85,.5);border-radius:12px;overflow:hidden;position:relative}
+  .dk .dcard .dcard-bar{height:2px;width:100%}
+  .dk .dcard .dcard-bar.blue{background:linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6)}
+  .dk .dcard .dcard-bar.red{background:linear-gradient(90deg,#ef4444,#f97316)}
+  .dk .dcard .dcard-bar.amber{background:linear-gradient(90deg,#f59e0b,#d97706)}
+  .dk .dcard .dcard-bar.cyan{background:linear-gradient(90deg,#06b6d4,#3b82f6)}
+  .dk .dcard .dch{padding:8px 10px;border-bottom:1px solid rgba(51,65,85,.4);background:rgba(15,23,42,.3);display:flex;align-items:center;justify-content:space-between}
+  .dk .dcard .dch b{font-size:9.5px;font-weight:700;color:#f1f5f9;display:flex;align-items:center;gap:5px}
+  .dk .dcard .dch b i{font-size:10px}
+  .dk .dcard .dch .dbtn{font-size:8px;padding:3px 7px;border:1px solid #475569;border-radius:5px;color:#94a3b8;background:#1e293b;font-weight:500}
+  .dk .dcard .dbody{padding:10px}
+
+  .dk .drow2{display:grid;grid-template-columns:5fr 7fr;gap:10px}
+  .dk .drow-half{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+  .dk .dstats{display:flex;gap:10px;margin-bottom:10px;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px 10px}
+  .dk .dstats .ds{flex:1;text-align:center}
+  .dk .dstats .ds:first-child{border-right:1px solid #334155;padding-right:10px}
+  .dk .dstats .ds .dsl{font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:#64748b;font-weight:700;margin-bottom:2px}
+  .dk .dstats .ds .dsv{font-size:18px;font-weight:800;color:#f1f5f9}
+  .dk .dstats .ds .dsv.blue{color:#60a5fa}
+
+  .dk .mini-bar{display:flex;align-items:flex-end;gap:3px;height:60px;padding-top:4px}
+  .dk .mini-bar .mb{width:100%;border-radius:3px 3px 0 0;min-height:4px}
+  .dk .mini-bar .mb.green{background:#22c55e}
+  .dk .mini-bar .mb.red{background:#ef4444}
+  .dk .mini-bar .mb.amber{background:#f59e0b}
+  .dk .mini-bar .mb.blue{background:#3b82f6}
+  .dk .mini-bar .mb.gray{background:#475569}
+
+  .dk .donut-area{display:flex;align-items:center;justify-content:center;gap:16px;padding:8px}
+  .dk .donut-ring{width:100px;height:100px;position:relative;flex-shrink:0}
+  .dk .donut-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .dk .donut-ring .dr-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .dk .donut-ring .dr-center .drn{font-size:16px;font-weight:800;color:#f1f5f9}
+  .dk .donut-ring .dr-center .drl{font-size:7px;color:#64748b;text-transform:uppercase;letter-spacing:.06em}
+  .dk .legend{display:flex;flex-direction:column;gap:6px}
+  .dk .legend .leg{display:flex;align-items:center;gap:6px;font-size:9px;color:#cbd5e1;font-weight:500}
+  .dk .legend .leg .ldot{width:7px;height:7px;border-radius:50%}
+
+  .dk .dtable{width:100%;font-size:9px}
+  .dk .dtable thead{background:rgba(15,23,42,.6)}
+  .dk .dtable th{padding:6px 8px;text-align:left;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#64748b;border-bottom:1px solid #334155}
+  .dk .dtable td{padding:6px 8px;border-bottom:1px solid rgba(51,65,85,.3);color:#cbd5e1}
+  .dk .dtable .tpill{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:999px;font-size:8px;font-weight:600}
+  .dk .dtable .tpill.t-late{background:rgba(251,191,36,.15);color:#fbbf24}
+  .dk .dtable .tpill.t-absent{background:rgba(239,68,68,.15);color:#f87171}
+  .dk .dtable .tpill.t-pending{background:rgba(96,165,250,.15);color:#60a5fa}
+  .dk .dtable .tpill.t-ok{background:rgba(34,197,94,.15);color:#4ade80}
+  .dk .dtable .tap{padding:2px 7px;border-radius:5px;font-size:8px;font-weight:600;border:0}
+  .dk .dtable .tap.ap-y{background:#3b82f6;color:#fff}
+  .dk .dtable .tap.ap-n{background:#334155;color:#94a3b8}
+
+  .dk .activity-chart{height:80px;display:flex;align-items:flex-end;gap:2px;padding:4px 0}
+  .dk .activity-chart .ac-bar{width:100%;display:flex;flex-direction:column;align-items:center;gap:1px}
+  .dk .activity-chart .ac-bar .acb{width:100%;border-radius:2px 2px 0 0}
+  .dk .activity-chart .ac-bar .acl{font-size:6.5px;color:#475569;margin-top:2px}
+
+  .dk .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;color:#64748b}
+  .dk .empty-state .es-ico{width:28px;height:28px;border-radius:50%;background:#1e293b;display:grid;place-items:center;margin-bottom:6px;color:#22c55e;font-size:11px}
+  .dk .empty-state .es-txt{font-size:9px;font-weight:500}
+
+  /* ───────── Timeline (zig-zag rail) ───────── */
+  .tl-section{padding-top:clamp(72px,9vw,128px);padding-bottom:clamp(72px,9vw,128px)}
+  .tl-track{position:relative;padding-left:84px;max-width:760px;margin:0 auto}
+
+  .tl-rail{position:absolute;left:0;top:0;width:84px;height:100%;pointer-events:none}
+  .tl-rail-svg{display:block;width:100%;height:100%;overflow:visible}
+  .tl-grad-start{stop-color:var(--indigo)}
+  .tl-grad-end{stop-color:var(--orange)}
+  .tl-rail-bg{display:none}
+  .tl-rail-fill{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:8;opacity:.18}
+  .tl-rail-progress{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:8}
+  .tl-rail-train{fill:var(--orange);stroke:var(--paper);stroke-width:3;filter:drop-shadow(0 2px 6px color-mix(in oklab, var(--orange) 35%, transparent))}
+  .tl-rail-train-halo{fill:none;stroke:color-mix(in oklab, var(--orange) 28%, transparent);stroke-width:1.5}
+  .tl-fill{display:none}
+
+  .tl-node{position:relative;padding:0 0 48px 4px}
+  .tl-node:last-child{padding-bottom:0}
+  .tl-dot{display:none}
+
+  .tl-card{
+    display:flex;gap:16px;align-items:flex-start;
+    padding:20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);
+    opacity:.45;transform:translateY(8px);
+    transition:opacity .5s ease, transform .5s ease, border-color .4s, box-shadow .4s;
+  }
+  .tl-node.is-active .tl-card,
+  .tl-node.is-past .tl-card{
+    opacity:1;transform:translateY(0);
+  }
+  .tl-node.is-active .tl-card{
+    border-color:color-mix(in oklab, var(--indigo) 30%, transparent);
+    box-shadow:var(--shadow-md);
+  }
+
+  .tl-ico{
+    width:36px;height:36px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;
+    background:color-mix(in oklab, var(--ink-3) 8%, var(--paper)) !important;
+    color:var(--ink-3) !important;
+    transition:background .5s ease, color .5s ease, box-shadow .5s ease;
+  }
+  .tl-node.is-active .tl-ico{
+    background:color-mix(in oklab, var(--indigo) 12%, var(--paper)) !important;
+    color:var(--indigo) !important;
+    box-shadow:0 0 0 3px color-mix(in oklab, var(--indigo) 14%, transparent);
+  }
+  .tl-node.is-past .tl-ico{
+    background:color-mix(in oklab, var(--orange) 12%, var(--paper)) !important;
+    color:var(--orange) !important;
+  }
+  .tl-body h4{margin:0 0 6px;font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-0.01em}
+  .tl-body p{margin:0;color:var(--ink-2);font-size:14px;line-height:1.5;max-width:48ch}
+
+  @media (max-width:640px){
+    .tl-track{padding-left:60px}
+    .tl-rail{width:60px}
+    .tl-card{padding:16px;flex-direction:column;gap:12px}
+  }
+
+  /* ───────── Dashboard mockup ───────── */
+  .device-mac{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow-lg);overflow:hidden;position:relative;
+  }
+  .device-mac .bar{height:30px;background:linear-gradient(180deg,#f6f3ec,#efeadf);display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid var(--line)}
+  .device-mac .bar .dot{width:10px;height:10px;border-radius:50%;background:#dcd6c5}
+  .device-mac .bar .dot:nth-child(1){background:#e88a86}
+  .device-mac .bar .dot:nth-child(2){background:#e9c46a}
+  .device-mac .bar .dot:nth-child(3){background:#8bc394}
+  .device-mac .bar .url{margin-left:auto;background:#fff;border:1px solid var(--line);font-family:var(--font-mono);font-size:10.5px;color:var(--ink-3);padding:3px 12px;border-radius:8px;letter-spacing:.02em}
+
+  .dash{display:grid;grid-template-columns: 200px 1fr;min-height:460px;font-size:12.5px}
+  .dash .side{background:#fbfaf5;border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:6px}
+  .dash .side .logo{display:flex;align-items:center;gap:8px;padding:6px 8px 14px;font-family:var(--font-display);font-weight:500;color:var(--indigo);font-size:15px}
+  .dash .side .logo .m{width:22px;height:22px;border-radius:7px;background:var(--indigo);display:grid;place-items:center;position:relative}
+  .dash .side .logo .m::after{content:"";position:absolute;inset:6px 6px auto auto;width:4px;height:4px;border-radius:50%;background:var(--orange)}
+  .dash .side .lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding:14px 8px 4px}
+  .dash .side .nav-i{padding:7px 10px;border-radius:7px;color:var(--ink-2);display:flex;align-items:center;gap:9px;font-weight:500}
+  .dash .side .nav-i.active{background:color-mix(in oklab, var(--indigo) 8%, transparent);color:var(--indigo)}
+  .dash .side .nav-i .pip{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5}
+  .dash .side .nav-i.active .pip{background:var(--orange);opacity:1}
+
+  .dash .main{padding:18px 22px;background:#fff;display:flex;flex-direction:column;gap:18px}
+  .dash .topbar{display:flex;justify-content:space-between;align-items:center}
+  .dash .topbar h4{margin:0;font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-0.01em}
+  .dash .topbar .sub{color:var(--ink-3);font-size:11px;font-family:var(--font-mono);letter-spacing:.04em;margin-top:2px}
+  .dash .seg{display:flex;gap:0;border:1px solid var(--line);border-radius:8px;padding:2px;font-size:11px;background:#fbfaf5}
+  .dash .seg span{padding:5px 12px;border-radius:6px;color:var(--ink-3);font-weight:500}
+  .dash .seg span.on{background:#fff;color:var(--indigo);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .kpi{padding:14px;border:1px solid var(--line);border-radius:10px;background:#fbfaf5}
+  .kpi .name{font-size:10.5px;color:var(--ink-3);font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase}
+  .kpi .v{font-family:var(--font-display);font-weight:500;font-size:24px;letter-spacing:-0.012em;color:var(--ink);margin-top:6px;display:flex;align-items:baseline;gap:6px}
+  .kpi .v .small{font-size:11px;font-family:var(--font-ui);color:var(--ink-3);font-weight:500;letter-spacing:0}
+  .kpi .delta{font-size:11px;color:#2f8f7a;font-weight:500;margin-top:4px;display:inline-flex;align-items:center;gap:4px}
+  .kpi.warn .delta{color:var(--coral)}
+
+  .chart{
+    height:160px;border:1px solid var(--line);border-radius:10px;padding:14px;background:#fbfaf5;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .chart .ch-head{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3)}
+  .chart .ch-head b{color:var(--ink);font-family:var(--font-display);font-weight:500;font-size:13px}
+  .chart svg{width:100%;flex:1}
+
+  .panel-row{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+  .panel{border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px}
+  .panel h5{margin:0 0 10px;font-family:var(--font-display);font-weight:500;font-size:13.5px;display:flex;align-items:center;justify-content:space-between}
+  .panel h5 span{font-family:var(--font-mono);font-size:10px;color:var(--ink-3);letter-spacing:.06em;font-weight:400;text-transform:uppercase}
+  .row-i{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line-2);font-size:12px}
+  .row-i:first-of-type{border-top:0}
+  .row-i .av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--orange));color:#fff;display:grid;place-items:center;font-weight:600;font-size:10px;font-family:var(--font-ui)}
+  .row-i .nm{font-weight:500;color:var(--ink)}
+  .row-i .meta{color:var(--ink-3);font-size:11px;font-family:var(--font-mono);letter-spacing:.02em}
+  .pill{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:.01em}
+  .pill.ok{background:color-mix(in oklab, var(--mint) 18%, transparent);color:#2f8f7a}
+  .pill.late{background:color-mix(in oklab, var(--orange) 16%, transparent);color:#b95400}
+  .pill.absent{background:color-mix(in oklab, var(--coral) 14%, transparent);color:#c93545}
+  .pill.leave{background:color-mix(in oklab, var(--indigo-2) 16%, transparent);color:var(--indigo)}
+  .pill .dt{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+  .approvals{display:flex;flex-direction:column;gap:10px}
+  .appr{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#fbfaf5;display:flex;justify-content:space-between;align-items:center}
+  .appr .who{font-weight:500;font-size:12px}
+  .appr .reason{font-size:11px;color:var(--ink-3)}
+  .appr .actions{display:flex;gap:6px}
+  .appr .actions button{padding:4px 10px;border-radius:6px;border:1px solid var(--line);background:#fff;font-size:11px;font-weight:500;color:var(--ink-2)}
+  .appr .actions button.ap{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+
+  /* ───────── Phone mockup ───────── */
+  .phone-stack{position:relative;display:flex;justify-content:center;align-items:center;width:100%;min-height:560px}
+  .phone{
+    width:280px;background:#0f0a22;border-radius:42px;padding:8px;position:relative;
+    box-shadow:var(--shadow-lg), 0 0 0 1px color-mix(in oklab, white 8%, transparent) inset;
+  }
+  .phone::before{
+    content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);
+    width:108px;height:26px;background:#0f0a22;border-radius:16px;z-index:2;
+  }
+  .phone .screen{
+    border-radius:36px;background:#fbfaf5;height:556px;overflow:hidden;position:relative;display:flex;flex-direction:column;
+  }
+  .phone .status{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 8px;font-size:11px;font-weight:600;color:var(--ink)}
+  .phone .status .right{display:flex;gap:5px;align-items:center}
+  .phone .status .right svg{width:13px;height:9px}
+  .phone .ph-content{padding:18px 18px;flex:1;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+  .phone .greet{display:flex;justify-content:space-between;align-items:center}
+  .phone .greet .hi{font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-0.01em}
+  .phone .greet .sub{font-size:11px;color:var(--ink-3);margin-top:1px}
+  .phone .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--indigo-2),var(--orange));display:grid;place-items:center;color:#fff;font-weight:600;font-size:12px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .clock-card{background:var(--indigo);color:#fff;border-radius:18px;padding:18px;position:relative;overflow:hidden}
+  .clock-card::after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:color-mix(in oklab, var(--orange) 70%, transparent);filter:blur(60px);right:-40px;top:-40px;opacity:.7}
+  .clock-card .lbl{font-size:10px;font-family:var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:color-mix(in oklab, white 70%, transparent);position:relative}
+  .clock-card .time{font-family:var(--font-display);font-weight:500;font-size:36px;letter-spacing:-0.02em;margin-top:6px;display:flex;align-items:baseline;gap:8px;position:relative}
+  .clock-card .time small{font-size:12px;font-family:var(--font-mono);color:color-mix(in oklab, white 70%, transparent);font-weight:400}
+  .clock-card .loc{font-size:11px;color:color-mix(in oklab, white 78%, transparent);display:flex;gap:6px;align-items:center;margin-top:10px;position:relative}
+  .clock-card .btn-c{margin-top:14px;background:var(--orange);color:#fff;padding:11px;border-radius:12px;font-weight:600;font-size:13px;text-align:center;position:relative;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid color-mix(in oklab, white 14%, transparent)}
+
+  .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .quick .q{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+  .quick .q .ic{width:24px;height:24px;border-radius:7px;background:color-mix(in oklab, var(--indigo) 8%, transparent);color:var(--indigo);display:grid;place-items:center}
+  .quick .q .t{font-size:10.5px;font-weight:600;color:var(--ink);line-height:1.2}
+  .quick .q .s{font-size:9.5px;color:var(--ink-3);font-family:var(--font-mono);letter-spacing:.02em}
+
+  .sched-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+  .sched-card .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .sched-card .hd b{font-family:var(--font-display);font-weight:500;font-size:13px}
+  .sched-card .hd span{font-size:10px;color:var(--ink-3);font-family:var(--font-mono);letter-spacing:.04em}
+  .sched-card .list{display:flex;flex-direction:column;gap:8px}
+  .sched-card .si{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:8px;border:1px solid var(--line-2);border-radius:10px;background:#fbfaf5}
+  .sched-card .si .ti{font-family:var(--font-mono);font-size:10px;color:var(--ink-3);text-align:center;line-height:1.2;letter-spacing:.02em}
+  .sched-card .si .ti b{display:block;color:var(--ink);font-family:var(--font-display);font-weight:500;font-size:13px;letter-spacing:-0.01em}
+  .sched-card .si .nm{font-size:11.5px;font-weight:500}
+  .sched-card .si .sub{font-size:10px;color:var(--ink-3);margin-top:1px}
+
+  /* Phone 2 (smaller, behind) */
+  .phone.behind{
+    position:absolute;left:6%;bottom:-10px;transform:rotate(-8deg) scale(.78);
+    transform-origin:bottom left;z-index:-1;opacity:.95;
+  }
+  .phone.front{transform:rotate(2deg)}
+
+  /* ───────── Misc ───────── */
+  .divider-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--ink-3);margin:0 8px;vertical-align:middle;opacity:.6}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;
+    background:color-mix(in oklab, var(--mint) 16%, transparent);color:#1f7a64;
+    font-size:11.5px;font-weight:600;letter-spacing:.01em;
+  }
+  .badge .ld{width:6px;height:6px;border-radius:50%;background:#2f8f7a;animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  /* ───────── Responsive ───────── */
+  @media (max-width: 1080px){
+    .hero-grid, .showcase-grid, .suite-grid, .quote, .sec-head{grid-template-columns:1fr;gap:36px}
+    .hero-vis{justify-self:center;max-width:520px}
+    .featgrid .item{grid-column:span 6}
+    .pillar{grid-column:span 12;min-height:auto}
+    .pillar.pillar-feature{grid-column:span 6}
+    .sector-strip{grid-template-columns:repeat(3,1fr)}
+    .sector:nth-child(3){border-right:0}
+    .nav-links{display:none}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+  }
+  @media (max-width: 640px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .featgrid .item{grid-column:span 12}
+    .sector-strip{grid-template-columns:repeat(2,1fr)}
+    .panel-row{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .suite-features{grid-template-columns:1fr}
+    .stat-grid{grid-template-columns:1fr 1fr}
+    .foot-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ NAV ════════ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="8"/>
+          <path d="M12 8v4l2.5 2"/>
+        </svg>
+      </span>
+      Klokin
+      <small>by Pocket Pixel</small>
+    </a>
+    <nav class="nav-links" aria-label="primary">
+      <a href="#product" class="active">Product</a>
+      <a href="#features">Features</a>
+      <a href="#mobile">Mobile Suite</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#contact" class="btn btn-primary">Request a demo
+        <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero" id="product">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-meta">
+          <span class="eyebrow">Klokin Software · 2025</span>
+          <span class="badge"><span class="ld"></span> Integrated Attendance &amp; Entry Ecosystem</span>
+        </div>
+        <h1 class="display">
+          Precision Attendance.<br/>
+          Smart Tracking.<br/>
+          <span class="underlay"><span class="accent" style="font-family: Ubuntu">Human Touch.</span></span>
+        </h1>
+        <p class="lead" style="margin-top:28px">
+          Klokin is a comprehensive solution designed to automate and streamline attendance tracking, reduce errors, and provide valuable insights into workforce management.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary btn-lg">Request a demo
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#mobile" class="btn btn-outline btn-lg">Explore Mobile Suite</a>
+        </div>
+        <div class="hero-note">
+          <span class="dot"></span>
+          <span>Available in Android &amp; iOS</span>
+          <span class="divider-dot"></span>
+          <span>Multi-branch, single login</span>
+          <span class="divider-dot"></span>
+          <span>Bilingual (BM / EN)</span>
+        </div>
+      </div>
+
+      <div class="hero-vis">
+        <div class="hero-blob"></div>
+        <div class="hero-vis-frame">
+          <!-- Dashboard mockup is reused here; clone via #dashboard-template -->
+          <div class="device-mac" style="width:100%;transform:rotate(.6deg)">
+            <div class="bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="url">app.klokin.io / dashboard</span>
+            </div>
+            <div class="dk" id="hero-dash">
+              <!-- Top nav -->
+              <div class="tnav">
+                <div class="tlogo">
+                  <span class="tl-ico" style="position:relative">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg>
+                  </span>
+                </div>
+                <div class="tlinks">
+                  <a class="on">Papan Pemuka Organisasi</a>
+                  <a>Papan Pemuka Peribadi</a>
+                  <a>Jadual <span class="chev">▾</span></a>
+                  <a>Laporan <span class="chev">▾</span></a>
+                  <a>Penugasan <span class="chev">▾</span></a>
+                  <a>Kelulusan <span class="chev">▾</span></a>
+                  <a>Pentadbir <span class="chev">▾</span></a>
+                </div>
+                <div class="tright">
+                  <span class="tbadge">Status bulan: Red</span>
+                  <span class="tglobe">🌐</span>
+                  <span class="tav">SA</span>
+                </div>
+              </div>
+              <!-- Filter bar -->
+              <div class="fbar">
+                <div class="fc"><div class="fl">📅 Tarikh</div><div class="fv">Today <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">🏢 Cawangan</div><div class="fv">All branches <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">🏗 Jabatan</div><div class="fv">All <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">👥 Kumpulan</div><div class="fv">All <span class="caret">▾</span></div></div>
+              </div>
+              <div class="dgradbar"></div>
+
+              <!-- Dashboard content -->
+              <div class="dcontent">
+                <!-- Top row: attendance status + check-in overview -->
+                <div class="drow2">
+                  <div class="dcard">
+                    <div class="dcard-bar blue"></div>
+                    <div class="dch"><b>📊 Status Kehadiran Keseluruhan</b></div>
+                    <div class="dbody">
+                      <div class="dstats">
+                        <div class="ds"><div class="dsl">Total Staff</div><div class="dsv">248</div></div>
+                        <div class="ds"><div class="dsl">Scheduled Staff</div><div class="dsv blue">214</div></div>
+                      </div>
+                      <div class="mini-bar">
+                        <div class="mb green" style="height:78%"></div>
+                        <div class="mb green" style="height:82%"></div>
+                        <div class="mb green" style="height:70%"></div>
+                        <div class="mb amber" style="height:22%"></div>
+                        <div class="mb red" style="height:14%"></div>
+                        <div class="mb gray" style="height:8%"></div>
+                        <div class="mb blue" style="height:6%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dcard">
+                    <div class="dcard-bar blue"></div>
+                    <div class="dch"><b>🚪 Gambaran Keseluruhan Daftar Masuk</b></div>
+                    <div class="dbody">
+                      <div class="donut-area">
+                        <div class="donut-ring">
+                          <svg viewBox="0 0 36 36">
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="#1e293b" stroke-width="3.5"/>
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="#00c0ef" stroke-width="3.5" stroke-dasharray="58 30" stroke-linecap="round"/>
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="#fd7e14" stroke-width="3.5" stroke-dasharray="30 58" stroke-dashoffset="-58" stroke-linecap="round"/>
+                          </svg>
+                          <div class="dr-center"><div class="drn">186</div><div class="drl">Checked In</div></div>
+                        </div>
+                        <div class="legend">
+                          <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;border-bottom:1px solid #334155;padding-bottom:4px;margin-bottom:2px">Check-in Methods</div>
+                          <div class="leg"><span class="ldot" style="background:#00c0ef;box-shadow:0 0 6px rgba(0,192,239,.5)"></span> Daftar Masuk Pejabat</div>
+                          <div class="leg"><span class="ldot" style="background:#fd7e14;box-shadow:0 0 6px rgba(253,126,20,.5)"></span> Daftar Masuk Aplikasi Mudah Alih</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom row: incidents + absent list -->
+                <div class="drow-half">
+                  <div class="dcard">
+                    <div class="dcard-bar red"></div>
+                    <div class="dch"><b>📋 Senarai Insiden</b><span class="dbtn">View All →</span></div>
+                    <div class="dbody" style="padding:0">
+                      <table class="dtable">
+                        <thead><tr><th>Nama</th><th>Cawangan</th><th>Jenis</th><th>Tindakan</th></tr></thead>
+                        <tbody>
+                          <tr><td>Ahmad Faizal</td><td>APM Besut</td><td><span class="tpill t-late">Lewat</span></td><td><button class="tap ap-y">Lulus</button> <button class="tap ap-n">Skip</button></td></tr>
+                          <tr><td>Siti Aminah</td><td>HQ</td><td><span class="tpill t-absent">Tidak Hadir</span></td><td><button class="tap ap-y">Lulus</button> <button class="tap ap-n">Skip</button></td></tr>
+                          <tr><td>Mohd Rizal</td><td>APM Langkawi</td><td><span class="tpill t-pending">Pending</span></td><td><button class="tap ap-y">Lulus</button> <button class="tap ap-n">Skip</button></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="dcard">
+                    <div class="dcard-bar amber"></div>
+                    <div class="dch"><b>🚫 Senarai Tidak Hadir</b></div>
+                    <div class="dbody" style="padding:0">
+                      <table class="dtable">
+                        <thead><tr><th>Nama</th><th>Cawangan</th><th>Jabatan</th></tr></thead>
+                        <tbody>
+                          <tr><td>Nur Aisyah</td><td>APM Jerantut</td><td>Operasi</td></tr>
+                          <tr><td>Hafiz Rahman</td><td>Serdang</td><td>Pentadbiran</td></tr>
+                          <tr><td>Farah Diyana</td><td>APM Bintulu</td><td>Logistik</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Activity chart -->
+                <div class="dcard">
+                  <div class="dcard-bar cyan"></div>
+                  <div class="dch"><b>📈 Aktiviti</b><span style="font-size:8px;color:#64748b">Data Aktiviti Daftar Masuk & Daftar Keluar</span></div>
+                  <div class="dbody">
+                    <div class="activity-chart">
+                      <div class="ac-bar"><div class="acb" style="height:8px;background:#3b82f6"></div><div class="acl">6</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:14px;background:#3b82f6"></div><div class="acl">7</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:52px;background:#3b82f6"></div><div class="acl">8</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:60px;background:#3b82f6"></div><div class="acl">9</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:20px;background:#3b82f6"></div><div class="acl">10</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:10px;background:#3b82f6"></div><div class="acl">11</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:6px;background:#3b82f6"></div><div class="acl">12</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:12px;background:#22c55e"></div><div class="acl">13</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:8px;background:#22c55e"></div><div class="acl">14</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:16px;background:#22c55e"></div><div class="acl">15</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:22px;background:#22c55e"></div><div class="acl">16</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:48px;background:#22c55e"></div><div class="acl">17</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:54px;background:#22c55e"></div><div class="acl">18</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:18px;background:#22c55e"></div><div class="acl">19</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PROOF STRIP ════════ -->
+<div class="proof">
+  <div class="wrap proof-inner">
+    <div class="proof-label">Trusted by<br/>Malaysian government agencies</div>
+    <div class="proof-logos">
+      <span class="logo"><image-slot id="logo-apm" placeholder="Drop APM logo" shape="rect" style="width:56px;height:56px;display:inline-block;vertical-align:middle;border-radius:4px;margin-right:8px"></image-slot>APM<br/><small style="font-size:10px;font-weight:400;color:var(--ink-3);letter-spacing:.02em">Angkatan Pertahanan Awam</small></span>
+      <span class="logo"><image-slot id="logo-kdn" placeholder="Drop KDN logo" shape="rect" style="width:56px;height:56px;display:inline-block;vertical-align:middle;border-radius:4px;margin-right:8px"></image-slot>KDN<br/><small style="font-size:10px;font-weight:400;color:var(--ink-3);letter-spacing:.02em">Kementerian Dalam Negeri</small></span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ PILLARS ════════ -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Why Klokin</span>
+        <h2 class="display" style="margin:18px 0 0">Built to support<br/>your unique workflows.</h2>
+      </div>
+      <div class="right lead">
+        Klokin's flexibility lies in its ability to accommodate various shift patterns with customizable rule sets, catering to diverse operational requirements. The system is designed for user convenience, allowing employees to personalise their reporting preferences.
+      </div>
+    </div>
+
+    <div class="pillars">
+      <article class="pillar">
+        <div>
+          <div class="ico" style="border-radius: 99px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-6 8-12a8 8 0 0 0-16 0c0 6 8 12 8 12z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <h3 class="display">Location-based sign-in</h3>
+          <p>Sign-ins can be pre-assigned or post-approved based on your organisation's policies, offering a secure, location-aware attendance system that adapts to your workflow and roles.</p>
+        </div>
+        <div class="vis">
+          <svg width="100%" height="100%" viewBox="0 0 420 120" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e6e2d8" stroke-width=".5"/>
+              </pattern>
+            </defs>
+            <rect width="420" height="120" fill="url(#grid)"/>
+            <circle cx="120" cy="62" r="34" fill="#44396b" fill-opacity=".08" stroke="#44396b" stroke-opacity=".35" stroke-dasharray="3,3"/>
+            <circle cx="120" cy="62" r="6" fill="#44396b"/>
+            <circle cx="120" cy="62" r="14" fill="none" stroke="#44396b" stroke-opacity=".4"/>
+            <circle cx="300" cy="44" r="22" fill="#f27200" fill-opacity=".1" stroke="#f27200" stroke-opacity=".5" stroke-dasharray="3,3"/>
+            <circle cx="300" cy="44" r="5" fill="#f27200"/>
+            <text x="150" y="60" font-family="Inter" font-size="9" fill="#44396b" font-weight="500">HQ · 3.139, 101.687</text>
+            <text x="320" y="42" font-family="Inter" font-size="9" fill="#f27200" font-weight="500">SITE B</text>
+          </svg>
+        </div>
+      </article>
+
+      <article class="pillar dark">
+        <div>
+          <div class="ico" style="border-radius: 99px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M3 7l9-4 9 4"/><path d="M12 11v8"/><path d="M8 13h8"/>
+            </svg>
+          </div>
+          <h3 class="display">Built for scalability</h3>
+          <p>To support future technological development, Klokin supports integrated check-in via selected &amp; compatible fingerprint and facial recognition devices.</p>
+        </div>
+        <div class="vis" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.7);background:rgba(255,255,255,.05)">
+          <svg width="100%" height="100%" viewBox="0 0 420 120">
+            <g stroke="rgba(255,255,255,.45)" stroke-width="1.2" fill="none">
+              <rect x="40" y="32" width="56" height="56" rx="6"/>
+              <circle cx="68" cy="60" r="14"/>
+              <path d="M58 60a10 10 0 0 1 20 0M62 64a6 6 0 0 1 12 0"/>
+              <rect x="180" y="32" width="56" height="56" rx="6"/>
+              <circle cx="208" cy="58" r="16"/>
+              <circle cx="208" cy="58" r="3" fill="rgba(255,255,255,.5)"/>
+              <rect x="320" y="32" width="56" height="56" rx="6"/>
+              <path d="M340 56h16M340 62h16M340 68h12"/>
+            </g>
+            <text x="38" y="106" font-family="Inter" font-size="9" fill="rgba(255,255,255,.6)">FINGERPRINT</text>
+            <text x="180" y="106" font-family="Inter" font-size="9" fill="rgba(255,255,255,.6)">FACE-ID</text>
+            <text x="320" y="106" font-family="Inter" font-size="9" fill="rgba(255,255,255,.6)">RFID / NFC</text>
+          </svg>
+        </div>
+      </article>
+
+      <article class="pillar pillar-feature">
+        <div>
+          <div class="ico ico-orange" style="border-radius: 99px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </div>
+          <h3 class="display">Smart dashboard</h3>
+          <p>A compact yet comprehensive overview of key information — keeping users informed and in control at a glance.</p>
+        </div>
+      </article>
+      <article class="pillar pillar-feature">
+        <div>
+          <div class="ico ico-mint" style="border-radius: 99px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="display">Personal info, on-the-go</h3>
+          <p>Team members can easily access schedules and task lists, and stay updated on pending actions; all from their mobile devices.</p>
+        </div>
+      </article>
+      <article class="pillar pillar-feature">
+        <div>
+          <div class="ico ico-coral" style="border-radius: 99px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <h3 class="display">Up to 3 shifts a day</h3>
+          <p>Support up to 3 shifts a day — perfect for flexible or varied work schedules.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ TIMELINE ════════ -->
+<section class="tl-section" id="timeline">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:40px">
+      <div>
+        <span class="eyebrow">Product Workflow</span>
+        <h2 class="display" style="margin:18px 0 0">How Klokin works<br/>for your team.</h2>
+      </div>
+      <div class="right lead">From clock-in to reporting — every step tracked, every shift covered.</div>
+    </div>
+
+    <div class="tl-track">
+      <div class="tl-rail">
+        <div class="tl-fill"></div>
+      </div>
+
+      <div class="tl-node" data-tl="0">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico ico-indigo" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="tl-body">
+            <h4>Staff onboarded</h4>
+            <p>Import your roster and assign branches, shifts and roles under a single organisation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="1">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico ico-orange" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <div class="tl-body">
+            <h4>Shifts &amp; schedules configured</h4>
+            <p>Support up to 3 shifts a day with customizable rule sets and public holidays baked in.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="2">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico ico-mint" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-6 8-12a8 8 0 0 0-16 0c0 6 8 12 8 12z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="tl-body">
+            <h4>Location-based clock-in</h4>
+            <p>Staff check in via web or mobile app — pre-assigned or post-approved based on your policies.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="3">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico ico-coral" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+          <div class="tl-body">
+            <h4>Incidents flagged</h4>
+            <p>Late arrivals, absences and offenses surface with colour-coded indicators for supervisors.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="4">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico ico-sky" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+          <div class="tl-body">
+            <h4>Approvals &amp; reasons</h4>
+            <p>Submit and approve absence reasons and documents in one organised, trackable system.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="5">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico ico-yellow" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+          <div class="tl-body">
+            <h4>Reports generated</h4>
+            <p>Comprehensive reporting for workflow efficiency, staff synchronisation and data-driven decisions.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ DASHBOARD SHOWCASE ════════ -->
+<section class="showcase">
+  <div class="wrap">
+    <div class="showcase-grid">
+      <div>
+        <span class="eyebrow">The Klokin Web Console</span>
+        <h2 class="display" style="margin:18px 0 16px">Single user access.<br/>All your roles.</h2>
+        <p class="lead">One login for all roles — easily access and manage multiple dashboards without switching accounts. View personal records, or for supervisors, team data — all in one glance.</p>
+        <ul class="checks">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><strong>Multi-branch setup.</strong> Manage unlimited branches under a single organisation — no limits, full control.</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><strong>Reason submission.</strong> Submit and approve absence and offense reasons and documents in one organised, trackable system.</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><strong>Colour-coded offense indicator.</strong> Repeat patterns surface visually so supervisors can act before issues compound.</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><strong>Comprehensive reporting.</strong> A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.</span>
+          </li>
+        </ul>
+        <div class="hero-cta" style="margin-top:32px">
+          <a href="#contact" class="btn btn-primary">Book a walkthrough
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#features" class="btn btn-ghost">See all features →</a>
+        </div>
+      </div>
+
+      <div class="device-mac" style="transform:rotate(-.4deg)">
+        <div class="bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">app.klokin.io / papan-pemuka-peribadi</span>
+        </div>
+        <div class="dk">
+              <!-- Top nav -->
+              <div class="tnav">
+                <div class="tlogo">
+                  <span class="tl-ico" style="position:relative">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg>
+                  </span>
+                </div>
+                <div class="tlinks">
+                  <a>Papan Pemuka Organisasi</a>
+                  <a class="on">Papan Pemuka Peribadi</a>
+                  <a>Jadual <span class="chev">▾</span></a>
+                  <a>Laporan <span class="chev">▾</span></a>
+                  <a>Penugasan <span class="chev">▾</span></a>
+                  <a>Kelulusan <span class="chev">▾</span></a>
+                  <a>Pentadbir <span class="chev">▾</span></a>
+                </div>
+                <div class="tright">
+                  <span class="tbadge" style="background:#16a34a">Status bulan: Green</span>
+                  <span class="tglobe">🌐</span>
+                  <span class="tav">NF</span>
+                </div>
+              </div>
+
+              <!-- Filter bar -->
+              <div class="fbar">
+                <div class="fc"><div class="fl">📅 Tarikh</div><div class="fv">Minggu ini <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">🏢 Cawangan</div><div class="fv">HQ <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">🏗 Jabatan</div><div class="fv">Operasi <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">👥 Kumpulan</div><div class="fv">All <span class="caret">▾</span></div></div>
+              </div>
+              <div class="dgradbar"></div>
+
+              <!-- Personal dashboard content -->
+              <div class="dcontent">
+                <div class="drow2">
+                  <div class="dcard">
+                    <div class="dcard-bar blue"></div>
+                    <div class="dch"><b>📊 Status Kehadiran Peribadi</b></div>
+                    <div class="dbody">
+                      <div class="dstats">
+                        <div class="ds"><div class="dsl">Hadir</div><div class="dsv" style="color:#22c55e">19</div></div>
+                        <div class="ds"><div class="dsl">Tidak Hadir</div><div class="dsv" style="color:#ef4444">1</div></div>
+                      </div>
+                      <div class="mini-bar">
+                        <div class="mb green" style="height:90%"></div>
+                        <div class="mb green" style="height:95%"></div>
+                        <div class="mb green" style="height:88%"></div>
+                        <div class="mb green" style="height:92%"></div>
+                        <div class="mb red" style="height:10%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dcard">
+                    <div class="dcard-bar blue"></div>
+                    <div class="dch"><b>🚪 Rekod Daftar Masuk</b></div>
+                    <div class="dbody" style="padding:0">
+                      <table class="dtable">
+                        <thead><tr><th>Tarikh</th><th>Masuk</th><th>Keluar</th><th>Status</th></tr></thead>
+                        <tbody>
+                          <tr><td>20 Mei</td><td>08:47</td><td>17:32</td><td><span class="tpill t-ok">Hadir</span></td></tr>
+                          <tr><td>19 Mei</td><td>08:55</td><td>17:28</td><td><span class="tpill t-ok">Hadir</span></td></tr>
+                          <tr><td>18 Mei</td><td>09:12</td><td>17:45</td><td><span class="tpill t-late">Lewat</span></td></tr>
+                          <tr><td>17 Mei</td><td>—</td><td>—</td><td><span class="tpill t-absent">Tidak Hadir</span></td></tr>
+                          <tr><td>16 Mei</td><td>08:30</td><td>17:15</td><td><span class="tpill t-ok">Hadir</span></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="drow-half">
+                  <div class="dcard">
+                    <div class="dcard-bar cyan"></div>
+                    <div class="dch"><b>📅 Jadual Syif</b><span class="dbtn">View All →</span></div>
+                    <div class="dbody" style="padding:0">
+                      <table class="dtable">
+                        <thead><tr><th>Hari</th><th>Syif</th><th>Masa</th></tr></thead>
+                        <tbody>
+                          <tr><td>Isnin</td><td>Pagi</td><td>08:00 – 17:00</td></tr>
+                          <tr><td>Selasa</td><td>Pagi</td><td>08:00 – 17:00</td></tr>
+                          <tr><td>Rabu</td><td>Petang</td><td>14:00 – 22:00</td></tr>
+                          <tr><td>Khamis</td><td>Pagi</td><td>08:00 – 17:00</td></tr>
+                          <tr><td>Jumaat</td><td>Pagi</td><td>08:00 – 17:00</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="dcard">
+                    <div class="dcard-bar amber"></div>
+                    <div class="dch"><b>📋 Insiden Saya</b></div>
+                    <div class="dbody">
+                      <div class="empty-state">
+                        <div class="es-ico">✓</div>
+                        <div class="es-txt">Tiada insiden pending.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div></section>
+
+<!-- ════════ MOBILE SUITE ════════ -->
+<section class="suite" id="mobile">
+  <div class="wrap">
+    <div class="suite-grid">
+      <div>
+        <span class="eyebrow suite-eyebrow">Klokin Mobile Suite™</span>
+        <h2 class="display" style="margin:18px 0 18px">From Desk to Field —<br/>Always in Sync.</h2>
+        <p class="lead">Klokin Mobile Suite™ enables team members to perform secure, location-based check-ins directly from their mobile devices, supporting flexible and remote work environments. Each check-in is automatically synchronised with the web platform, allowing supervisors and administrators to monitor attendance in real time. This seamless integration ensures timely and accurate attendance tracking, improves oversight, and streamlines reporting for operational efficiency.</p>
+
+        <div class="suite-features">
+          <div class="suite-feat">
+            <div class="lbl"><span class="num">01 ·</span> Supports Pre-set &amp; Post Approval</div>
+            <p>Allows sign-ins to be approved according to assignments.</p>
+          </div>
+          <div class="suite-feat">
+            <div class="lbl"><span class="num">02 ·</span> On-the-go Schedule</div>
+            <p>Monitor and manage tasks and assignments from anywhere.</p>
+          </div>
+          <div class="suite-feat">
+            <div class="lbl"><span class="num">03 ·</span> Comprehensive Dashboard</div>
+            <p>View records, summaries, and key insights.</p>
+          </div>
+          <div class="suite-feat">
+            <div class="lbl"><span class="num">04 ·</span> Location-based Sign-in</div>
+            <p>Staff check in based on assigned locations.</p>
+          </div>
+        </div>
+
+        <div class="suite-store">
+          <a href="#" class="store-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.02-2.85 2.32-4.21 2.43-4.28-1.32-1.93-3.39-2.2-4.13-2.23-1.76-.18-3.43 1.04-4.32 1.04-.89 0-2.27-1.02-3.74-.99-1.93.03-3.71 1.12-4.7 2.85-2 3.46-.51 8.59 1.44 11.4.95 1.37 2.09 2.92 3.56 2.86 1.43-.06 1.97-.93 3.7-.93 1.73 0 2.22.93 3.74.9 1.55-.03 2.53-1.4 3.48-2.78 1.1-1.6 1.55-3.15 1.57-3.23-.04-.02-3.01-1.16-3.03-4.61zM14.3 4.27c.78-.95 1.31-2.27 1.17-3.59-1.13.05-2.5.76-3.31 1.7-.72.84-1.36 2.18-1.19 3.47 1.27.1 2.55-.64 3.33-1.58z"/></svg>
+            <div><div class="small">Download on the</div><div class="big">App Store</div></div>
+          </a>
+          <a href="#" class="store-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.61 2.27a1.6 1.6 0 0 0-.61 1.27v16.91c0 .49.22.93.59 1.23l9.43-9.69L3.61 2.27zm10.4 10.43 2.49 2.56-12.06 6.83c-.18.1-.39.13-.6.08l10.17-9.47zm0-1.42L3.84 1.7a.97.97 0 0 1 .6.1l12.06 6.83-2.49 2.65zm5.69-1.41-2.94 1.66-2.72 2.83 2.72 2.79 2.95 1.67c.78-.44 1.27-1.18 1.27-2.18v-4.59c0-1-.49-1.74-1.28-2.18z"/></svg>
+            <div><div class="small">Get it on</div><div class="big">Google Play</div></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="phone-stack">
+        <!-- Behind phone (schedule) -->
+        <div class="phone behind">
+          <div class="screen">
+            <div class="status"><span>9:41</span><div class="right"><span>● ● ●</span><svg viewBox="0 0 13 9" fill="currentColor"><rect width="11" height="6" x="0" y="1" rx="1.5" fill="none" stroke="currentColor"/><rect width="7" height="3" x="1" y="2.5" rx=".5"/></svg></div></div>
+            <div class="ph-content">
+              <div class="greet">
+                <div><div class="hi">My week</div><div class="sub">19 – 25 May · 5 shifts</div></div>
+                <div class="av">AZ</div>
+              </div>
+              <div class="sched-card">
+                <div class="hd"><b>Today</b><span>TUE 19 MAY</span></div>
+                <div class="list">
+                  <div class="si"><div class="ti"><b>09:00</b>→ 13:00</div><div><div class="nm">Morning shift</div><div class="sub">KL Sentral HQ · Floor 12</div></div><span class="pill ok" style="font-size:9px"><span class="dt"></span>On</span></div>
+                  <div class="si"><div class="ti"><b>14:00</b>→ 18:00</div><div><div class="nm">Afternoon shift</div><div class="sub">KL Sentral HQ · Floor 12</div></div><span class="pill leave" style="font-size:9px"><span class="dt"></span>Set</span></div>
+                </div>
+              </div>
+              <div class="sched-card">
+                <div class="hd"><b>Tomorrow</b><span>WED 20</span></div>
+                <div class="list">
+                  <div class="si"><div class="ti"><b>10:00</b>→ 14:00</div><div><div class="nm">Site visit</div><div class="sub">Bandar Utama · Outlet B</div></div><span class="pill late" style="font-size:9px"><span class="dt"></span>Pre</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Front phone (clock-in) -->
+        <div class="phone front">
+          <div class="screen">
+            <div class="status"><span>9:41</span><div class="right"><span>● ● ●</span><svg viewBox="0 0 13 9" fill="currentColor"><rect width="11" height="6" x="0" y="1" rx="1.5" fill="none" stroke="currentColor"/><rect width="7" height="3" x="1" y="2.5" rx=".5"/></svg></div></div>
+            <div class="ph-content">
+              <div class="greet">
+                <div><div class="hi">Hi Aisyah 👋</div><div class="sub">Tuesday · 19 May 2026</div></div>
+                <div class="av">AZ</div>
+              </div>
+
+              <div class="clock-card">
+                <div class="lbl">Clock in · morning shift</div>
+                <div class="time">09:14 <small>:32 AM</small></div>
+                <div class="loc">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-6 8-12a8 8 0 0 0-16 0c0 6 8 12 8 12z"/><circle cx="12" cy="10" r="3"/></svg>
+                  KL Sentral HQ · within 40m of site
+                </div>
+                <div class="btn-c">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  Tap to clock in
+                </div>
+              </div>
+
+              <div class="quick">
+                <div class="q"><div class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="t">Schedule</div><div class="s">5 shifts</div></div>
+                <div class="q"><div class="ic" style="background:color-mix(in oklab, var(--orange) 14%, transparent);color:#b95400"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div class="t">Reasons</div><div class="s">1 draft</div></div>
+                <div class="q"><div class="ic" style="background:color-mix(in oklab, var(--mint) 22%, transparent);color:#2f8f7a"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="t">Records</div><div class="s">May</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FEATURE GRID ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Key features</span>
+        <h2 class="display" style="margin:18px 0 0">Everything an attendance<br/>system should be.</h2>
+      </div>
+      <div class="right lead">A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting across sectors.</div>
+    </div>
+
+    <div class="featgrid">
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h4>Single user access</h4>
+        <p>One login for all roles — easily access and manage multiple dashboards without switching accounts.</p>
+        <span class="tag">Access · 01</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13h6M9 17h4"/></svg></div>
+        <h4>Reason submission</h4>
+        <p>Submit and approve absence and offense reasons and documents in one organised, trackable system.</p>
+        <span class="tag">Workflow · 02</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+        <h4>Dashboard for unique roles</h4>
+        <p>View personal records, or for supervisors, team data — all in one glance.</p>
+        <span class="tag">Insight · 03</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 1 0 10-10"/><path d="M12 2v10l5 3"/></svg></div>
+        <h4>Multiple shifts</h4>
+        <p>Support up to 3 shifts a day — perfect for flexible or varied work schedules.</p>
+        <span class="tag">Scheduling · 04</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+        <h4>Multi-branch setup</h4>
+        <p>Manage unlimited branches under a single organisation — no limits, full control.</p>
+        <span class="tag">Organisation · 05</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+        <h4>Mobile app*</h4>
+        <p>Check in remotely with accurate, real-time syncing to the web app.</p>
+        <span class="tag">Mobile Suite · 06</span>
+      </div>
+
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+        <h4>Colour-coded offense indicator</h4>
+        <p>Colour-coded offense indicator for offenses so supervisors can spot patterns.</p>
+        <span class="tag">Compliance · 07</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+        <h4>Incidents approval flow</h4>
+        <p>Route incidents through configurable approval chains with full audit trails.</p>
+        <span class="tag">Workflow · 08</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <h4>Public holidays</h4>
+        <p>Bake regional public holidays into shift rules — no manual exceptions required.</p>
+        <span class="tag">Setup · 09</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
+        <h4>Pop-up notifications</h4>
+        <p>Timely alerts for clock-ins, approvals and exceptions — pushed to web and mobile.</p>
+        <span class="tag">Comms · 10</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12 15.3 15.3 0 0 1 12 2z"/></svg></div>
+        <h4>Bilingual (BM / EN)</h4>
+        <p>Switch the entire interface between Bahasa Malaysia and English in one click.</p>
+        <span class="tag">Localisation · 11</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h4>Comprehensive reporting</h4>
+        <p>A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.</p>
+        <span class="tag">Insight · 12</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-neutral"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></div>
+        <h4>Shifts &amp; scheduling</h4>
+        <p>Multiple shifts settings to support up to 3 shifts a day with customizable rule sets.</p>
+        <span class="tag">Scheduling · 13</span>
+      </div>
+    </div>
+    <div class="mono" style="margin-top:24px;color:var(--ink-3)">* Available with subscription of Klokin Mobile Suite. ** Compatibility with devices apply.</div>
+  </div>
+</section>
+
+<!-- ════════ SECTORS ════════ -->
+<section class="sectors" id="sectors">
+  <div class="wrap" style="padding-bottom:48px">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Built for many sectors</span>
+        <h2 class="display" style="margin:18px 0 0">Wherever people<br/>need to clock in.</h2>
+      </div>
+      <div class="right lead">A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.</div>
+    </div>
+  </div>
+  <div class="sector-strip">
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+      <div class="name">Retail &amp; F&amp;B</div>
+      <div class="desc">Multi-outlet rosters with peak-hour shift splits</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M5 9l-3 3 3 3M19 9l3 3-3 3M12 22v-6M5 16h14"/></svg></div>
+      <div class="name">Manufacturing</div>
+      <div class="desc">3-shift rotations and overtime ledgers</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14a7 7 0 1 0-14 0M19 14l-2 6H7l-2-6M9 22h6"/></svg></div>
+      <div class="name">Clinics &amp; care</div>
+      <div class="desc">Locum schedules &amp; on-call patterns</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+      <div class="name">Schools</div>
+      <div class="desc">Staff &amp; visiting teachers in one roster</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <div class="name">Logistics</div>
+      <div class="desc">Field check-ins per route &amp; stop</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <div class="name">Corporate offices</div>
+      <div class="desc">Hybrid &amp; flexi-time across departments</div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ════════ CTA ════════ -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <span class="eyebrow">Be Efficient</span>
+    <h2 class="display" style="margin-top:18px">Be Efficient.</h2>
+    <p class="lead">Klokin is also built with technological sustainability in mind; with features that can be upgraded according to user needs and resources optimisation goals.</p>
+    <div class="hero-cta">
+      <a href="mailto:hello@pocketpixel.xyz" class="btn btn-accent btn-lg">
+        hello@pocketpixel.xyz
+        <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a href="tel:+60123246453" class="btn btn-outline btn-lg">+60 12-324 6453</a>
+    </div>
+    <div class="mono" style="margin-top:20px">For enquiries, please contact :</div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="brand" style="margin-bottom:14px;display:inline-flex">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg>
+          </span>
+          Klokin
+        </a>
+        <p style="max-width:32ch;margin:0;color:var(--ink-2)">Integrated Attendance &amp; Entry Ecosystem. Be efficient.</p>
+        <div class="mono" style="margin-top:18px">Klokin Software · 2025</div>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#features">Web console</a></li>
+          <li><a href="#mobile">Mobile Suite</a></li>
+          <li><a href="#features">Integrations</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">Pocket Pixel</a></li>
+          <li><a href="#contact">Contact sales</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:hello@pocketpixel.xyz">hello@pocketpixel.xyz</a></li>
+          <li><a href="tel:+60123246453">+60 12-324 6453</a></li>
+          <li><a href="tel:+60176557920">+60 17-655 7920</a></li>
+          <li>Kuala Lumpur, MY</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>POCKET PIXEL SDN BHD · ALL RIGHTS RESERVED</span>
+      <span>BE EFFICIENT · 2025</span>
+    </div>
+  </div>
+</footer>
+
+<!-- React + Babel + Tweaks panel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<div id="tweaks-root"></div>
+
+<script type="text/babel">
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "palette": [
+      "#44396b",
+      "#f27200",
+      "#f7f4ec"
+    ],
+    "accent": "#f27200",
+    "ground": "cool",
+    "density": "regular",
+    "heroLayout": "split",
+    "showProof": true
+  }/*EDITMODE-END*/;
+
+  const PALETTES = [
+    ["#44396b", "#f27200", "#f7f4ec"], // brochure primary (default)
+    ["#2d2548", "#f04a5a", "#f6f3ec"], // deep indigo + coral
+    ["#1f3a5a", "#f27200", "#f5f2ea"], // navy + orange
+    ["#3a2e5c", "#f6e042", "#fcf9ee"], // plum + yellow
+    ["#1a4f44", "#f27200", "#f4f1e7"], // forest + orange
+  ];
+  const GROUNDS = {
+    warm:    { paper: "#f7f4ec", paper2: "#efeadd", line: "#e6e2d8", line2: "#efece4", ink: "#1a1530", ink2: "#4a4565", ink3: "#8a85a0" },
+    cool:    { paper: "#f3f4f8", paper2: "#e8eaf0", line: "#dee0e8", line2: "#e6e8ee", ink: "#161425", ink2: "#42425a", ink3: "#7d7d92" },
+    paper:   { paper: "#faf7ef", paper2: "#f1ecdd", line: "#e8e2cf", line2: "#efeadb", ink: "#211c33", ink2: "#534c66", ink3: "#8c869c" },
+  };
+  const DENSITIES = {
+    compact:  { padBig: 80,  padSmall: 22, gapPillar: 16 },
+    regular:  { padBig: 120, padSmall: 32, gapPillar: 20 },
+    comfy:    { padBig: 160, padSmall: 44, gapPillar: 24 },
+  };
+
+  function App() {
+    const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+    const root = document.documentElement;
+
+    React.useEffect(() => {
+      const [indigo, accent, paper] = t.palette;
+      root.style.setProperty('--indigo', indigo);
+      root.style.setProperty('--orange', accent);
+      // Auto-derive deep & light variants
+      root.style.setProperty('--indigo-3', mixHex(indigo, '#000', 0.35));
+      root.style.setProperty('--indigo-2', mixHex(indigo, '#fff', 0.22));
+
+      const g = GROUNDS[t.ground] || GROUNDS.warm;
+      Object.entries({
+        '--paper': g.paper, '--paper-2': g.paper2,
+        '--line': g.line, '--line-2': g.line2,
+        '--ink': g.ink, '--ink-2': g.ink2, '--ink-3': g.ink3,
+      }).forEach(([k, v]) => root.style.setProperty(k, v));
+
+      const d = DENSITIES[t.density] || DENSITIES.regular;
+      document.querySelectorAll('section').forEach(s => {
+        if (!s.classList.contains('proof') && !s.classList.contains('sectors')) {
+          s.style.paddingTop = `${d.padBig}px`;
+          s.style.paddingBottom = `${d.padBig}px`;
+        }
+      });
+
+      document.querySelector('.proof').style.display = t.showProof ? '' : 'none';
+    });
+
+    return (
+      <TweaksPanel>
+        <TweakSection label="Brand palette" />
+        <TweakColor label="Theme" value={t.palette} options={PALETTES} onChange={(v)=>setTweak('palette', v)} />
+        <TweakSection label="Ground" />
+        <TweakRadio label="Tone" value={t.ground} options={['warm','cool','paper']} onChange={(v)=>setTweak('ground', v)} />
+        <TweakSection label="Layout" />
+        <TweakSelect label="Density" value={t.density} options={['compact','regular','comfy']} onChange={(v)=>setTweak('density', v)} />
+        <TweakToggle label="Show logo strip" value={t.showProof} onChange={(v)=>setTweak('showProof', v)} />
+      </TweaksPanel>
+    );
+  }
+
+  function mixHex(a, b, t) {
+    const ah = a.replace('#','').match(/.{2}/g).map(x=>parseInt(x,16));
+    const bh = b.replace('#','').match(/.{2}/g).map(x=>parseInt(x,16));
+    return '#' + ah.map((v,i)=>Math.round(v*(1-t)+bh[i]*t).toString(16).padStart(2,'0')).join('');
+  }
+
+  // Wait for tweaks-panel.jsx to attach globals
+  function mount() {
+    if (typeof TweaksPanel === 'undefined' || typeof useTweaks === 'undefined') {
+      setTimeout(mount, 30); return;
+    }
+    ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App />);
+  }
+  mount();
+</script>
+
+<script>
+// Scroll-spy + anchor links with Lenis
+(function(){
+  // Wire anchor links to Lenis
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e){
+      const id = this.getAttribute('href').replace('#','');
+      const target = document.getElementById(id);
+      if(target){ e.preventDefault(); lenis.scrollTo(target, {offset: -80}); }
+    });
+  });
+
+  const links = document.querySelectorAll('.nav-links a');
+  const sections = [];
+  links.forEach(a => {
+    const id = a.getAttribute('href').replace('#','');
+    const el = document.getElementById(id);
+    if(el) sections.push({el, a});
+  });
+  function update(){
+    let current = sections[0];
+    const off = window.scrollY + 120;
+    for(const s of sections){
+      if(s.el.offsetTop <= off) current = s;
+    }
+    links.forEach(a => a.classList.remove('active'));
+    if(current) current.a.classList.add('active');
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+
+<script>
+// GSAP scroll-triggered reveals — subtle & professional
+document.addEventListener('DOMContentLoaded', function(){
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Sync ScrollTrigger with Lenis
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+
+  // Defaults
+  const revealUp = { y: 32, opacity: 0 };
+  const revealTo = { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' };
+
+  // Section headings
+  gsap.utils.toArray('.sec-head, .cta .eyebrow, .cta .display, .cta .lead, .cta .hero-cta').forEach(function(el){
+    gsap.from(el, Object.assign({}, revealUp, {
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+      duration: 0.8, ease: 'power2.out'
+    }));
+  });
+
+  // Pillar cards — staggered
+  gsap.utils.toArray('.pillars').forEach(function(grid){
+    gsap.from(grid.children, Object.assign({}, revealUp, {
+      scrollTrigger: { trigger: grid, start: 'top 85%' },
+      duration: 0.7, ease: 'power2.out', stagger: 0.1
+    }));
+  });
+
+  // Feature grid items — scroll-activated train-line style
+  (function(){
+    var items = document.querySelectorAll('.featgrid .item');
+    if(!items.length) return;
+    items.forEach(function(item, i){
+      ScrollTrigger.create({
+        trigger: item,
+        start: 'top 80%',
+        end: 'top 40%',
+        onEnter: function(){
+          // Mark all previous items as past, current as active
+          items.forEach(function(el, j){
+            if(j < i){ el.classList.add('is-feat-past'); el.classList.remove('is-feat-active'); }
+            else if(j === i){ el.classList.add('is-feat-active'); el.classList.remove('is-feat-past'); }
+          });
+        },
+        onEnterBack: function(){
+          items.forEach(function(el, j){
+            if(j < i){ el.classList.add('is-feat-past'); el.classList.remove('is-feat-active'); }
+            else if(j === i){ el.classList.add('is-feat-active'); el.classList.remove('is-feat-past'); }
+            else { el.classList.remove('is-feat-active', 'is-feat-past'); }
+          });
+        }
+      });
+    });
+  })();
+
+  // Dashboard mockups — slight scale + fade
+  gsap.utils.toArray('.device-mac').forEach(function(el){
+    gsap.from(el, {
+      y: 40, opacity: 0, scale: 0.97,
+      scrollTrigger: { trigger: el, start: 'top 85%' },
+      duration: 1, ease: 'power2.out'
+    });
+  });
+
+  // Showcase checks list
+  gsap.utils.toArray('.checks li').forEach(function(el, i){
+    gsap.from(el, Object.assign({}, revealUp, {
+      scrollTrigger: { trigger: el, start: 'top 90%' },
+      duration: 0.6, ease: 'power2.out', delay: i * 0.08
+    }));
+  });
+
+  // Sector strip
+  gsap.utils.toArray('.sector').forEach(function(el, i){
+    gsap.from(el, Object.assign({}, revealUp, {
+      scrollTrigger: { trigger: el, start: 'top 90%' },
+      duration: 0.5, ease: 'power2.out', delay: i * 0.06
+    }));
+  });
+
+  // Phone mockups in mobile suite
+  gsap.utils.toArray('.phone').forEach(function(el){
+    gsap.from(el, {
+      y: 50, opacity: 0, scale: 0.95,
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      duration: 1, ease: 'power2.out'
+    });
+  });
+
+  // Suite features
+  gsap.utils.toArray('.suite-feat').forEach(function(el, i){
+    gsap.from(el, Object.assign({}, revealUp, {
+      scrollTrigger: { trigger: el, start: 'top 90%' },
+      duration: 0.6, ease: 'power2.out', delay: i * 0.08
+    }));
+  });
+
+  // Proof strip
+  gsap.from('.proof-inner', {
+    y: 20, opacity: 0,
+    scrollTrigger: { trigger: '.proof', start: 'top 90%' },
+    duration: 0.7, ease: 'power2.out'
+  });
+
+  // Footer
+  gsap.from('.foot-grid', {
+    y: 24, opacity: 0,
+    scrollTrigger: { trigger: 'footer', start: 'top 90%' },
+    duration: 0.7, ease: 'power2.out'
+  });
+
+  // Timeline zig-zag rail animation
+  (function(){
+    var track = document.querySelector('.tl-track');
+    var rail = document.querySelector('.tl-rail');
+    var nodes = document.querySelectorAll('.tl-node');
+    if(!track || !rail || !nodes.length) return;
+
+    var state = null;
+
+    function build(){
+      var trackRect = track.getBoundingClientRect();
+      var trackH = trackRect.height || 1;
+      var isMobile = window.innerWidth <= 640;
+      var railW = isMobile ? 60 : 84;
+      var mainX = isMobile ? 44 : 60;
+      var amp = isMobile ? 16 : 24;
+
+      var ys = Array.prototype.map.call(nodes, function(node){
+        var ico = node.querySelector('.tl-ico') || node.querySelector('.tl-card') || node;
+        var r = ico.getBoundingClientRect();
+        return (r.top - trackRect.top) + r.height / 2;
+      });
+
+      // Metro-map path: vertices at each card icon row, alternating between the
+      // right rail column (near cards) and a leftward bulge. Long diagonals
+      // connect them with sharp miter corners.
+      var rightX = mainX;
+      var leftX = mainX - (isMobile ? 30 : 50);
+      var vertices = ys.map(function(y, i){
+        return { x: (i % 2 === 0 ? leftX : rightX), y: y };
+      });
+
+      var topPad = 12;
+      var d = 'M ' + vertices[0].x.toFixed(2) + ' ' + topPad.toFixed(2);
+      vertices.forEach(function(v){
+        d += ' L ' + v.x.toFixed(2) + ' ' + v.y.toFixed(2);
+      });
+      var last = vertices[vertices.length - 1];
+      d += ' L ' + last.x.toFixed(2) + ' ' + (trackH - topPad).toFixed(2);
+
+      var markers = '';
+
+      rail.innerHTML = ''
+        + '<svg class="tl-rail-svg" width="' + railW + '" height="' + trackH + '" viewBox="0 0 ' + railW + ' ' + trackH + '" preserveAspectRatio="none" aria-hidden="true">'
+        +   '<path class="tl-rail-fill" d="' + d + '"></path>'
+        +   '<path class="tl-rail-progress" d="' + d + '"></path>'
+        +   '<circle class="tl-rail-train-halo" cx="' + mainX + '" cy="0" r="10"></circle>'
+        +   '<circle class="tl-rail-train" cx="' + mainX + '" cy="0" r="6"></circle>'
+        + '</svg>';
+
+      var path = rail.querySelector('.tl-rail-progress');
+      var len = path.getTotalLength();
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = len;
+
+      state = {
+        path: path,
+        len: len,
+        train: rail.querySelector('.tl-rail-train'),
+        halo: rail.querySelector('.tl-rail-train-halo'),
+        ys: ys,
+        trackH: trackH
+      };
+    }
+
+    function apply(pct){
+      if(!state) return;
+      state.path.style.strokeDashoffset = state.len * (1 - pct);
+
+      // Move the train dot along the path
+      var clamped = Math.max(0, Math.min(1, pct));
+      var pt = state.path.getPointAtLength(state.len * clamped);
+      if(state.train){
+        state.train.setAttribute('cx', pt.x.toFixed(2));
+        state.train.setAttribute('cy', pt.y.toFixed(2));
+      }
+      if(state.halo){
+        state.halo.setAttribute('cx', pt.x.toFixed(2));
+        state.halo.setAttribute('cy', pt.y.toFixed(2));
+      }
+
+      nodes.forEach(function(node, i){
+        var threshold = state.ys[i] / state.trackH;
+        var cls = '';
+        if(pct >= threshold + 0.04) cls = 'is-past';
+        else if(pct >= threshold - 0.06) cls = 'is-active';
+
+        node.classList.remove('is-active','is-past');
+        if(cls) node.classList.add(cls);
+      });
+    }
+
+    build();
+
+    var st = ScrollTrigger.create({
+      trigger: track,
+      start: 'top 70%',
+      end: 'bottom 55%',
+      scrub: 0.3,
+      onUpdate: function(self){ apply(self.progress); }
+    });
+
+    var rebuildTimer;
+    window.addEventListener('resize', function(){
+      clearTimeout(rebuildTimer);
+      rebuildTimer = setTimeout(function(){
+        build();
+        apply(st.progress);
+        ScrollTrigger.refresh();
+      }, 120);
+    });
+  })();
+
+  // Hero — no scroll trigger, just entrance on load
+  gsap.from('.hero h1', { y: 30, opacity: 0, duration: 0.9, ease: 'power2.out', delay: 0.1 });
+  gsap.from('.hero .lead', { y: 24, opacity: 0, duration: 0.8, ease: 'power2.out', delay: 0.25 });
+  gsap.from('.hero-cta', { y: 20, opacity: 0, duration: 0.7, ease: 'power2.out', delay: 0.4 });
+  gsap.from('.hero-note', { y: 16, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.55 });
+  gsap.from('.hero-meta', { y: 16, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.05 });
+  gsap.from('.hero-vis', { y: 40, opacity: 0, scale: 0.97, duration: 1.1, ease: 'power2.out', delay: 0.3 });
+});
+</script>
+
+</body>
+</html>

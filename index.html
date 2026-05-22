@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Klokin — Precision Attendance. Smart Tracking. Human Touch.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  // Init Lenis smooth scroll immediately
+  const lenis = new Lenis({
+    duration: 1.4,
+    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    touchMultiplier: 2,
+  });
+  // Lenis raf driven by GSAP ticker (see bottom script); standalone raf as fallback
+  function _raf(time){ lenis.raf(time); requestAnimationFrame(_raf); }
+  requestAnimationFrame(_raf);
+</script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="image-slot.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ════════ NAV ════════ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="8"/>
+          <path d="M12 8v4l2.5 2"/>
+        </svg>
+      </span>
+      Klokin
+      <small>by Pocket Pixel</small>
+    </a>
+    <nav class="nav-links" aria-label="primary">
+      <a href="#product" class="active">Product</a>
+      <a href="#features">Features</a>
+      <a href="#mobile">Mobile Suite</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#contact" class="btn btn-primary">Request a demo
+        <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero" id="product">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-meta">
+          <span class="eyebrow">Klokin Software · 2025</span>
+          <span class="badge"><span class="ld"></span> Integrated Attendance &amp; Entry Ecosystem</span>
+        </div>
+        <h1 class="display">
+          Precision Attendance.<br/>
+          Smart Tracking.<br/>
+          <span class="underlay"><span class="accent" style="font-family: Ubuntu">Human Touch.</span></span>
+        </h1>
+        <p class="lead" style="margin-top:28px">
+          Klokin is a comprehensive solution designed to automate and streamline attendance tracking, reduce errors, and provide valuable insights into workforce management.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary btn-lg">Request a demo
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#mobile" class="btn btn-outline btn-lg">Explore Mobile Suite</a>
+        </div>
+        <div class="hero-note">
+          <span class="dot"></span>
+          <span>Available in Android &amp; iOS</span>
+          <span class="divider-dot"></span>
+          <span>Multi-branch, single login</span>
+          <span class="divider-dot"></span>
+          <span>Bilingual (BM / EN)</span>
+        </div>
+      </div>
+
+      <div class="hero-vis">
+        <div class="hero-blob"></div>
+        <div class="hero-vis-frame">
+          <!-- Dashboard mockup is reused here; clone via #dashboard-template -->
+          <div class="device-mac" style="width:100%;transform:rotate(.6deg)">
+            <div class="bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="url">app.klokin.io / dashboard</span>
+            </div>
+            <div class="dk" id="hero-dash">
+              <!-- Top nav -->
+              <div class="tnav">
+                <div class="tlogo">
+                  <span class="tl-ico" style="position:relative">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg>
+                  </span>
+                </div>
+                <div class="tlinks">
+                  <a class="on">Papan Pemuka Organisasi</a>
+                  <a>Papan Pemuka Peribadi</a>
+                  <a>Jadual <span class="chev">▾</span></a>
+                  <a>Laporan <span class="chev">▾</span></a>
+                  <a>Penugasan <span class="chev">▾</span></a>
+                  <a>Kelulusan <span class="chev">▾</span></a>
+                  <a>Pentadbir <span class="chev">▾</span></a>
+                </div>
+                <div class="tright">
+                  <span class="tbadge">Status bulan: Red</span>
+                  <span class="tglobe">🌐</span>
+                  <span class="tav">SA</span>
+                </div>
+              </div>
+              <!-- Filter bar -->
+              <div class="fbar">
+                <div class="fc"><div class="fl">📅 Tarikh</div><div class="fv">Today <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">🏢 Cawangan</div><div class="fv">All branches <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">🏗 Jabatan</div><div class="fv">All <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">👥 Kumpulan</div><div class="fv">All <span class="caret">▾</span></div></div>
+              </div>
+              <div class="dgradbar"></div>
+
+              <!-- Dashboard content -->
+              <div class="dcontent">
+                <!-- Top row: attendance status + check-in overview -->
+                <div class="drow2">
+                  <div class="dcard">
+                    <div class="dcard-bar blue"></div>
+                    <div class="dch"><b>📊 Status Kehadiran Keseluruhan</b></div>
+                    <div class="dbody">
+                      <div class="dstats">
+                        <div class="ds"><div class="dsl">Total Staff</div><div class="dsv">248</div></div>
+                        <div class="ds"><div class="dsl">Scheduled Staff</div><div class="dsv blue">214</div></div>
+                      </div>
+                      <div class="mini-bar">
+                        <div class="mb green" style="height:78%"></div>
+                        <div class="mb green" style="height:82%"></div>
+                        <div class="mb green" style="height:70%"></div>
+                        <div class="mb amber" style="height:22%"></div>
+                        <div class="mb red" style="height:14%"></div>
+                        <div class="mb gray" style="height:8%"></div>
+                        <div class="mb blue" style="height:6%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dcard">
+                    <div class="dcard-bar blue"></div>
+                    <div class="dch"><b>🚪 Gambaran Keseluruhan Daftar Masuk</b></div>
+                    <div class="dbody">
+                      <div class="donut-area">
+                        <div class="donut-ring">
+                          <svg viewBox="0 0 36 36">
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="#1e293b" stroke-width="3.5"/>
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="#00c0ef" stroke-width="3.5" stroke-dasharray="58 30" stroke-linecap="round"/>
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="#fd7e14" stroke-width="3.5" stroke-dasharray="30 58" stroke-dashoffset="-58" stroke-linecap="round"/>
+                          </svg>
+                          <div class="dr-center"><div class="drn">186</div><div class="drl">Checked In</div></div>
+                        </div>
+                        <div class="legend">
+                          <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;border-bottom:1px solid #334155;padding-bottom:4px;margin-bottom:2px">Check-in Methods</div>
+                          <div class="leg"><span class="ldot" style="background:#00c0ef;box-shadow:0 0 6px rgba(0,192,239,.5)"></span> Daftar Masuk Pejabat</div>
+                          <div class="leg"><span class="ldot" style="background:#fd7e14;box-shadow:0 0 6px rgba(253,126,20,.5)"></span> Daftar Masuk Aplikasi Mudah Alih</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom row: incidents + absent list -->
+                <div class="drow-half">
+                  <div class="dcard">
+                    <div class="dcard-bar red"></div>
+                    <div class="dch"><b>📋 Senarai Insiden</b><span class="dbtn">View All →</span></div>
+                    <div class="dbody" style="padding:0">
+                      <table class="dtable">
+                        <thead><tr><th>Nama</th><th>Cawangan</th><th>Jenis</th><th>Tindakan</th></tr></thead>
+                        <tbody>
+                          <tr><td>Ahmad Faizal</td><td>APM Besut</td><td><span class="tpill t-late">Lewat</span></td><td><button class="tap ap-y">Lulus</button> <button class="tap ap-n">Skip</button></td></tr>
+                          <tr><td>Siti Aminah</td><td>HQ</td><td><span class="tpill t-absent">Tidak Hadir</span></td><td><button class="tap ap-y">Lulus</button> <button class="tap ap-n">Skip</button></td></tr>
+                          <tr><td>Mohd Rizal</td><td>APM Langkawi</td><td><span class="tpill t-pending">Pending</span></td><td><button class="tap ap-y">Lulus</button> <button class="tap ap-n">Skip</button></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="dcard">
+                    <div class="dcard-bar amber"></div>
+                    <div class="dch"><b>🚫 Senarai Tidak Hadir</b></div>
+                    <div class="dbody" style="padding:0">
+                      <table class="dtable">
+                        <thead><tr><th>Nama</th><th>Cawangan</th><th>Jabatan</th></tr></thead>
+                        <tbody>
+                          <tr><td>Nur Aisyah</td><td>APM Jerantut</td><td>Operasi</td></tr>
+                          <tr><td>Hafiz Rahman</td><td>Serdang</td><td>Pentadbiran</td></tr>
+                          <tr><td>Farah Diyana</td><td>APM Bintulu</td><td>Logistik</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Activity chart -->
+                <div class="dcard">
+                  <div class="dcard-bar cyan"></div>
+                  <div class="dch"><b>📈 Aktiviti</b><span style="font-size:8px;color:#64748b">Data Aktiviti Daftar Masuk & Daftar Keluar</span></div>
+                  <div class="dbody">
+                    <div class="activity-chart">
+                      <div class="ac-bar"><div class="acb" style="height:8px;background:#3b82f6"></div><div class="acl">6</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:14px;background:#3b82f6"></div><div class="acl">7</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:52px;background:#3b82f6"></div><div class="acl">8</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:60px;background:#3b82f6"></div><div class="acl">9</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:20px;background:#3b82f6"></div><div class="acl">10</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:10px;background:#3b82f6"></div><div class="acl">11</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:6px;background:#3b82f6"></div><div class="acl">12</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:12px;background:#22c55e"></div><div class="acl">13</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:8px;background:#22c55e"></div><div class="acl">14</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:16px;background:#22c55e"></div><div class="acl">15</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:22px;background:#22c55e"></div><div class="acl">16</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:48px;background:#22c55e"></div><div class="acl">17</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:54px;background:#22c55e"></div><div class="acl">18</div></div>
+                      <div class="ac-bar"><div class="acb" style="height:18px;background:#22c55e"></div><div class="acl">19</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PROOF STRIP ════════ -->
+<div class="proof">
+  <div class="wrap proof-inner">
+    <div class="proof-label">Trusted by<br/>Malaysian government agencies</div>
+    <div class="proof-logos">
+      <span class="logo"><image-slot id="logo-apm" placeholder="Drop APM logo" shape="rect" style="width:56px;height:56px;display:inline-block;vertical-align:middle;border-radius:4px;margin-right:8px"></image-slot>APM<br/><small style="font-size:10px;font-weight:400;color:var(--ink-3);letter-spacing:.02em">Angkatan Pertahanan Awam</small></span>
+      <span class="logo"><image-slot id="logo-kdn" placeholder="Drop KDN logo" shape="rect" style="width:56px;height:56px;display:inline-block;vertical-align:middle;border-radius:4px;margin-right:8px"></image-slot>KDN<br/><small style="font-size:10px;font-weight:400;color:var(--ink-3);letter-spacing:.02em">Kementerian Dalam Negeri</small></span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ PILLARS ════════ -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Why Klokin</span>
+        <h2 class="display" style="margin:18px 0 0">Built to support<br/>your unique workflows.</h2>
+      </div>
+      <div class="right lead">
+        Klokin's flexibility lies in its ability to accommodate various shift patterns with customizable rule sets, catering to diverse operational requirements. The system is designed for user convenience, allowing employees to personalise their reporting preferences.
+      </div>
+    </div>
+
+    <div class="pillars">
+      <article class="pillar">
+        <div>
+          <div class="ico" style="border-radius: 99px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-6 8-12a8 8 0 0 0-16 0c0 6 8 12 8 12z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <h3 class="display">Location-based sign-in</h3>
+          <p>Sign-ins can be pre-assigned or post-approved based on your organisation's policies, offering a secure, location-aware attendance system that adapts to your workflow and roles.</p>
+        </div>
+        <div class="vis">
+          <svg width="100%" height="100%" viewBox="0 0 420 120" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e6e2d8" stroke-width=".5"/>
+              </pattern>
+            </defs>
+            <rect width="420" height="120" fill="url(#grid)"/>
+            <circle cx="120" cy="62" r="34" fill="#44396b" fill-opacity=".08" stroke="#44396b" stroke-opacity=".35" stroke-dasharray="3,3"/>
+            <circle cx="120" cy="62" r="6" fill="#44396b"/>
+            <circle cx="120" cy="62" r="14" fill="none" stroke="#44396b" stroke-opacity=".4"/>
+            <circle cx="300" cy="44" r="22" fill="#f27200" fill-opacity=".1" stroke="#f27200" stroke-opacity=".5" stroke-dasharray="3,3"/>
+            <circle cx="300" cy="44" r="5" fill="#f27200"/>
+            <text x="150" y="60" font-family="Inter" font-size="9" fill="#44396b" font-weight="500">HQ · 3.139, 101.687</text>
+            <text x="320" y="42" font-family="Inter" font-size="9" fill="#f27200" font-weight="500">SITE B</text>
+          </svg>
+        </div>
+      </article>
+
+      <article class="pillar dark">
+        <div>
+          <div class="ico" style="border-radius: 99px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M3 7l9-4 9 4"/><path d="M12 11v8"/><path d="M8 13h8"/>
+            </svg>
+          </div>
+          <h3 class="display">Built for scalability</h3>
+          <p>To support future technological development, Klokin supports integrated check-in via selected &amp; compatible fingerprint and facial recognition devices.</p>
+        </div>
+        <div class="vis" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.7);background:rgba(255,255,255,.05)">
+          <svg width="100%" height="100%" viewBox="0 0 420 120">
+            <g stroke="rgba(255,255,255,.45)" stroke-width="1.2" fill="none">
+              <rect x="40" y="32" width="56" height="56" rx="6"/>
+              <circle cx="68" cy="60" r="14"/>
+              <path d="M58 60a10 10 0 0 1 20 0M62 64a6 6 0 0 1 12 0"/>
+              <rect x="180" y="32" width="56" height="56" rx="6"/>
+              <circle cx="208" cy="58" r="16"/>
+              <circle cx="208" cy="58" r="3" fill="rgba(255,255,255,.5)"/>
+              <rect x="320" y="32" width="56" height="56" rx="6"/>
+              <path d="M340 56h16M340 62h16M340 68h12"/>
+            </g>
+            <text x="38" y="106" font-family="Inter" font-size="9" fill="rgba(255,255,255,.6)">FINGERPRINT</text>
+            <text x="180" y="106" font-family="Inter" font-size="9" fill="rgba(255,255,255,.6)">FACE-ID</text>
+            <text x="320" y="106" font-family="Inter" font-size="9" fill="rgba(255,255,255,.6)">RFID / NFC</text>
+          </svg>
+        </div>
+      </article>
+
+      <article class="pillar pillar-feature">
+        <div>
+          <div class="ico ico-orange" style="border-radius: 99px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </div>
+          <h3 class="display">Smart dashboard</h3>
+          <p>A compact yet comprehensive overview of key information — keeping users informed and in control at a glance.</p>
+        </div>
+      </article>
+      <article class="pillar pillar-feature">
+        <div>
+          <div class="ico ico-mint" style="border-radius: 99px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="display">Personal info, on-the-go</h3>
+          <p>Team members can easily access schedules and task lists, and stay updated on pending actions; all from their mobile devices.</p>
+        </div>
+      </article>
+      <article class="pillar pillar-feature">
+        <div>
+          <div class="ico ico-coral" style="border-radius: 99px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <h3 class="display">Up to 3 shifts a day</h3>
+          <p>Support up to 3 shifts a day — perfect for flexible or varied work schedules.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ TIMELINE ════════ -->
+<section class="tl-section" id="timeline">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:40px">
+      <div>
+        <span class="eyebrow">Product Workflow</span>
+        <h2 class="display" style="margin:18px 0 0">How Klokin works<br/>for your team.</h2>
+      </div>
+      <div class="right lead">From clock-in to reporting — every step tracked, every shift covered.</div>
+    </div>
+
+    <div class="tl-track">
+      <div class="tl-rail"></div>
+
+      <div class="tl-node" data-tl="0">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="tl-body">
+            <h4>Staff onboarded</h4>
+            <p>Import your roster and assign branches, shifts and roles under a single organisation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="1">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <div class="tl-body">
+            <h4>Shifts &amp; schedules configured</h4>
+            <p>Support up to 3 shifts a day with customizable rule sets and public holidays baked in.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="2">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-6 8-12a8 8 0 0 0-16 0c0 6 8 12 8 12z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="tl-body">
+            <h4>Location-based clock-in</h4>
+            <p>Staff check in via web or mobile app — pre-assigned or post-approved based on your policies.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="3">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+          <div class="tl-body">
+            <h4>Incidents flagged</h4>
+            <p>Late arrivals, absences and offenses surface with colour-coded indicators for supervisors.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="4">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+          <div class="tl-body">
+            <h4>Approvals &amp; reasons</h4>
+            <p>Submit and approve absence reasons and documents in one organised, trackable system.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node" data-tl="5">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-ico" style="border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+          <div class="tl-body">
+            <h4>Reports generated</h4>
+            <p>Comprehensive reporting for workflow efficiency, staff synchronisation and data-driven decisions.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ DASHBOARD SHOWCASE ════════ -->
+<section class="showcase">
+  <div class="wrap">
+    <div class="showcase-grid">
+      <div>
+        <span class="eyebrow">The Klokin Web Console</span>
+        <h2 class="display" style="margin:18px 0 16px">Single user access.<br/>All your roles.</h2>
+        <p class="lead">One login for all roles — easily access and manage multiple dashboards without switching accounts. View personal records, or for supervisors, team data — all in one glance.</p>
+        <ul class="checks">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><strong>Multi-branch setup.</strong> Manage unlimited branches under a single organisation — no limits, full control.</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><strong>Reason submission.</strong> Submit and approve absence and offense reasons and documents in one organised, trackable system.</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><strong>Colour-coded offense indicator.</strong> Repeat patterns surface visually so supervisors can act before issues compound.</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><strong>Comprehensive reporting.</strong> A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.</span>
+          </li>
+        </ul>
+        <div class="hero-cta" style="margin-top:32px">
+          <a href="#contact" class="btn btn-primary">Book a walkthrough
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#features" class="btn btn-ghost">See all features →</a>
+        </div>
+      </div>
+
+      <div class="device-mac" style="transform:rotate(-.4deg)">
+        <div class="bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">app.klokin.io / papan-pemuka-peribadi</span>
+        </div>
+        <div class="dk">
+              <!-- Top nav -->
+              <div class="tnav">
+                <div class="tlogo">
+                  <span class="tl-ico" style="position:relative">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg>
+                  </span>
+                </div>
+                <div class="tlinks">
+                  <a>Papan Pemuka Organisasi</a>
+                  <a class="on">Papan Pemuka Peribadi</a>
+                  <a>Jadual <span class="chev">▾</span></a>
+                  <a>Laporan <span class="chev">▾</span></a>
+                  <a>Penugasan <span class="chev">▾</span></a>
+                  <a>Kelulusan <span class="chev">▾</span></a>
+                  <a>Pentadbir <span class="chev">▾</span></a>
+                </div>
+                <div class="tright">
+                  <span class="tbadge" style="background:#16a34a">Status bulan: Green</span>
+                  <span class="tglobe">🌐</span>
+                  <span class="tav">NF</span>
+                </div>
+              </div>
+
+              <!-- Filter bar -->
+              <div class="fbar">
+                <div class="fc"><div class="fl">📅 Tarikh</div><div class="fv">Minggu ini <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">🏢 Cawangan</div><div class="fv">HQ <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">🏗 Jabatan</div><div class="fv">Operasi <span class="caret">▾</span></div></div>
+                <div class="fc"><div class="fl">👥 Kumpulan</div><div class="fv">All <span class="caret">▾</span></div></div>
+              </div>
+              <div class="dgradbar"></div>
+
+              <!-- Personal dashboard content -->
+              <div class="dcontent">
+                <div class="drow2">
+                  <div class="dcard">
+                    <div class="dcard-bar blue"></div>
+                    <div class="dch"><b>📊 Status Kehadiran Peribadi</b></div>
+                    <div class="dbody">
+                      <div class="dstats">
+                        <div class="ds"><div class="dsl">Hadir</div><div class="dsv" style="color:#22c55e">19</div></div>
+                        <div class="ds"><div class="dsl">Tidak Hadir</div><div class="dsv" style="color:#ef4444">1</div></div>
+                      </div>
+                      <div class="mini-bar">
+                        <div class="mb green" style="height:90%"></div>
+                        <div class="mb green" style="height:95%"></div>
+                        <div class="mb green" style="height:88%"></div>
+                        <div class="mb green" style="height:92%"></div>
+                        <div class="mb red" style="height:10%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dcard">
+                    <div class="dcard-bar blue"></div>
+                    <div class="dch"><b>🚪 Rekod Daftar Masuk</b></div>
+                    <div class="dbody" style="padding:0">
+                      <table class="dtable">
+                        <thead><tr><th>Tarikh</th><th>Masuk</th><th>Keluar</th><th>Status</th></tr></thead>
+                        <tbody>
+                          <tr><td>20 Mei</td><td>08:47</td><td>17:32</td><td><span class="tpill t-ok">Hadir</span></td></tr>
+                          <tr><td>19 Mei</td><td>08:55</td><td>17:28</td><td><span class="tpill t-ok">Hadir</span></td></tr>
+                          <tr><td>18 Mei</td><td>09:12</td><td>17:45</td><td><span class="tpill t-late">Lewat</span></td></tr>
+                          <tr><td>17 Mei</td><td>—</td><td>—</td><td><span class="tpill t-absent">Tidak Hadir</span></td></tr>
+                          <tr><td>16 Mei</td><td>08:30</td><td>17:15</td><td><span class="tpill t-ok">Hadir</span></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="drow-half">
+                  <div class="dcard">
+                    <div class="dcard-bar cyan"></div>
+                    <div class="dch"><b>📅 Jadual Syif</b><span class="dbtn">View All →</span></div>
+                    <div class="dbody" style="padding:0">
+                      <table class="dtable">
+                        <thead><tr><th>Hari</th><th>Syif</th><th>Masa</th></tr></thead>
+                        <tbody>
+                          <tr><td>Isnin</td><td>Pagi</td><td>08:00 – 17:00</td></tr>
+                          <tr><td>Selasa</td><td>Pagi</td><td>08:00 – 17:00</td></tr>
+                          <tr><td>Rabu</td><td>Petang</td><td>14:00 – 22:00</td></tr>
+                          <tr><td>Khamis</td><td>Pagi</td><td>08:00 – 17:00</td></tr>
+                          <tr><td>Jumaat</td><td>Pagi</td><td>08:00 – 17:00</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="dcard">
+                    <div class="dcard-bar amber"></div>
+                    <div class="dch"><b>📋 Insiden Saya</b></div>
+                    <div class="dbody">
+                      <div class="empty-state">
+                        <div class="es-ico">✓</div>
+                        <div class="es-txt">Tiada insiden pending.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div></section>
+
+<!-- ════════ MOBILE SUITE ════════ -->
+<section class="suite" id="mobile">
+  <div class="wrap">
+    <div class="suite-grid">
+      <div>
+        <span class="eyebrow suite-eyebrow">Klokin Mobile Suite™</span>
+        <h2 class="display" style="margin:18px 0 18px">From Desk to Field —<br/>Always in Sync.</h2>
+        <p class="lead">Klokin Mobile Suite™ enables team members to perform secure, location-based check-ins directly from their mobile devices, supporting flexible and remote work environments. Each check-in is automatically synchronised with the web platform, allowing supervisors and administrators to monitor attendance in real time. This seamless integration ensures timely and accurate attendance tracking, improves oversight, and streamlines reporting for operational efficiency.</p>
+
+        <div class="suite-features">
+          <div class="suite-feat">
+            <div class="lbl"><span class="num">01 ·</span> Supports Pre-set &amp; Post Approval</div>
+            <p>Allows sign-ins to be approved according to assignments.</p>
+          </div>
+          <div class="suite-feat">
+            <div class="lbl"><span class="num">02 ·</span> On-the-go Schedule</div>
+            <p>Monitor and manage tasks and assignments from anywhere.</p>
+          </div>
+          <div class="suite-feat">
+            <div class="lbl"><span class="num">03 ·</span> Comprehensive Dashboard</div>
+            <p>View records, summaries, and key insights.</p>
+          </div>
+          <div class="suite-feat">
+            <div class="lbl"><span class="num">04 ·</span> Location-based Sign-in</div>
+            <p>Staff check in based on assigned locations.</p>
+          </div>
+        </div>
+
+        <div class="suite-store">
+          <a href="#" class="store-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.02-2.85 2.32-4.21 2.43-4.28-1.32-1.93-3.39-2.2-4.13-2.23-1.76-.18-3.43 1.04-4.32 1.04-.89 0-2.27-1.02-3.74-.99-1.93.03-3.71 1.12-4.7 2.85-2 3.46-.51 8.59 1.44 11.4.95 1.37 2.09 2.92 3.56 2.86 1.43-.06 1.97-.93 3.7-.93 1.73 0 2.22.93 3.74.9 1.55-.03 2.53-1.4 3.48-2.78 1.1-1.6 1.55-3.15 1.57-3.23-.04-.02-3.01-1.16-3.03-4.61zM14.3 4.27c.78-.95 1.31-2.27 1.17-3.59-1.13.05-2.5.76-3.31 1.7-.72.84-1.36 2.18-1.19 3.47 1.27.1 2.55-.64 3.33-1.58z"/></svg>
+            <div><div class="small">Download on the</div><div class="big">App Store</div></div>
+          </a>
+          <a href="#" class="store-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.61 2.27a1.6 1.6 0 0 0-.61 1.27v16.91c0 .49.22.93.59 1.23l9.43-9.69L3.61 2.27zm10.4 10.43 2.49 2.56-12.06 6.83c-.18.1-.39.13-.6.08l10.17-9.47zm0-1.42L3.84 1.7a.97.97 0 0 1 .6.1l12.06 6.83-2.49 2.65zm5.69-1.41-2.94 1.66-2.72 2.83 2.72 2.79 2.95 1.67c.78-.44 1.27-1.18 1.27-2.18v-4.59c0-1-.49-1.74-1.28-2.18z"/></svg>
+            <div><div class="small">Get it on</div><div class="big">Google Play</div></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="phone-stack">
+        <!-- Behind phone (schedule) -->
+        <div class="phone behind">
+          <div class="screen">
+            <div class="status"><span>9:41</span><div class="right"><span>● ● ●</span><svg viewBox="0 0 13 9" fill="currentColor"><rect width="11" height="6" x="0" y="1" rx="1.5" fill="none" stroke="currentColor"/><rect width="7" height="3" x="1" y="2.5" rx=".5"/></svg></div></div>
+            <div class="ph-content">
+              <div class="greet">
+                <div><div class="hi">My week</div><div class="sub">19 – 25 May · 5 shifts</div></div>
+                <div class="av">AZ</div>
+              </div>
+              <div class="sched-card">
+                <div class="hd"><b>Today</b><span>TUE 19 MAY</span></div>
+                <div class="list">
+                  <div class="si"><div class="ti"><b>09:00</b>→ 13:00</div><div><div class="nm">Morning shift</div><div class="sub">KL Sentral HQ · Floor 12</div></div><span class="pill ok" style="font-size:9px"><span class="dt"></span>On</span></div>
+                  <div class="si"><div class="ti"><b>14:00</b>→ 18:00</div><div><div class="nm">Afternoon shift</div><div class="sub">KL Sentral HQ · Floor 12</div></div><span class="pill leave" style="font-size:9px"><span class="dt"></span>Set</span></div>
+                </div>
+              </div>
+              <div class="sched-card">
+                <div class="hd"><b>Tomorrow</b><span>WED 20</span></div>
+                <div class="list">
+                  <div class="si"><div class="ti"><b>10:00</b>→ 14:00</div><div><div class="nm">Site visit</div><div class="sub">Bandar Utama · Outlet B</div></div><span class="pill late" style="font-size:9px"><span class="dt"></span>Pre</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Front phone (clock-in) -->
+        <div class="phone front">
+          <div class="screen">
+            <div class="status"><span>9:41</span><div class="right"><span>● ● ●</span><svg viewBox="0 0 13 9" fill="currentColor"><rect width="11" height="6" x="0" y="1" rx="1.5" fill="none" stroke="currentColor"/><rect width="7" height="3" x="1" y="2.5" rx=".5"/></svg></div></div>
+            <div class="ph-content">
+              <div class="greet">
+                <div><div class="hi">Hi Aisyah 👋</div><div class="sub">Tuesday · 19 May 2026</div></div>
+                <div class="av">AZ</div>
+              </div>
+
+              <div class="clock-card">
+                <div class="lbl">Clock in · morning shift</div>
+                <div class="time">09:14 <small>:32 AM</small></div>
+                <div class="loc">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-6 8-12a8 8 0 0 0-16 0c0 6 8 12 8 12z"/><circle cx="12" cy="10" r="3"/></svg>
+                  KL Sentral HQ · within 40m of site
+                </div>
+                <div class="btn-c">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  Tap to clock in
+                </div>
+              </div>
+
+              <div class="quick">
+                <div class="q"><div class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="t">Schedule</div><div class="s">5 shifts</div></div>
+                <div class="q"><div class="ic" style="background:color-mix(in oklab, var(--orange) 14%, transparent);color:#b95400"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div class="t">Reasons</div><div class="s">1 draft</div></div>
+                <div class="q"><div class="ic" style="background:color-mix(in oklab, var(--mint) 22%, transparent);color:#2f8f7a"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="t">Records</div><div class="s">May</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FEATURE GRID ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Key features</span>
+        <h2 class="display" style="margin:18px 0 0">Everything an attendance<br/>system should be.</h2>
+      </div>
+      <div class="right lead">A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting across sectors.</div>
+    </div>
+
+    <div id="feat-tabs-root"></div>
+    <div class="featgrid" style="display:none">
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h4>Single user access</h4>
+        <p>One login for all roles — easily access and manage multiple dashboards without switching accounts.</p>
+        <span class="tag">Access · 01</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13h6M9 17h4"/></svg></div>
+        <h4>Reason submission</h4>
+        <p>Submit and approve absence and offense reasons and documents in one organised, trackable system.</p>
+        <span class="tag">Workflow · 02</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+        <h4>Dashboard for unique roles</h4>
+        <p>View personal records, or for supervisors, team data — all in one glance.</p>
+        <span class="tag">Insight · 03</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 1 0 10-10"/><path d="M12 2v10l5 3"/></svg></div>
+        <h4>Multiple shifts</h4>
+        <p>Support up to 3 shifts a day — perfect for flexible or varied work schedules.</p>
+        <span class="tag">Scheduling · 04</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+        <h4>Multi-branch setup</h4>
+        <p>Manage unlimited branches under a single organisation — no limits, full control.</p>
+        <span class="tag">Organisation · 05</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+        <h4>Mobile app*</h4>
+        <p>Check in remotely with accurate, real-time syncing to the web app.</p>
+        <span class="tag">Mobile Suite · 06</span>
+      </div>
+
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+        <h4>Colour-coded offense indicator</h4>
+        <p>Colour-coded offense indicator for offenses so supervisors can spot patterns.</p>
+        <span class="tag">Compliance · 07</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+        <h4>Incidents approval flow</h4>
+        <p>Route incidents through configurable approval chains with full audit trails.</p>
+        <span class="tag">Workflow · 08</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <h4>Public holidays</h4>
+        <p>Bake regional public holidays into shift rules — no manual exceptions required.</p>
+        <span class="tag">Setup · 09</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
+        <h4>Pop-up notifications</h4>
+        <p>Timely alerts for clock-ins, approvals and exceptions — pushed to web and mobile.</p>
+        <span class="tag">Comms · 10</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12 15.3 15.3 0 0 1 12 2z"/></svg></div>
+        <h4>Bilingual (BM / EN)</h4>
+        <p>Switch the entire interface between Bahasa Malaysia and English in one click.</p>
+        <span class="tag">Localisation · 11</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h4>Comprehensive reporting</h4>
+        <p>A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.</p>
+        <span class="tag">Insight · 12</span>
+      </div>
+      <div class="item">
+        <div class="ico ico-indigo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></div>
+        <h4>Shifts &amp; scheduling</h4>
+        <p>Multiple shifts settings to support up to 3 shifts a day with customizable rule sets.</p>
+        <span class="tag">Scheduling · 13</span>
+      </div>
+    </div>
+    <div class="mono" style="margin-top:24px;color:var(--ink-3)">* Available with subscription of Klokin Mobile Suite. ** Compatibility with devices apply.</div>
+  </div>
+</section>
+
+<!-- ════════ SECTORS ════════ -->
+<section class="sectors" id="sectors">
+  <div class="wrap" style="padding-bottom:48px">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Built for many sectors</span>
+        <h2 class="display" style="margin:18px 0 0">Wherever people<br/>need to clock in.</h2>
+      </div>
+      <div class="right lead">A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.</div>
+    </div>
+  </div>
+  <div class="sector-strip">
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+      <div class="name">Retail &amp; F&amp;B</div>
+      <div class="desc">Multi-outlet rosters with peak-hour shift splits</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M5 9l-3 3 3 3M19 9l3 3-3 3M12 22v-6M5 16h14"/></svg></div>
+      <div class="name">Manufacturing</div>
+      <div class="desc">3-shift rotations and overtime ledgers</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14a7 7 0 1 0-14 0M19 14l-2 6H7l-2-6M9 22h6"/></svg></div>
+      <div class="name">Clinics &amp; care</div>
+      <div class="desc">Locum schedules &amp; on-call patterns</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+      <div class="name">Schools</div>
+      <div class="desc">Staff &amp; visiting teachers in one roster</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <div class="name">Logistics</div>
+      <div class="desc">Field check-ins per route &amp; stop</div>
+    </div>
+    <div class="sector">
+      <div class="ico-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <div class="name">Corporate offices</div>
+      <div class="desc">Hybrid &amp; flexi-time across departments</div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ════════ CTA ════════ -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <span class="eyebrow">Be Efficient</span>
+    <h2 class="display" style="margin-top:18px">Be Efficient.</h2>
+    <p class="lead">Klokin is also built with technological sustainability in mind; with features that can be upgraded according to user needs and resources optimisation goals.</p>
+    <div class="hero-cta">
+      <a href="mailto:hello@pocketpixel.xyz" class="btn btn-accent btn-lg">
+        hello@pocketpixel.xyz
+        <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a href="tel:+60123246453" class="btn btn-outline btn-lg">+60 12-324 6453</a>
+    </div>
+    <div class="mono" style="margin-top:20px">For enquiries, please contact :</div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="brand" style="margin-bottom:14px;display:inline-flex">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg>
+          </span>
+          Klokin
+        </a>
+        <p style="max-width:32ch;margin:0;color:var(--ink-2)">Integrated Attendance &amp; Entry Ecosystem. Be efficient.</p>
+        <div class="mono" style="margin-top:18px">Klokin Software · 2025</div>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#features">Web console</a></li>
+          <li><a href="#mobile">Mobile Suite</a></li>
+          <li><a href="#features">Integrations</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">Pocket Pixel</a></li>
+          <li><a href="#contact">Contact sales</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:hello@pocketpixel.xyz">hello@pocketpixel.xyz</a></li>
+          <li><a href="tel:+60123246453">+60 12-324 6453</a></li>
+          <li><a href="tel:+60176557920">+60 17-655 7920</a></li>
+          <li>Kuala Lumpur, MY</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>POCKET PIXEL SDN BHD · ALL RIGHTS RESERVED</span>
+      <span>BE EFFICIENT · 2025</span>
+    </div>
+  </div>
+</footer>
+
+<!-- React + Babel + Tweaks panel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<div id="tweaks-root"></div>
+
+<script type="text/babel">
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "palette": [
+      "#44396b",
+      "#f27200",
+      "#f7f4ec"
+    ],
+    "accent": "#f27200",
+    "ground": "cool",
+    "density": "regular",
+    "heroLayout": "split",
+    "showProof": true
+  }/*EDITMODE-END*/;
+
+  const PALETTES = [
+    ["#44396b", "#f27200", "#f7f4ec"], // brochure primary (default)
+    ["#2d2548", "#f04a5a", "#f6f3ec"], // deep indigo + coral
+    ["#1f3a5a", "#f27200", "#f5f2ea"], // navy + orange
+    ["#3a2e5c", "#f6e042", "#fcf9ee"], // plum + yellow
+    ["#1a4f44", "#f27200", "#f4f1e7"], // forest + orange
+  ];
+  const GROUNDS = {
+    warm:    { paper: "#f7f4ec", paper2: "#efeadd", line: "#e6e2d8", line2: "#efece4", ink: "#1a1530", ink2: "#4a4565", ink3: "#8a85a0" },
+    cool:    { paper: "#f3f4f8", paper2: "#e8eaf0", line: "#dee0e8", line2: "#e6e8ee", ink: "#161425", ink2: "#42425a", ink3: "#7d7d92" },
+    paper:   { paper: "#faf7ef", paper2: "#f1ecdd", line: "#e8e2cf", line2: "#efeadb", ink: "#211c33", ink2: "#534c66", ink3: "#8c869c" },
+  };
+  const DENSITIES = {
+    compact:  { padBig: 80,  padSmall: 22, gapPillar: 16 },
+    regular:  { padBig: 120, padSmall: 32, gapPillar: 20 },
+    comfy:    { padBig: 160, padSmall: 44, gapPillar: 24 },
+  };
+
+  function App() {
+    const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+    const root = document.documentElement;
+
+    React.useEffect(() => {
+      const [indigo, accent, paper] = t.palette;
+      root.style.setProperty('--indigo', indigo);
+      root.style.setProperty('--orange', accent);
+      // Auto-derive deep & light variants
+      root.style.setProperty('--indigo-3', mixHex(indigo, '#000', 0.35));
+      root.style.setProperty('--indigo-2', mixHex(indigo, '#fff', 0.22));
+
+      const g = GROUNDS[t.ground] || GROUNDS.warm;
+      Object.entries({
+        '--paper': g.paper, '--paper-2': g.paper2,
+        '--line': g.line, '--line-2': g.line2,
+        '--ink': g.ink, '--ink-2': g.ink2, '--ink-3': g.ink3,
+      }).forEach(([k, v]) => root.style.setProperty(k, v));
+
+      const d = DENSITIES[t.density] || DENSITIES.regular;
+      document.querySelectorAll('section').forEach(s => {
+        if (!s.classList.contains('proof') && !s.classList.contains('sectors')) {
+          s.style.paddingTop = `${d.padBig}px`;
+          s.style.paddingBottom = `${d.padBig}px`;
+        }
+      });
+
+      document.querySelector('.proof').style.display = t.showProof ? '' : 'none';
+    });
+
+    return (
+      <TweaksPanel>
+        <TweakSection label="Brand palette" />
+        <TweakColor label="Theme" value={t.palette} options={PALETTES} onChange={(v)=>setTweak('palette', v)} />
+        <TweakSection label="Ground" />
+        <TweakRadio label="Tone" value={t.ground} options={['warm','cool','paper']} onChange={(v)=>setTweak('ground', v)} />
+        <TweakSection label="Layout" />
+        <TweakSelect label="Density" value={t.density} options={['compact','regular','comfy']} onChange={(v)=>setTweak('density', v)} />
+        <TweakToggle label="Show logo strip" value={t.showProof} onChange={(v)=>setTweak('showProof', v)} />
+      </TweaksPanel>
+    );
+  }
+
+  function mixHex(a, b, t) {
+    const ah = a.replace('#','').match(/.{2}/g).map(x=>parseInt(x,16));
+    const bh = b.replace('#','').match(/.{2}/g).map(x=>parseInt(x,16));
+    return '#' + ah.map((v,i)=>Math.round(v*(1-t)+bh[i]*t).toString(16).padStart(2,'0')).join('');
+  }
+
+  // Wait for tweaks-panel.jsx to attach globals
+  function mount() {
+    if (typeof TweaksPanel === 'undefined' || typeof useTweaks === 'undefined') {
+      setTimeout(mount, 30); return;
+    }
+    ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App />);
+  }
+  mount();
+</script>
+
+<script src="js/main.js"></script>
+
+<!-- React + Babel for Feature Tabs component -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+<script type="text/babel">
+/* ═══ FEATURE TABS COMPONENT ═══ */
+(function(){
+  const { useState, useCallback } = React;
+
+  const FT_FEATURES = [
+    { id: 1, title: "Role-based dashboards", desc: "One login, personalised views for every role — from personal records to full team oversight.", cat: "core",
+      icon: <><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></> },
+    { id: 2, title: "Approval workflows", desc: "Submit and route absence reasons and incidents through configurable approval chains with audit trails.", cat: "workflow",
+      icon: <><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></> },
+    { id: 3, title: "Shift management", desc: "Up to 3 shifts per day with customisable rule sets and flexible scheduling.", cat: "scheduling",
+      icon: <><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></> },
+    { id: 4, title: "Multi-branch setup", desc: "Manage unlimited branches under one organisation — no limits, full control.", cat: "core",
+      icon: <><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></> },
+    { id: 5, title: "Mobile app", desc: "Check in remotely with accurate, real-time syncing to the web console.", cat: "connect", note: true,
+      icon: <><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></> },
+    { id: 6, title: "Offense tracking", desc: "Colour-coded indicators help supervisors spot attendance patterns at a glance.", cat: "workflow",
+      icon: <><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></> },
+    { id: 7, title: "Public holidays", desc: "Bake regional holidays into shift rules — no manual exceptions.", cat: "scheduling",
+      icon: <><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></> },
+    { id: 8, title: "Notifications", desc: "Timely alerts for clock-ins, approvals, and exceptions — pushed to web and mobile.", cat: "connect",
+      icon: <><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></> },
+    { id: 9, title: "Bilingual (BM / EN)", desc: "Switch the entire interface between Bahasa Malaysia and English in one click.", cat: "core",
+      icon: <><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12 15.3 15.3 0 0 1 12 2z"/></> },
+    { id: 10, title: "Comprehensive reporting", desc: "Data-driven reports for workflow efficiency, staff synchronisation, and compliance.", cat: "connect",
+      icon: <><path d="M18 20V10M12 20V4M6 20v-6"/></> },
+  ];
+
+  const FT_CATS = [
+    { id: "all",        label: "All features" },
+    { id: "core",       label: "Core Platform" },
+    { id: "workflow",   label: "Workflow" },
+    { id: "scheduling", label: "Scheduling" },
+    { id: "connect",    label: "Connect" },
+  ];
+
+  function FeatureTabs() {
+    const [activeTab, setActiveTab] = useState("all");
+    const [fading, setFading]       = useState(false);
+    const [renderTab, setRenderTab] = useState("all");
+
+    const switchTab = useCallback(function(id) {
+      if (id === activeTab || fading) return;
+      setFading(true);
+      setActiveTab(id);
+      setTimeout(function() { setRenderTab(id); setFading(false); }, 180);
+    }, [activeTab, fading]);
+
+    const filtered = renderTab === "all"
+      ? FT_FEATURES
+      : FT_FEATURES.filter(function(f) { return f.cat === renderTab; });
+
+    return (
+      <div>
+        <div className="feat-tabs-row">
+          {FT_CATS.map(function(cat) {
+            var isActive = activeTab === cat.id;
+            var count = cat.id === "all"
+              ? FT_FEATURES.length
+              : FT_FEATURES.filter(function(f) { return f.cat === cat.id; }).length;
+            return (
+              <button key={cat.id}
+                className={"feat-tab-pill" + (isActive ? " active" : "")}
+                onClick={function() { switchTab(cat.id); }}>
+                {cat.label}
+                <span className="feat-tab-count">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div className={"feat-tab-grid" + (fading ? " ft-fading" : "")} key={renderTab}>
+          {filtered.map(function(f, i) {
+            return (
+              <div key={f.id} className="feat-tab-card" style={{ animationDelay: (i * 55) + "ms" }}>
+                <div className="ico ico-indigo">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {f.icon}
+                  </svg>
+                </div>
+                <h4>{f.title}{f.note && <sup>*</sup>}</h4>
+                <p>{f.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  function ftMount() {
+    var el = document.getElementById('feat-tabs-root');
+    if (!el || typeof ReactDOM === 'undefined') { setTimeout(ftMount, 30); return; }
+    ReactDOM.createRoot(el).render(<FeatureTabs />);
+  }
+  ftMount();
+})();
+</script>
+
+</body>
+</html>

@@ -16,7 +16,8 @@
       "Bash(mkdir \"C:\\\\Users\\\\Mike\\\\OneDrive\\\\Desktop\\\\Pocket Pixel - Projects\\\\Klokin\\\\.claude\" 2>nul & echo done)",
       "mcp__Claude_Preview__preview_start",
       "Bash(where npx *)",
-      "Bash(where node *)"
+      "Bash(where node *)",
+      "Bash(git remote *)"
     ]
   }
 }

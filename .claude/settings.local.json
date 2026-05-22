@@ -17,7 +17,16 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(where npx *)",
       "Bash(where node *)",
-      "Bash(git remote *)"
+      "Bash(git remote *)",
+      "PowerShell(gh pr list --head master --repo afiq-UX/Klokin)",
+      "Bash(command -v gh)",
+      "Bash(where gh *)",
+      "Skill(anthropic-skills:pdf)",
+      "Skill(anthropic-skills:pdf:*)",
+      "Bash(python -c ' *)",
+      "mcp__Claude_in_Chrome__computer",
+      "PowerShell($file = \"C:\\\\Users\\\\Mike\\\\OneDrive\\\\Desktop\\\\Pocket Pixel - Projects\\\\Klokin\\\\B _ Abstract _geometric clock composition_ no dashboard_.html\"; \\(Get-Item $file\\).Length)",
+      "Bash(node -e ' *)"
     ]
   }
 }

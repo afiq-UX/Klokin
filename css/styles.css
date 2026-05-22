@@ -280,9 +280,11 @@
 
   /* ───────── Sectors ───────── */
   .sectors{padding-top:0}
-  .sector-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .sector{padding:32px 18px;text-align:center;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;align-items:center}
-  .sector:last-child{border-right:0}
+  .sector-strip{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  @keyframes sector-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .sector-track{display:flex;width:max-content;animation:sector-scroll 24s linear infinite}
+  .sector-track:hover{animation-play-state:paused}
+  .sector{flex-shrink:0;width:220px;padding:32px 24px;text-align:center;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;align-items:center}
   .sector .ico-wrap{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line);color:var(--indigo)}
   .sector .name{font-family:var(--font-display);font-weight:500;font-size:15px;letter-spacing:-0.005em}
   .sector .desc{font-size:12px;color:var(--ink-3)}
@@ -601,8 +603,6 @@
     .feat-tab-grid{grid-template-columns:repeat(2,1fr)}
     .pillar{grid-column:span 12;min-height:auto}
     .pillar.pillar-feature{grid-column:span 6}
-    .sector-strip{grid-template-columns:repeat(3,1fr)}
-    .sector:nth-child(3){border-right:0}
     .nav-links{display:none}
     .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
   }
@@ -610,7 +610,6 @@
     .kpis{grid-template-columns:repeat(2,1fr)}
     .featgrid .item{grid-column:span 12}
     .feat-tab-grid{grid-template-columns:1fr}
-    .sector-strip{grid-template-columns:repeat(2,1fr)}
     .panel-row{grid-template-columns:1fr}
     .steps{grid-template-columns:1fr}
     .suite-features{grid-template-columns:1fr}

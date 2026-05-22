@@ -43,7 +43,6 @@
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-cta">
-      <a href="#" class="btn btn-ghost">Sign in</a>
       <a href="#contact" class="btn btn-primary">Request a demo
         <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
@@ -208,7 +207,8 @@
 </section>
 
 <!-- ════════ PROOF STRIP ════════ -->
-<div class="proof">
+<!-- Hidden until client approval to display logos -->
+<div class="proof" style="display:none">
   <div class="wrap proof-inner">
     <div class="proof-label">Trusted by<br/>Malaysian government agencies</div>
     <div class="proof-logos">
@@ -431,7 +431,7 @@
             <span><strong>Comprehensive reporting.</strong> A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.</span>
           </li>
         </ul>
-        <div class="hero-cta" style="margin-top:32px">
+        <div class="hero-cta" style="margin-top:32px;display:none">
           <a href="#contact" class="btn btn-primary">Book a walkthrough
             <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
@@ -987,7 +987,7 @@ function handleInquiry(e) {
     "ground": "cool",
     "density": "regular",
     "heroLayout": "split",
-    "showProof": true
+    "showProof": false
   }/*EDITMODE-END*/;
 
   const PALETTES = [

@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if(!track || !rail || !nodes.length) return;
 
     var state = null;
+    var nodeStates = [];
 
     function build(){
       var trackRect = track.getBoundingClientRect();
@@ -255,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function(){
         ys: ys,
         trackH: trackH
       };
+      nodeStates = Array.prototype.map.call(nodes, function(){ return ''; });
     }
 
     function apply(pct){
@@ -268,8 +270,11 @@ document.addEventListener('DOMContentLoaded', function(){
         if(pct >= threshold + 0.04) cls = 'is-past';
         else if(pct >= threshold - 0.06) cls = 'is-active';
 
-        node.classList.remove('is-active','is-past');
-        if(cls) node.classList.add(cls);
+        if(cls !== nodeStates[i]){
+          node.classList.remove('is-active','is-past');
+          if(cls) node.classList.add(cls);
+          nodeStates[i] = cls;
+        }
       });
     }
 

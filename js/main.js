@@ -24,10 +24,12 @@
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function(e){
       const id = this.getAttribute('href').replace('#','');
-      const target = document.getElementById(id);
-      if(target){
-        e.preventDefault();
-        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      e.preventDefault();
+      if(!id) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const target = document.getElementById(id);
+        if(target) window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
       }
     });
   });

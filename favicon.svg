@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Large segment 240° — from 5 o'clock to 1 o'clock going clockwise through left/top -->
+  <path d="M16 16 L22.5 27.26 A13 13 0 1 1 22.5 4.74 Z" fill="#5568F3"/>
+  <!-- Small segment 120° — right side from 1 o'clock to 5 o'clock -->
+  <path d="M16 16 L22.5 4.74 A13 13 0 0 1 22.5 27.26 Z" fill="#8EADFF"/>
+  <!-- White dividing lines -->
+  <line x1="16" y1="16" x2="22.5" y2="4.74" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="16" y1="16" x2="22.5" y2="27.26" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

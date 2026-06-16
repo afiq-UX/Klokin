@@ -934,9 +934,9 @@ function handleInquiry(e) {
   </div>
 </footer>
 
-<!-- React + Babel + Tweaks panel -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<!-- React + Babel (shared by tweaks panel + feature tabs) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 
@@ -1033,17 +1033,15 @@ function handleInquiry(e) {
     if (typeof TweaksPanel === 'undefined' || typeof useTweaks === 'undefined') {
       setTimeout(mount, 30); return;
     }
-    ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App />);
+    var el = document.getElementById('tweaks-root');
+    if (!el || el.dataset.mounted) return;
+    el.dataset.mounted = '1';
+    ReactDOM.createRoot(el).render(<App />);
   }
   mount();
 </script>
 
 <script src="js/main.js"></script>
-
-<!-- React + Babel for Feature Tabs component -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 
 <script type="text/babel">
 /* ═══ FEATURE TABS COMPONENT ═══ */
@@ -1137,7 +1135,12 @@ function handleInquiry(e) {
 
   function ftMount() {
     var el = document.getElementById('feat-tabs-root');
-    if (!el || typeof ReactDOM === 'undefined') { setTimeout(ftMount, 30); return; }
+    if (!el || el.dataset.mounted || typeof ReactDOM === 'undefined') {
+      if (!el || el.dataset.mounted) return;
+      setTimeout(ftMount, 30);
+      return;
+    }
+    el.dataset.mounted = '1';
     ReactDOM.createRoot(el).render(<FeatureTabs />);
   }
   ftMount();

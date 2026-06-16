@@ -120,18 +120,24 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   // Proof strip
-  gsap.from('.proof-inner', {
-    y: 20, opacity: 0,
-    scrollTrigger: { trigger: '.proof', start: 'top 90%' },
-    duration: 0.7, ease: 'power2.out'
-  });
+  var proofInner = document.querySelector('.proof-inner');
+  if (proofInner) {
+    gsap.from(proofInner, {
+      y: 20, opacity: 0,
+      scrollTrigger: { trigger: '.proof', start: 'top 90%' },
+      duration: 0.7, ease: 'power2.out'
+    });
+  }
 
   // Footer
-  gsap.from('.foot-grid', {
-    y: 24, opacity: 0,
-    scrollTrigger: { trigger: 'footer', start: 'top 90%' },
-    duration: 0.7, ease: 'power2.out'
-  });
+  var footTop = document.querySelector('.foot-top');
+  if (footTop) {
+    gsap.from(footTop, {
+      y: 24, opacity: 0,
+      scrollTrigger: { trigger: 'footer', start: 'top 90%' },
+      duration: 0.7, ease: 'power2.out'
+    });
+  }
 
   // Timeline zig-zag rail animation
   (function(){

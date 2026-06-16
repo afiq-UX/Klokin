@@ -71,8 +71,21 @@
   let loaded = false;
   let loadP = null;
 
+  function canPersist() {
+    return !!(window.omelette && window.omelette.writeFile);
+  }
+
   function load() {
     if (loadP) return loadP;
+    // Sidecar only exists in the omelette editor — skip fetch on static deploys
+    // so production doesn't log a 404 for every page load.
+    if (!canPersist()) {
+      loadP = Promise.resolve().then(() => {
+        loaded = true;
+        subs.forEach((fn) => fn());
+      });
+      return loadP;
+    }
     loadP = fetch(STATE_FILE)
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {

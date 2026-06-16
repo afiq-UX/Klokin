@@ -406,8 +406,9 @@
   .form-note{margin:0;font-size:12px;color:var(--ink-3);text-align:center;font-family:var(--font-mono);letter-spacing:.02em}
 
   /* ───────── Footer ───────── */
-  footer{display:flex;flex-direction:column;align-items:center;gap:48px;padding:56px 0;background:#17273e;color:#e6e2d8;font-size:13.5px}
-  .foot-top{width:100%;max-width:1240px;padding:0 var(--gutter);display:flex;justify-content:space-between;align-items:flex-start}
+  footer{position:relative;display:flex;flex-direction:column;align-items:center;padding:56px 0;min-height:525px;background:#17273e;color:#e6e2d8;font-size:13.5px;overflow:hidden}
+  .foot-bg{position:absolute;top:84px;left:50%;transform:translateX(-50%);width:1280px;height:419px;max-width:none;object-fit:cover;opacity:.1;pointer-events:none;z-index:0;display:block}
+  .foot-top{position:relative;z-index:1;width:100%;max-width:1240px;padding:0 var(--gutter);display:flex;justify-content:space-between;align-items:flex-start}
   .foot-brand{width:229px;flex-shrink:0}
   .foot-tagline{margin:0;font-family:var(--font-display);font-weight:500;font-size:14px;letter-spacing:.02em;text-transform:uppercase;color:#e6e2d8;line-height:1.5}
   .foot-accent{color:#feae00}
@@ -418,8 +419,6 @@
   .foot-col ul{list-style:none;padding:14px 0 0;margin:0;display:flex;flex-direction:column;gap:9px}
   .foot-col li,.foot-col a{font-size:13.5px;color:#fff;line-height:20.25px;font-weight:400}
   .foot-col a:hover{color:var(--gold)}
-  .foot-wordmark{width:100%;max-width:1281px;height:380px;opacity:.8;overflow:hidden;position:relative}
-  .foot-wordmark img{position:absolute;width:99.92%;height:143.05%;left:.04%;top:-1.35%;display:block}
 
 
   /* ───────── Dark Dashboard Mockup (real Klokin UI) ───────── */
@@ -745,5 +744,4 @@
     .stat-grid{grid-template-columns:1fr 1fr}
     .foot-col-group{flex-direction:column;gap:24px}
     .foot-brand,.foot-col{width:100%}
-    .foot-wordmark{height:200px}
   }

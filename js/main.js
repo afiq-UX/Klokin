@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     function apply(pct){
       if(!state) return;
-      var offset = state.trainLen - (pct * state.len);
+      var offset = state.trainLen - (pct * (state.len + 2 * state.trainLen));
       state.trainPath.style.strokeDashoffset = offset;
 
       nodes.forEach(function(node, i){
@@ -226,9 +226,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
     var st = ScrollTrigger.create({
       trigger: track,
-      start: 'top 70%',
-      end: 'bottom 55%',
-      scrub: 0.3,
+      start: 'top center',
+      end: 'bottom center',
+      scrub: true,
       onUpdate: function(self){ apply(self.progress); }
     });
 

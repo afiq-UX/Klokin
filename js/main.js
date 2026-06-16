@@ -1,3 +1,24 @@
+// Nav theme — switches to light text when over dark sections
+(function(){
+  var nav          = document.querySelector('.nav');
+  var darkSections = document.querySelectorAll('[data-nav-theme="dark"]');
+  if(!nav || !darkSections.length) return;
+
+  function updateNavTheme(){
+    var navBottom = nav.getBoundingClientRect().bottom;
+    var isDark = false;
+    darkSections.forEach(function(s){
+      var r = s.getBoundingClientRect();
+      if(r.top <= navBottom && r.bottom >= 0) isDark = true;
+    });
+    nav.classList.toggle('nav--on-dark', isDark);
+  }
+
+  lenis.on('scroll', updateNavTheme);
+  window.addEventListener('resize', updateNavTheme);
+  updateNavTheme();
+})();
+
 // Scroll-spy + anchor links with Lenis
 (function(){
   // Wire anchor links to Lenis

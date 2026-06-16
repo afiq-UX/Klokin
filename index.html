@@ -558,7 +558,7 @@
             </div></section>
 
 <!-- ════════ MOBILE SUITE ════════ -->
-<section class="suite" id="mobile">
+<section class="suite" id="mobile" data-nav-theme="dark">
   <div class="wrap">
     <div class="suite-grid">
       <div>
@@ -801,11 +801,11 @@
         <p class="lead" style="margin-top:20px">Tell us about your organisation and we'll reach out within one business day to arrange a personalised walkthrough.</p>
 
         <div class="inquiry-contacts">
-          <a href="mailto:hello@pocketpixel.xyz" class="inquiry-contact-row">
+          <a href="mailto:office@pocketpixel.com" class="inquiry-contact-row">
             <span class="inquiry-contact-icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             </span>
-            hello@pocketpixel.xyz
+            office@pocketpixel.com
           </a>
           <a href="tel:+60123246453" class="inquiry-contact-row">
             <span class="inquiry-contact-icon">
@@ -818,24 +818,26 @@
 
       <!-- Right: form -->
       <form class="inquiry-form" onsubmit="handleInquiry(event)">
+        <!-- honeypot — hidden from humans, traps bots -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
         <div class="form-row-2">
           <div class="form-field">
             <label for="inq-name">Full name <span class="req">*</span></label>
-            <input id="inq-name" type="text" placeholder="Ahmad Syafiq" required>
+            <input id="inq-name" name="name" type="text" placeholder="Ahmad Syafiq" required>
           </div>
           <div class="form-field">
             <label for="inq-email">Work email <span class="req">*</span></label>
-            <input id="inq-email" type="email" placeholder="you@company.com" required>
+            <input id="inq-email" name="email" type="email" placeholder="you@company.com" required>
           </div>
         </div>
         <div class="form-row-2">
           <div class="form-field">
             <label for="inq-org">Organisation <span class="req">*</span></label>
-            <input id="inq-org" type="text" placeholder="Acme Sdn Bhd" required>
+            <input id="inq-org" name="organisation" type="text" placeholder="Acme Sdn Bhd" required>
           </div>
           <div class="form-field">
             <label for="inq-size">Team size</label>
-            <select id="inq-size">
+            <select id="inq-size" name="team_size">
               <option value="" disabled selected>Select range</option>
               <option>1 – 25</option>
               <option>26 – 100</option>
@@ -846,7 +848,7 @@
         </div>
         <div class="form-field">
           <label for="inq-sector">Sector</label>
-          <select id="inq-sector">
+          <select id="inq-sector" name="sector">
             <option value="" disabled selected>Select your sector</option>
             <option>Retail &amp; F&amp;B</option>
             <option>Manufacturing</option>
@@ -860,7 +862,7 @@
         </div>
         <div class="form-field">
           <label for="inq-msg">Message</label>
-          <textarea id="inq-msg" rows="4" placeholder="Tell us what you're looking for — current pain points, team setup, or anything else that helps us prepare."></textarea>
+          <textarea id="inq-msg" name="message" rows="4" placeholder="Tell us what you're looking for — current pain points, team setup, or anything else that helps us prepare."></textarea>
         </div>
         <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
           Send inquiry
@@ -874,13 +876,36 @@
 </section>
 
 <script>
+var FIRAFORM_ENDPOINT = 'https://a.firaform.com/api/f/ObBqO5b3z2jfzy9BA6K2B';
+
 function handleInquiry(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.textContent = '✓ Sent! We\'ll be in touch.';
+  var form = e.target;
+  var btn  = form.querySelector('button[type="submit"]');
+  var data = new FormData(form);
+
+  btn.textContent = 'Sending…';
   btn.disabled = true;
-  btn.style.background = 'var(--teal)';
-  e.target.reset();
+
+  fetch(FIRAFORM_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json' },
+    body: data
+  })
+  .then(function(res) {
+    if (res.ok) {
+      btn.textContent = '✓ Sent! We\'ll be in touch.';
+      btn.style.background = 'var(--teal)';
+      form.reset();
+    } else {
+      throw new Error('Server error ' + res.status);
+    }
+  })
+  .catch(function() {
+    btn.textContent = 'Failed — please try again.';
+    btn.style.background = 'var(--coral)';
+    btn.disabled = false;
+  });
 }
 </script>
 
@@ -893,7 +918,7 @@ function handleInquiry(e) {
           <img src="klokin logo.png" alt="Klokin" class="brand-logo">
         </a>
         <p style="max-width:32ch;margin:0;color:var(--ink-2)">Integrated Attendance &amp; Entry Ecosystem. Be efficient.</p>
-        <div class="mono" style="margin-top:18px">Klokin Software · 2025</div>
+        <div class="mono" style="margin-top:18px">Klokin Software · 2026</div>
       </div>
       <div>
         <h5>Product</h5>
@@ -916,7 +941,7 @@ function handleInquiry(e) {
       <div>
         <h5>Contact</h5>
         <ul>
-          <li><a href="mailto:hello@pocketpixel.xyz">hello@pocketpixel.xyz</a></li>
+          <li><a href="mailto:office@pocketpixel.com">office@pocketpixel.com</a></li>
           <li><a href="tel:+60123246453">+60 12-324 6453</a></li>
           <li><a href="tel:+60176557920">+60 17-655 7920</a></li>
           <li>Kuala Lumpur, MY</li>
@@ -925,7 +950,7 @@ function handleInquiry(e) {
     </div>
     <div class="foot-bottom">
       <span>POCKET PIXEL SDN BHD · ALL RIGHTS RESERVED</span>
-      <span>BE EFFICIENT · 2025</span>
+      <span>BE EFFICIENT · 2026</span>
     </div>
   </div>
 </footer>

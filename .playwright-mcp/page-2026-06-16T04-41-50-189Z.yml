@@ -1,0 +1,565 @@
+- generic [active] [ref=e1]:
+  - banner:
+    - generic [ref=e2]:
+      - link "Klokin" [ref=e6] [cursor=pointer]:
+        - /url: "#"
+        - img "Klokin" [ref=e7]
+      - link "Request a demo" [ref=e9] [cursor=pointer]:
+        - /url: "#contact"
+        - text: Request a demo
+        - img [ref=e10]
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e19]: Klokin Software · 2026
+      - heading "From office desks to teams on ground." [level=1] [ref=e20]:
+        - text: From office desks
+        - text: to teams on ground.
+      - paragraph [ref=e21]: Klokin streamlines attendance, scheduling, and workforce coordination through one connected ecosystem. Helping organisations stay efficient, visible, and in sync across every level of operations.
+      - generic [ref=e22]:
+        - link "Request a demo" [ref=e23] [cursor=pointer]:
+          - /url: "#contact"
+          - text: Request a demo
+          - img [ref=e24]
+        - link "Explore Mobile Suite" [ref=e26] [cursor=pointer]:
+          - /url: "#mobile"
+      - generic [ref=e27]:
+        - generic [ref=e29]: Available in Android & iOS
+        - generic [ref=e31]: Multi-branch, single login
+        - generic [ref=e33]: Bilingual (BM / EN)
+    - img [ref=e37]:
+      - generic [ref=e57]:
+        - generic [ref=e59]: STAFF ON TIME
+        - generic [ref=e60]: 94%
+      - generic [ref=e61]:
+        - generic [ref=e63]: BRANCHES
+        - generic [ref=e64]: "12"
+      - generic [ref=e65]:
+        - generic [ref=e67]: CHECKED IN
+        - generic [ref=e68]: "186"
+      - generic [ref=e69]:
+        - generic [ref=e71]: TOTAL STAFF
+        - generic [ref=e72]: "248"
+        - generic [ref=e73]: SHIFTS TODAY
+        - generic [ref=e74]: "3"
+        - generic [ref=e75]: INCIDENTS
+        - generic [ref=e76]: "7"
+  - generic [ref=e82]:
+    - generic [ref=e83]:
+      - generic [ref=e84]:
+        - generic [ref=e85]: Why Klokin
+        - heading "Built to support your unique workflows." [level=2] [ref=e86]:
+          - text: Built to support
+          - text: your unique workflows.
+      - generic [ref=e87]: Klokin's flexibility lies in its ability to accommodate various shift patterns with customizable rule sets, catering to diverse operational requirements. The system is designed for user convenience, allowing employees to personalise their reporting preferences.
+    - generic [ref=e88]:
+      - article [ref=e89]:
+        - generic [ref=e90]:
+          - img [ref=e92]
+          - heading "Location-based sign-in" [level=3] [ref=e95]
+          - paragraph [ref=e96]: Sign-ins can be pre-assigned or post-approved based on your organisation's policies, offering a secure, location-aware attendance system that adapts to your workflow and roles.
+        - img [ref=e98]:
+          - generic [ref=e105]: HQ · 3.139, 101.687
+          - generic [ref=e106]: SITE B
+      - article [ref=e107]:
+        - generic [ref=e108]:
+          - img [ref=e110]
+          - heading "Built for scalability" [level=3] [ref=e113]
+          - paragraph [ref=e114]: To support future technological development, Klokin supports integrated check-in via selected & compatible fingerprint and facial recognition devices.
+        - img [ref=e116]:
+          - generic [ref=e126]: FINGERPRINT
+          - generic [ref=e127]: FACE-ID
+          - generic [ref=e128]: RFID / NFC
+      - article [ref=e129]:
+        - generic [ref=e130]:
+          - img [ref=e132]
+          - heading "Smart dashboard" [level=3] [ref=e137]
+          - paragraph [ref=e138]: A compact yet comprehensive overview of key information — keeping users informed and in control at a glance.
+      - article [ref=e139]:
+        - generic [ref=e140]:
+          - img [ref=e142]
+          - heading "Personal info, on-the-go" [level=3] [ref=e147]
+          - paragraph [ref=e148]: Team members can easily access schedules and task lists, and stay updated on pending actions; all from their mobile devices.
+      - article [ref=e149]:
+        - generic [ref=e150]:
+          - img [ref=e152]
+          - heading "Up to 3 shifts a day" [level=3] [ref=e155]
+          - paragraph [ref=e156]: Support up to 3 shifts a day — perfect for flexible or varied work schedules.
+  - generic [ref=e158]:
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - generic [ref=e161]: Product Workflow
+        - heading "How Klokin works for your team." [level=2] [ref=e162]:
+          - text: How Klokin works
+          - text: for your team.
+      - generic [ref=e163]: From clock-in to reporting — every step tracked, every shift covered.
+    - generic [ref=e164]:
+      - generic:
+        - img
+      - generic [ref=e166]:
+        - img [ref=e168]
+        - generic [ref=e171]:
+          - heading "Staff onboarded" [level=4] [ref=e172]
+          - paragraph [ref=e173]: Import your roster and assign branches, shifts and roles under a single organisation.
+      - generic [ref=e175]:
+        - img [ref=e177]
+        - generic [ref=e180]:
+          - heading "Shifts & schedules configured" [level=4] [ref=e181]
+          - paragraph [ref=e182]: Support up to 3 shifts a day with customizable rule sets and public holidays baked in.
+      - generic [ref=e184]:
+        - img [ref=e186]
+        - generic [ref=e189]:
+          - heading "Location-based clock-in" [level=4] [ref=e190]
+          - paragraph [ref=e191]: Staff check in via web or mobile app — pre-assigned or post-approved based on your policies.
+      - generic [ref=e193]:
+        - img [ref=e195]
+        - generic [ref=e198]:
+          - heading "Incidents flagged" [level=4] [ref=e199]
+          - paragraph [ref=e200]: Late arrivals, absences and offenses surface with colour-coded indicators for supervisors.
+      - generic [ref=e202]:
+        - img [ref=e204]
+        - generic [ref=e206]:
+          - heading "Approvals & reasons" [level=4] [ref=e207]
+          - paragraph [ref=e208]: Submit and approve absence reasons and documents in one organised, trackable system.
+      - generic [ref=e210]:
+        - img [ref=e212]
+        - generic [ref=e214]:
+          - heading "Reports generated" [level=4] [ref=e215]
+          - paragraph [ref=e216]: Comprehensive reporting for workflow efficiency, staff synchronisation and data-driven decisions.
+  - generic [ref=e219]:
+    - generic [ref=e220]:
+      - generic [ref=e221]: The Klokin Web Console
+      - heading "Single user access. All your roles." [level=2] [ref=e222]:
+        - text: Single user access.
+        - text: All your roles.
+      - paragraph [ref=e223]: One login for all roles — easily access and manage multiple dashboards without switching accounts. View personal records, or for supervisors, team data — all in one glance.
+      - list [ref=e224]:
+        - listitem [ref=e225]:
+          - img [ref=e226]
+          - generic [ref=e228]:
+            - strong [ref=e229]: Multi-branch setup.
+            - text: Manage unlimited branches under a single organisation — no limits, full control.
+        - listitem [ref=e230]:
+          - img [ref=e231]
+          - generic [ref=e233]:
+            - strong [ref=e234]: Reason submission.
+            - text: Submit and approve absence and offense reasons and documents in one organised, trackable system.
+        - listitem [ref=e235]:
+          - img [ref=e236]
+          - generic [ref=e238]:
+            - strong [ref=e239]: Colour-coded offense indicator.
+            - text: Repeat patterns surface visually so supervisors can act before issues compound.
+        - listitem [ref=e240]:
+          - img [ref=e241]
+          - generic [ref=e243]:
+            - strong [ref=e244]: Comprehensive reporting.
+            - text: A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.
+    - generic [ref=e245]:
+      - generic [ref=e250]: app.klokin.io / papan-pemuka-peribadi
+      - generic [ref=e251]:
+        - generic [ref=e252]:
+          - img [ref=e255]
+          - generic [ref=e258]:
+            - generic [ref=e259]: Papan Pemuka Organisasi
+            - generic [ref=e260]: Papan Pemuka Peribadi
+            - generic [ref=e261]: Jadual ▾
+            - generic [ref=e262]: Laporan ▾
+            - generic [ref=e263]: Penugasan ▾
+            - generic [ref=e264]: Kelulusan ▾
+            - generic [ref=e265]: Pentadbir ▾
+          - generic [ref=e266]:
+            - generic [ref=e267]: "Status bulan: Green"
+            - generic [ref=e268]: 🌐
+            - generic [ref=e269]: NF
+        - generic [ref=e270]:
+          - generic [ref=e271]:
+            - generic [ref=e272]: 📅 Tarikh
+            - generic [ref=e273]:
+              - text: Minggu ini
+              - generic [ref=e274]: ▾
+          - generic [ref=e275]:
+            - generic [ref=e276]: 🏢 Cawangan
+            - generic [ref=e277]:
+              - text: HQ
+              - generic [ref=e278]: ▾
+          - generic [ref=e279]:
+            - generic [ref=e280]: 🏗 Jabatan
+            - generic [ref=e281]:
+              - text: Operasi
+              - generic [ref=e282]: ▾
+          - generic [ref=e283]:
+            - generic [ref=e284]: 👥 Kumpulan
+            - generic [ref=e285]:
+              - text: All
+              - generic [ref=e286]: ▾
+        - generic [ref=e288]:
+          - generic [ref=e289]:
+            - generic [ref=e290]:
+              - generic [ref=e293]: 📊 Status Kehadiran Peribadi
+              - generic [ref=e295]:
+                - generic [ref=e296]:
+                  - generic [ref=e297]: Hadir
+                  - generic [ref=e298]: "19"
+                - generic [ref=e299]:
+                  - generic [ref=e300]: Tidak Hadir
+                  - generic [ref=e301]: "1"
+            - generic [ref=e308]:
+              - generic [ref=e311]: 🚪 Rekod Daftar Masuk
+              - table [ref=e313]:
+                - rowgroup [ref=e314]:
+                  - row "Tarikh Masuk Keluar Status" [ref=e315]:
+                    - columnheader "Tarikh" [ref=e316]
+                    - columnheader "Masuk" [ref=e317]
+                    - columnheader "Keluar" [ref=e318]
+                    - columnheader "Status" [ref=e319]
+                - rowgroup [ref=e320]:
+                  - row "20 Mei 08:47 17:32 Hadir" [ref=e321]:
+                    - cell "20 Mei" [ref=e322]
+                    - cell "08:47" [ref=e323]
+                    - cell "17:32" [ref=e324]
+                    - cell "Hadir" [ref=e325]:
+                      - generic [ref=e326]: Hadir
+                  - row "19 Mei 08:55 17:28 Hadir" [ref=e327]:
+                    - cell "19 Mei" [ref=e328]
+                    - cell "08:55" [ref=e329]
+                    - cell "17:28" [ref=e330]
+                    - cell "Hadir" [ref=e331]:
+                      - generic [ref=e332]: Hadir
+                  - row "18 Mei 09:12 17:45 Lewat" [ref=e333]:
+                    - cell "18 Mei" [ref=e334]
+                    - cell "09:12" [ref=e335]
+                    - cell "17:45" [ref=e336]
+                    - cell "Lewat" [ref=e337]:
+                      - generic [ref=e338]: Lewat
+                  - row "17 Mei — — Tidak Hadir" [ref=e339]:
+                    - cell "17 Mei" [ref=e340]
+                    - cell "—" [ref=e341]
+                    - cell "—" [ref=e342]
+                    - cell "Tidak Hadir" [ref=e343]:
+                      - generic [ref=e344]: Tidak Hadir
+                  - row "16 Mei 08:30 17:15 Hadir" [ref=e345]:
+                    - cell "16 Mei" [ref=e346]
+                    - cell "08:30" [ref=e347]
+                    - cell "17:15" [ref=e348]
+                    - cell "Hadir" [ref=e349]:
+                      - generic [ref=e350]: Hadir
+          - generic [ref=e351]:
+            - generic [ref=e352]:
+              - generic [ref=e354]:
+                - generic [ref=e355]: 📅 Jadual Syif
+                - generic [ref=e356]: View All →
+              - table [ref=e358]:
+                - rowgroup [ref=e359]:
+                  - row "Hari Syif Masa" [ref=e360]:
+                    - columnheader "Hari" [ref=e361]
+                    - columnheader "Syif" [ref=e362]
+                    - columnheader "Masa" [ref=e363]
+                - rowgroup [ref=e364]:
+                  - row "Isnin Pagi 08:00 – 17:00" [ref=e365]:
+                    - cell "Isnin" [ref=e366]
+                    - cell "Pagi" [ref=e367]
+                    - cell "08:00 – 17:00" [ref=e368]
+                  - row "Selasa Pagi 08:00 – 17:00" [ref=e369]:
+                    - cell "Selasa" [ref=e370]
+                    - cell "Pagi" [ref=e371]
+                    - cell "08:00 – 17:00" [ref=e372]
+                  - row "Rabu Petang 14:00 – 22:00" [ref=e373]:
+                    - cell "Rabu" [ref=e374]
+                    - cell "Petang" [ref=e375]
+                    - cell "14:00 – 22:00" [ref=e376]
+                  - row "Khamis Pagi 08:00 – 17:00" [ref=e377]:
+                    - cell "Khamis" [ref=e378]
+                    - cell "Pagi" [ref=e379]
+                    - cell "08:00 – 17:00" [ref=e380]
+                  - row "Jumaat Pagi 08:00 – 17:00" [ref=e381]:
+                    - cell "Jumaat" [ref=e382]
+                    - cell "Pagi" [ref=e383]
+                    - cell "08:00 – 17:00" [ref=e384]
+            - generic [ref=e385]:
+              - generic [ref=e388]: 📋 Insiden Saya
+              - generic [ref=e390]:
+                - generic [ref=e391]: ✓
+                - generic [ref=e392]: Tiada insiden pending.
+  - generic [ref=e395]:
+    - generic [ref=e396]:
+      - generic [ref=e397]: Klokin Mobile Suite™
+      - heading "From Desk to Field — Always in Sync." [level=2] [ref=e398]:
+        - text: From Desk to Field —
+        - text: Always in Sync.
+      - paragraph [ref=e399]: Klokin Mobile Suite™ enables team members to perform secure, location-based check-ins directly from their mobile devices, supporting flexible and remote work environments. Each check-in is automatically synchronised with the web platform, allowing supervisors and administrators to monitor attendance in real time. This seamless integration ensures timely and accurate attendance tracking, improves oversight, and streamlines reporting for operational efficiency.
+      - generic [ref=e400]:
+        - generic [ref=e401]:
+          - generic [ref=e402]:
+            - generic [ref=e403]: 01 ·
+            - text: Supports Pre-set & Post Approval
+          - paragraph [ref=e404]: Allows sign-ins to be approved according to assignments.
+        - generic [ref=e405]:
+          - generic [ref=e406]:
+            - generic [ref=e407]: 02 ·
+            - text: On-the-go Schedule
+          - paragraph [ref=e408]: Monitor and manage tasks and assignments from anywhere.
+        - generic [ref=e409]:
+          - generic [ref=e410]:
+            - generic [ref=e411]: 03 ·
+            - text: Comprehensive Dashboard
+          - paragraph [ref=e412]: View records, summaries, and key insights.
+        - generic [ref=e413]:
+          - generic [ref=e414]:
+            - generic [ref=e415]: 04 ·
+            - text: Location-based Sign-in
+          - paragraph [ref=e416]: Staff check in based on assigned locations.
+      - generic [ref=e417]:
+        - link "Download on the App Store" [ref=e418] [cursor=pointer]:
+          - /url: "#"
+          - img [ref=e419]
+          - generic [ref=e421]:
+            - generic [ref=e422]: Download on the
+            - generic [ref=e423]: App Store
+        - link "Get it on Google Play" [ref=e424] [cursor=pointer]:
+          - /url: "#"
+          - img [ref=e425]
+          - generic [ref=e427]:
+            - generic [ref=e428]: Get it on
+            - generic [ref=e429]: Google Play
+    - generic [ref=e430]:
+      - generic [ref=e431]:
+        - img "Klokin — Get started screen"
+      - generic [ref=e432]:
+        - img "Klokin — Check Out screen"
+  - generic [ref=e434]:
+    - generic [ref=e435]:
+      - generic [ref=e436]:
+        - generic [ref=e437]: Key features
+        - heading "Everything an attendance system should be." [level=2] [ref=e438]:
+          - text: Everything an attendance
+          - text: system should be.
+      - generic [ref=e439]: A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting across sectors.
+    - generic [ref=e699]:
+      - generic [ref=e700]:
+        - button "All features 10" [ref=e701] [cursor=pointer]:
+          - text: All features
+          - generic [ref=e702]: "10"
+        - button "Core Platform 3" [ref=e703] [cursor=pointer]:
+          - text: Core Platform
+          - generic [ref=e704]: "3"
+        - button "Workflow 2" [ref=e705] [cursor=pointer]:
+          - text: Workflow
+          - generic [ref=e706]: "2"
+        - button "Scheduling 2" [ref=e707] [cursor=pointer]:
+          - text: Scheduling
+          - generic [ref=e708]: "2"
+        - button "Connect 3" [ref=e709] [cursor=pointer]:
+          - text: Connect
+          - generic [ref=e710]: "3"
+      - generic [ref=e711]:
+        - generic [ref=e712]:
+          - img [ref=e714]
+          - heading "Role-based dashboards" [level=4] [ref=e719]
+          - paragraph [ref=e720]: One login, personalised views for every role — from personal records to full team oversight.
+        - generic [ref=e721]:
+          - img [ref=e723]
+          - heading "Approval workflows" [level=4] [ref=e725]
+          - paragraph [ref=e726]: Submit and route absence reasons and incidents through configurable approval chains with audit trails.
+        - generic [ref=e727]:
+          - img [ref=e729]
+          - heading "Shift management" [level=4] [ref=e732]
+          - paragraph [ref=e733]: Up to 3 shifts per day with customisable rule sets and flexible scheduling.
+        - generic [ref=e734]:
+          - img [ref=e736]
+          - heading "Multi-branch setup" [level=4] [ref=e739]
+          - paragraph [ref=e740]: Manage unlimited branches under one organisation — no limits, full control.
+        - generic [ref=e741]:
+          - img [ref=e743]
+          - heading "Mobile app*" [level=4] [ref=e745]:
+            - text: Mobile app
+            - superscript [ref=e746]: "*"
+          - paragraph [ref=e747]: Check in remotely with accurate, real-time syncing to the web console.
+        - generic [ref=e748]:
+          - img [ref=e750]
+          - heading "Offense tracking" [level=4] [ref=e753]
+          - paragraph [ref=e754]: Colour-coded indicators help supervisors spot attendance patterns at a glance.
+        - generic [ref=e755]:
+          - img [ref=e757]
+          - heading "Public holidays" [level=4] [ref=e760]
+          - paragraph [ref=e761]: Bake regional holidays into shift rules — no manual exceptions.
+        - generic [ref=e762]:
+          - img [ref=e764]
+          - heading "Notifications" [level=4] [ref=e767]
+          - paragraph [ref=e768]: Timely alerts for clock-ins, approvals, and exceptions — pushed to web and mobile.
+        - generic [ref=e769]:
+          - img [ref=e771]
+          - heading "Bilingual (BM / EN)" [level=4] [ref=e774]
+          - paragraph [ref=e775]: Switch the entire interface between Bahasa Malaysia and English in one click.
+        - generic [ref=e776]:
+          - img [ref=e778]
+          - heading "Comprehensive reporting" [level=4] [ref=e780]
+          - paragraph [ref=e781]: Data-driven reports for workflow efficiency, staff synchronisation, and compliance.
+    - generic [ref=e524]: "* Available with subscription of Klokin Mobile Suite. ** Compatibility with devices apply."
+  - generic [ref=e525]:
+    - generic [ref=e527]:
+      - generic [ref=e528]:
+        - generic [ref=e529]: Built for many sectors
+        - heading "Wherever people need to clock in." [level=2] [ref=e530]:
+          - text: Wherever people
+          - text: need to clock in.
+      - generic [ref=e531]: A holistic solution for workflow efficiency, staff synchronisation, and data-driven reporting in various sector operations.
+    - generic [ref=e533]:
+      - generic [ref=e534]:
+        - img [ref=e536]
+        - generic [ref=e539]: Retail & F&B
+        - generic [ref=e540]: Multi-outlet rosters with peak-hour shift splits
+      - generic [ref=e541]:
+        - img [ref=e543]
+        - generic [ref=e545]: Manufacturing
+        - generic [ref=e546]: 3-shift rotations and overtime ledgers
+      - generic [ref=e547]:
+        - img [ref=e549]
+        - generic [ref=e551]: Clinics & care
+        - generic [ref=e552]: Locum schedules & on-call patterns
+      - generic [ref=e553]:
+        - img [ref=e555]
+        - generic [ref=e558]: Schools
+        - generic [ref=e559]: Staff & visiting teachers in one roster
+      - generic [ref=e560]:
+        - img [ref=e562]
+        - generic [ref=e565]: Logistics
+        - generic [ref=e566]: Field check-ins per route & stop
+      - generic [ref=e567]:
+        - img [ref=e569]
+        - generic [ref=e572]: Corporate offices
+        - generic [ref=e573]: Hybrid & flexi-time across departments
+      - generic [ref=e574]:
+        - img [ref=e576]
+        - generic [ref=e579]: Retail & F&B
+        - generic [ref=e580]: Multi-outlet rosters with peak-hour shift splits
+      - generic [ref=e581]:
+        - img [ref=e583]
+        - generic [ref=e585]: Manufacturing
+        - generic [ref=e586]: 3-shift rotations and overtime ledgers
+      - generic [ref=e587]:
+        - img [ref=e589]
+        - generic [ref=e591]: Clinics & care
+        - generic [ref=e592]: Locum schedules & on-call patterns
+      - generic [ref=e593]:
+        - img [ref=e595]
+        - generic [ref=e598]: Schools
+        - generic [ref=e599]: Staff & visiting teachers in one roster
+      - generic [ref=e600]:
+        - img [ref=e602]
+        - generic [ref=e605]: Logistics
+        - generic [ref=e606]: Field check-ins per route & stop
+      - generic [ref=e607]:
+        - img [ref=e609]
+        - generic [ref=e612]: Corporate offices
+        - generic [ref=e613]: Hybrid & flexi-time across departments
+  - generic [ref=e616]:
+    - generic [ref=e617]:
+      - generic [ref=e618]: Get in touch
+      - heading "Let's get you clocked in." [level=2] [ref=e619]:
+        - text: Let's get you
+        - text: clocked in.
+      - paragraph [ref=e620]: Tell us about your organisation and we'll reach out within one business day to arrange a personalised walkthrough.
+      - generic [ref=e621]:
+        - link "office@pocketpixel.com" [ref=e622] [cursor=pointer]:
+          - /url: mailto:office@pocketpixel.com
+          - img [ref=e624]
+          - text: office@pocketpixel.com
+        - link "+60 12-324 6453" [ref=e627] [cursor=pointer]:
+          - /url: tel:+60123246453
+          - img [ref=e629]
+          - text: +60 12-324 6453
+    - generic [ref=e631]:
+      - generic [ref=e632]:
+        - generic [ref=e633]:
+          - generic [ref=e634]: Full name *
+          - textbox "Full name *" [ref=e635]:
+            - /placeholder: Ahmad Syafiq
+        - generic [ref=e636]:
+          - generic [ref=e637]: Work email *
+          - textbox "Work email *" [ref=e638]:
+            - /placeholder: you@company.com
+      - generic [ref=e639]:
+        - generic [ref=e640]:
+          - generic [ref=e641]: Organisation *
+          - textbox "Organisation *" [ref=e642]:
+            - /placeholder: Acme Sdn Bhd
+        - generic [ref=e643]:
+          - generic [ref=e644]: Team size
+          - combobox "Team size" [ref=e645]:
+            - option "Select range" [disabled] [selected]
+            - option "1 – 25"
+            - option "26 – 100"
+            - option "101 – 500"
+            - option "500+"
+      - generic [ref=e646]:
+        - generic [ref=e647]: Sector
+        - combobox "Sector" [ref=e648]:
+          - option "Select your sector" [disabled] [selected]
+          - option "Retail & F&B"
+          - option "Manufacturing"
+          - option "Clinics & Care"
+          - option "Schools & Education"
+          - option "Logistics"
+          - option "Corporate Office"
+          - option "Government"
+          - option "Other"
+      - generic [ref=e649]:
+        - generic [ref=e650]: Message
+        - textbox "Message" [ref=e651]:
+          - /placeholder: Tell us what you're looking for — current pain points, team setup, or anything else that helps us prepare.
+      - button "✓ Sent! We'll be in touch." [disabled] [ref=e782]
+      - paragraph [ref=e655]: We'll get back to you within 1 business day. No spam, ever.
+  - contentinfo [ref=e656]:
+    - generic [ref=e657]:
+      - generic [ref=e658]:
+        - generic [ref=e659]:
+          - link "Klokin" [ref=e660] [cursor=pointer]:
+            - /url: "#"
+            - img "Klokin" [ref=e661]
+          - paragraph [ref=e662]: Integrated Attendance & Entry Ecosystem. Be efficient.
+          - generic [ref=e663]: Klokin Software · 2026
+        - generic [ref=e664]:
+          - heading "Product" [level=5] [ref=e665]
+          - list [ref=e666]:
+            - listitem [ref=e667]:
+              - link "Web console" [ref=e668] [cursor=pointer]:
+                - /url: "#features"
+            - listitem [ref=e669]:
+              - link "Mobile Suite" [ref=e670] [cursor=pointer]:
+                - /url: "#mobile"
+            - listitem [ref=e671]:
+              - link "Integrations" [ref=e672] [cursor=pointer]:
+                - /url: "#features"
+            - listitem [ref=e673]:
+              - link "Changelog" [ref=e674] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e675]:
+          - heading "Company" [level=5] [ref=e676]
+          - list [ref=e677]:
+            - listitem [ref=e678]:
+              - link "Pocket Pixel" [ref=e679] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e680]:
+              - link "Contact sales" [ref=e681] [cursor=pointer]:
+                - /url: "#contact"
+            - listitem [ref=e682]:
+              - link "Partners" [ref=e683] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e684]:
+              - link "Careers" [ref=e685] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e686]:
+          - heading "Contact" [level=5] [ref=e687]
+          - list [ref=e688]:
+            - listitem [ref=e689]:
+              - link "office@pocketpixel.com" [ref=e690] [cursor=pointer]:
+                - /url: mailto:office@pocketpixel.com
+            - listitem [ref=e691]:
+              - link "+60 12-324 6453" [ref=e692] [cursor=pointer]:
+                - /url: tel:+60123246453
+            - listitem [ref=e693]:
+              - link "+60 17-655 7920" [ref=e694] [cursor=pointer]:
+                - /url: tel:+60176557920
+            - listitem [ref=e695]: Kuala Lumpur, MY
+      - generic [ref=e696]:
+        - generic [ref=e697]: POCKET PIXEL SDN BHD · ALL RIGHTS RESERVED
+        - generic [ref=e698]: BE EFFICIENT · 2026

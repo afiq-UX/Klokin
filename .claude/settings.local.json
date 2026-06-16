@@ -30,7 +30,17 @@
       "mcp__claude_ai_Figma__get_design_context",
       "WebFetch(domain:freefrontend.com)",
       "WebSearch",
-      "WebFetch(domain:blog.logrocket.com)"
+      "WebFetch(domain:blog.logrocket.com)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8787)",
+      "PowerShell(Start-Sleep -Seconds 3; try { $r = Invoke-WebRequest -Uri 'http://localhost:8787/' -TimeoutSec 3; Write-Output \"OK: $\\($r.StatusCode\\)\" } catch { Write-Output \"Failed: $_\" })",
+      "PowerShell(Start-Process -FilePath \"cmd\" -ArgumentList \"/c npx serve `\"c:\\\\Users\\\\ppp\\\\Desktop\\\\temp afiq\\\\Klokin-1`\" -p 8787 -n\" -WindowStyle Hidden; Start-Sleep -Seconds 5; try { $r = Invoke-WebRequest -Uri 'http://localhost:8787/' -TimeoutSec 5 -UseBasicParsing; Write-Output \"Server OK: $\\($r.StatusCode\\)\" } catch { Write-Output \"Error: $_\" })",
+      "PowerShell(netstat -an)",
+      "PowerShell(Start-Process -FilePath \"node\" -ArgumentList \"`\"c:\\\\Users\\\\ppp\\\\Desktop\\\\temp afiq\\\\Klokin-1\\\\server.js`\"\" -WindowStyle Hidden)",
+      "Bash(node \"c:/Users/ppp/Desktop/temp afiq/Klokin-1/server.js\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8787/)",
+      "mcp__plugin_playwright_playwright__browser_fill_form",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot"
     ]
   }
 }

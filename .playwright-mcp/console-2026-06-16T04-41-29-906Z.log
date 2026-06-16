@@ -1,0 +1,12 @@
+[      32ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/klokin%20logo.png:0
+[      32ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/images/Group%2013.jpg:0
+[      37ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/images/Group%207.jpg:0
+[     340ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/klokin%20logo.png:0
+[     341ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/.image-slots.state.json:0
+[     370ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[     637ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:29904
+[     714ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[     715ms] [WARNING] You are using the in-browser Babel transformer. Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/ @ https://unpkg.com/@babel/standalone@7.29.0/babel.min.js:2
+[    1153ms] [ERROR] Warning: You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:72
+[    1181ms] [ERROR] Warning: You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js:72
+[    1290ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/favicon.ico:0

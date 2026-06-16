@@ -120,7 +120,7 @@
     max-width:var(--maxw);margin:0 auto;padding:12px 24px;
     display:flex;align-items:center;justify-content:space-between;gap:24px;
     position:relative;overflow:hidden;border-radius:14px;
-    box-shadow:0 6px 6px rgba(0,0,0,0.2), 0 0 20px rgba(0,0,0,0.1);
+    border:1px solid rgba(204,221,242,0.6);
     pointer-events:auto;
   }
   /* ── Liquid Glass layers (must duplicate border-radius so filter/blur clips correctly) ── */
@@ -148,13 +148,21 @@
   .nav-inner .nav-links,
   .nav-inner .nav-cta{position:relative;z-index:3}
   .brand{display:flex;align-items:center;gap:10px}
-  .brand-logo{height:28px;width:auto;display:block}
+  .brand-logo{height:28px;width:auto;display:block;transition:filter .3s}
   .brand small{font-family:var(--font-ui);font-weight:500;font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;margin-left:8px;border-left:1px solid var(--line);padding-left:8px}
   .nav-links{display:flex;gap:28px;align-items:center;font-size:14px;color:var(--ink-2);font-weight:500}
-  .nav-links a{transition:color .15s, border-color .15s;padding-bottom:4px;border-bottom:2px solid transparent;color:var(--ink-3)}
+  .nav-links a{transition:color .3s, border-color .3s;padding-bottom:4px;border-bottom:2px solid transparent;color:var(--ink-3)}
   .nav-links a:hover{color:var(--indigo)}
   .nav-links a.active{color:var(--indigo);border-bottom-color:var(--indigo);font-weight:600}
   .nav-cta{display:flex;gap:10px;align-items:center}
+
+  /* ── Nav over dark sections ── */
+  .nav--on-dark .nav-inner{border-color:rgba(255,255,255,0.18);transition:border-color .3s}
+  .nav--on-dark .liquidGlass-tint{background:rgba(0,0,0,0.18);transition:background .3s}
+  .nav--on-dark .brand-logo{filter:brightness(0) invert(1)}
+  .nav--on-dark .nav-links a{color:rgba(255,255,255,0.55)}
+  .nav--on-dark .nav-links a:hover{color:#fff}
+  .nav--on-dark .nav-links a.active{color:#fff;border-bottom-color:rgba(255,255,255,0.7)}
 
   .btn{
     appearance:none;border:0;background:transparent;color:var(--ink);

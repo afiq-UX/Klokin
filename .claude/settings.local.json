@@ -26,7 +26,11 @@
       "Bash(python -c ' *)",
       "mcp__Claude_in_Chrome__computer",
       "PowerShell($file = \"C:\\\\Users\\\\Mike\\\\OneDrive\\\\Desktop\\\\Pocket Pixel - Projects\\\\Klokin\\\\B _ Abstract _geometric clock composition_ no dashboard_.html\"; \\(Get-Item $file\\).Length)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "mcp__claude_ai_Figma__get_design_context",
+      "WebFetch(domain:freefrontend.com)",
+      "WebSearch",
+      "WebFetch(domain:blog.logrocket.com)"
     ]
   }
 }

@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   // Phone mockups in mobile suite
-  gsap.utils.toArray('.phone').forEach(function(el){
+  gsap.utils.toArray('.phone-real').forEach(function(el){
     gsap.from(el, {
       y: 50, opacity: 0, scale: 0.95,
       scrollTrigger: { trigger: el, start: 'top 88%' },

@@ -112,15 +112,41 @@
   /* ───────── Nav ───────── */
   .nav{
     position:sticky;top:0;z-index:50;
-    background:color-mix(in oklab, var(--paper) 84%, transparent);
-    backdrop-filter:saturate(160%) blur(14px);
-    -webkit-backdrop-filter:saturate(160%) blur(14px);
-    border-bottom:1px solid color-mix(in oklab, var(--line) 60%, transparent);
+    padding:14px var(--gutter) 0;
+    background:transparent;
+    pointer-events:none;
   }
   .nav-inner{
-    max-width:var(--maxw);margin:0 auto;padding:14px var(--gutter);
+    max-width:var(--maxw);margin:0 auto;padding:12px 24px;
     display:flex;align-items:center;justify-content:space-between;gap:24px;
+    position:relative;overflow:hidden;border-radius:14px;
+    box-shadow:0 6px 6px rgba(0,0,0,0.2), 0 0 20px rgba(0,0,0,0.1);
+    pointer-events:auto;
   }
+  /* ── Liquid Glass layers (must duplicate border-radius so filter/blur clips correctly) ── */
+  .liquidGlass-effect,
+  .liquidGlass-tint,
+  .liquidGlass-shine{
+    position:absolute;inset:0;border-radius:14px;
+  }
+  .liquidGlass-effect{
+    z-index:0;overflow:hidden;
+    backdrop-filter:blur(3px);
+    filter:url(#glass-distortion);
+  }
+  .liquidGlass-tint{
+    z-index:1;
+    background:hsla(217,100%,97%,0.1);
+  }
+  .liquidGlass-shine{
+    z-index:2;overflow:hidden;
+    box-shadow:inset 2px 2px 1px 0 rgba(255,255,255,0.5),
+               inset -1px -1px 1px 1px rgba(255,255,255,0.5);
+  }
+  /* Nav content sits above glass layers */
+  .nav-inner .brand,
+  .nav-inner .nav-links,
+  .nav-inner .nav-cta{position:relative;z-index:3}
   .brand{display:flex;align-items:center;gap:10px}
   .brand-logo{height:28px;width:auto;display:block}
   .brand small{font-family:var(--font-ui);font-weight:500;font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;margin-left:8px;border-left:1px solid var(--line);padding-left:8px}
@@ -141,7 +167,7 @@
   .btn-ghost:hover{color:var(--indigo);background:color-mix(in oklab, var(--indigo) 7%, transparent)}
   .btn-outline{border:1px solid var(--line);color:var(--ink)}
   .btn-outline:hover{border-color:var(--indigo);color:var(--indigo)}
-  .btn-primary{background:var(--indigo);color:#fff;box-shadow:0 1px 0 color-mix(in oklab, white 14%, transparent) inset, 0 8px 18px -10px var(--indigo)}
+  .btn-primary{background:var(--indigo);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,0.14), 0 2px 8px rgba(0,99,197,0.45)}
   .btn-primary:hover{background:var(--indigo-3)}
   .btn-accent{background:var(--gold);color:#071526;box-shadow:0 1px 0 color-mix(in oklab, white 22%, transparent) inset, 0 8px 18px -8px color-mix(in oklab, var(--gold) 55%, transparent)}
   .btn-accent:hover{background:var(--gold-2)}
@@ -588,7 +614,7 @@
   .appr .actions button.ap{background:var(--indigo);color:#fff;border-color:var(--indigo)}
 
   /* ───────── Phone mockup ───────── */
-  .phone-stack{position:relative;display:flex;justify-content:center;align-items:center;width:100%;min-height:560px}
+  .phone-stack{position:relative;display:flex;justify-content:center;align-items:center;width:100%;min-height:600px}
   .phone{
     width:280px;background:#0f0a22;border-radius:42px;padding:8px;position:relative;
     box-shadow:var(--shadow-lg), 0 0 0 1px color-mix(in oklab, white 8%, transparent) inset;
@@ -640,6 +666,30 @@
   }
   .phone.front{transform:rotate(2deg)}
 
+  /* ───────── Real Phone Screenshots (Mobile Suite) ───────── */
+  .phone-real{
+    width:244px;
+    background:#07070e;
+    border-radius:46px;
+    padding:9px;
+    box-shadow:
+      0 60px 120px -30px rgba(0,0,0,0.80),
+      0 20px 40px -12px rgba(0,0,0,0.45),
+      0 0 0 1px rgba(255,255,255,0.08) inset;
+  }
+  .phone-real img{width:100%;border-radius:38px;display:block;pointer-events:none}
+  .phone-real--behind{
+    position:absolute;left:55%;top:50%;
+    transform:translate(-50%,-50%) rotate(-16deg) scale(0.83) translate(-110px,44px);
+    z-index:0;
+    filter:brightness(0.58) saturate(0.75);
+  }
+  .phone-real--front{
+    position:absolute;left:55%;top:50%;
+    transform:translate(-50%,-50%) rotate(8deg) translate(80px,-25px);
+    z-index:1;
+  }
+
   /* ───────── Misc ───────── */
   .divider-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--ink-3);margin:0 8px;vertical-align:middle;opacity:.6}
 
@@ -654,6 +704,7 @@
   /* ───────── Responsive ───────── */
   @media (max-width: 1080px){
     .hero-grid, .showcase-grid, .suite-grid, .quote, .sec-head{grid-template-columns:1fr;gap:36px}
+    .phone-real{width:210px}
     .hero-vis{justify-self:center;max-width:520px}
     .featgrid .item{grid-column:span 6}
     .feat-tab-grid{grid-template-columns:repeat(2,1fr)}
@@ -664,6 +715,10 @@
   }
   @media (max-width: 640px){
     .kpis{grid-template-columns:repeat(2,1fr)}
+    .phone-real{width:175px;border-radius:36px;padding:7px}
+    .phone-real img{border-radius:30px}
+    .phone-real--behind{transform:translate(-50%,-50%) rotate(-14deg) scale(0.81) translate(-85px,36px)}
+    .phone-real--front{transform:translate(-50%,-50%) rotate(7deg) translate(62px,-20px)}
     .featgrid .item{grid-column:span 12}
     .feat-tab-grid{grid-template-columns:1fr}
     .panel-row{grid-template-columns:1fr}

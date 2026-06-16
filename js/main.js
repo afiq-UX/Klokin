@@ -1,3 +1,36 @@
+// Mobile nav toggle
+(function(){
+  var nav    = document.querySelector('.nav');
+  var toggle = document.querySelector('.nav-toggle');
+  var menu   = document.querySelector('.nav-mobile-menu');
+  if(!toggle || !menu) return;
+
+  function openMenu(){
+    nav.classList.add('nav--open');
+    toggle.setAttribute('aria-expanded','true');
+    menu.removeAttribute('aria-hidden');
+  }
+  function closeMenu(){
+    nav.classList.remove('nav--open');
+    toggle.setAttribute('aria-expanded','false');
+    menu.setAttribute('aria-hidden','true');
+  }
+
+  toggle.addEventListener('click', function(){
+    nav.classList.contains('nav--open') ? closeMenu() : openMenu();
+  });
+
+  // Close on any menu link click
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e){
+    if(nav.classList.contains('nav--open') && !nav.contains(e.target)) closeMenu();
+  });
+})();
+
 // Nav theme — switches to light text when over dark sections
 (function(){
   var nav          = document.querySelector('.nav');

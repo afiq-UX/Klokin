@@ -1,3 +1,15 @@
+// Lenis smooth scroll — buttery, no snap
+(function(){
+  var lenis = new Lenis({
+    lerp: 0.08,
+    smoothWheel: true,
+    smoothTouch: false,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+})();
+
 // Mobile nav toggle
 (function(){
   var nav    = document.querySelector('.nav');

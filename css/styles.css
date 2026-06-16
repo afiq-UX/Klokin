@@ -605,13 +605,24 @@
     .pillar.pillar-feature{grid-column:span 6}
     .nav-links{display:none}
     .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+    section{padding:64px 0}
+    .sec-head{margin-bottom:40px}
   }
   @media (max-width: 640px){
+    section{padding:48px 0}
+    .hero{padding-top:40px}
+    .cta{padding:48px 0 36px}
+    .sec-head{margin-bottom:28px;gap:20px}
+    .hero-meta{margin:24px 0 16px}
+    .hero-note{margin-top:20px}
+    .steps{grid-template-columns:1fr;margin-top:24px}
+    .proof{padding:24px 0}
+    footer{padding:40px 0 28px}
+    .foot-bottom{margin-top:32px;padding-top:20px}
     .kpis{grid-template-columns:repeat(2,1fr)}
     .featgrid .item{grid-column:span 12}
     .feat-tab-grid{grid-template-columns:1fr}
     .panel-row{grid-template-columns:1fr}
-    .steps{grid-template-columns:1fr}
     .suite-features{grid-template-columns:1fr}
     .stat-grid{grid-template-columns:1fr 1fr}
     .foot-grid{grid-template-columns:1fr}

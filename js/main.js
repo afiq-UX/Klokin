@@ -14,19 +14,21 @@
     nav.classList.toggle('nav--on-dark', isDark);
   }
 
-  lenis.on('scroll', updateNavTheme);
+  window.addEventListener('scroll', updateNavTheme, {passive:true});
   window.addEventListener('resize', updateNavTheme);
   updateNavTheme();
 })();
 
-// Scroll-spy + anchor links with Lenis
+// Scroll-spy + anchor links (native smooth scroll)
 (function(){
-  // Wire anchor links to Lenis
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function(e){
       const id = this.getAttribute('href').replace('#','');
       const target = document.getElementById(id);
-      if(target){ e.preventDefault(); lenis.scrollTo(target, {offset: -80}); }
+      if(target){
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      }
     });
   });
 
@@ -50,18 +52,12 @@
   update();
 })();
 
-// GSAP scroll-triggered reveals — subtle & professional
+// GSAP scroll-triggered reveals
 document.addEventListener('DOMContentLoaded', function(){
   gsap.registerPlugin(ScrollTrigger);
 
-  // Sync ScrollTrigger with Lenis
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
-  gsap.ticker.lagSmoothing(0);
-
   // Defaults
   const revealUp = { y: 32, opacity: 0 };
-  const revealTo = { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' };
 
   // Section headings
   gsap.utils.toArray('.sec-head, .cta .eyebrow, .cta .display, .cta .lead, .cta .hero-cta').forEach(function(el){
@@ -78,8 +74,6 @@ document.addEventListener('DOMContentLoaded', function(){
       duration: 0.7, ease: 'power2.out', stagger: 0.1
     }));
   });
-
-  // Feature grid scroll animation — replaced by feat-tabs React component
 
   // Dashboard mockups — slight scale + fade
   gsap.utils.toArray('.device-mac').forEach(function(el){
@@ -158,30 +152,18 @@ document.addEventListener('DOMContentLoaded', function(){
         return (r.top - trackRect.top) + r.height / 2;
       });
 
-      /* nth-child(even) indents data-tl 0,2,4 (because .tl-rail is child 1)
-         indented cards → farX (rail swings right toward them)
-         non-indented   → nearX (rail stays moderate, card is already close)
-         Pattern: arrive at card → linger vertically → sweep to next card */
       var nearX = isMobile ? 18 : 26;
       var farX  = isMobile ? 50 : 77;
       var startX = isMobile ? 4 : 5;
 
-      /* Build waypoints: start → each card centre → bottom terminal.
-         Catmull-Rom guarantees matching tangents at every waypoint → no kinks. */
       var pts = [];
       pts.push({ x: startX, y: 0 });
       for(var i = 0; i < ys.length; i++){
         var cx = (i % 2 === 0 ? farX : nearX);
         pts.push({ x: cx, y: ys[i] });
       }
-      /* terminal: continue straight down from the last card */
       pts.push({ x: pts[pts.length - 1].x, y: trackH });
 
-      /* Catmull-Rom → cubic bezier conversion.
-         For each segment P[i]→P[i+1] the control points are:
-           cp1 = P[i]   + (P[i+1] - P[i-1]) / 6
-           cp2 = P[i+1] - (P[i+2] - P[i])   / 6
-         Endpoints are clamped (ghost points = themselves). */
       var d = 'M' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
       for(var si = 1; si < pts.length; si++){
         var p0 = pts[Math.max(0, si - 2)];
@@ -259,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   })();
 
-  // Hero — no scroll trigger, just entrance on load
+  // Hero — entrance on load
   gsap.from('.hero h1', { y: 30, opacity: 0, duration: 0.9, ease: 'power2.out', delay: 0.1 });
   gsap.from('.hero .lead', { y: 24, opacity: 0, duration: 0.8, ease: 'power2.out', delay: 0.25 });
   gsap.from('.hero-cta', { y: 20, opacity: 0, duration: 0.7, ease: 'power2.out', delay: 0.4 });

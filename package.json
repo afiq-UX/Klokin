@@ -2,7 +2,10 @@
   "name": "klokin",
   "private": true,
   "scripts": {
-    "build": "babel tweaks-panel.jsx --out-file js/tweaks-panel.js && babel src/tweaks-app.jsx --out-file js/tweaks-app.js && babel src/feat-tabs.jsx --out-file js/feat-tabs.js"
+    "build": "babel tweaks-panel.jsx --out-file js/tweaks-panel.js && babel src/tweaks-app.jsx --out-file js/tweaks-app.js && babel src/feat-tabs.jsx --out-file js/feat-tabs.js",
+    "watch": "concurrently -n panel,app,tabs -c blue,green,magenta \"babel tweaks-panel.jsx --out-file js/tweaks-panel.js -w\" \"babel src/tweaks-app.jsx --out-file js/tweaks-app.js -w\" \"babel src/feat-tabs.jsx --out-file js/feat-tabs.js -w\"",
+    "serve": "npx --yes serve . -l 3000",
+    "dev": "concurrently -n watch,serve -c cyan,yellow \"npm:watch\" \"npm:serve\""
   },
   "dependencies": {
     "@babel/cli": "^7.26.4",
@@ -10,6 +13,7 @@
     "@babel/preset-react": "^7.26.3"
   },
   "devDependencies": {
+    "concurrently": "^10.0.3",
     "pdf-parse": "^2.4.5"
   }
 }

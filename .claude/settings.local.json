@@ -42,7 +42,11 @@
       "mcp__plugin_playwright_playwright__browser_click",
       "mcp__plugin_playwright_playwright__browser_take_screenshot",
       "Bash(curl -L \"https://www.figma.com/api/mcp/asset/a96f0e98-d98c-46f0-8269-9e926a167c39\" -o \"c:/Users/ppp/Desktop/temp afiq/Klokin-1/images/klokin-wordmark.png\" -s)",
-      "mcp__claude_ai_Figma__get_metadata"
+      "mcp__claude_ai_Figma__get_metadata",
+      "Bash(curl -sL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\)\" https://klokin.my)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)"
     ]
   }
 }
